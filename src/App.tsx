@@ -4,6 +4,9 @@ import Board from './classes/Board';
 import Player from './classes/Player';
 import BoardComponent from './component/BoardComponent';
 import GameOverComponent from './component/GameOverComponent';
+import StartPage from './Pages/Startpage';
+
+
 import './index.css';
 
 function App() {
@@ -12,6 +15,13 @@ function App() {
   //Set up the stats for players by using useState
    const [playerX, setPlayerX] = useState<Player | null>(null);
   const [playerO, setPlayerO] = useState<Player | null>(null);
+  const [gameStarted, setGameStarted] = useState(false);
+
+
+   // Handler to start the game
+  const handleStartGame = () => {
+    setGameStarted(true);
+  };
 
   // Handle function column click on game board.
   const handleColumnClick = (column: number) => {
@@ -44,12 +54,15 @@ function App() {
     }
   };
 
+    if (!gameStarted) {
+    return <StartPage onStart={handleStartGame} />;
+  }
   
   // if player names are not set, render the form to do so.
   if (!playerX || !playerO) {
     return (
       <div className="app">
-        <h1>Welcome to Connect 4!</h1>
+        <h1>Welcome to Connect 4!</h1>§§
         <form
           onSubmit={(e) => {
             e.preventDefault();
