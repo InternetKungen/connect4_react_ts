@@ -5,6 +5,11 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   background: linear-gradient(to right, #3b82f6, #6366f1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
   /* Gradient background for the whole page */
 }
 
@@ -14,12 +19,14 @@ body {
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
+  height: 100%;
 }
 
 /* Board container styles */
 .board {
   display: flex;
   flex-direction: row;
+  height: 70vh;
 }
 
 /* Column container styles */
