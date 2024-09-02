@@ -817,22 +817,25 @@ const TunnelEffect: React.FC = () => {
           y: 0,
         };
 
-        gsap.to(this.textureParams, {
-          duration: 12,
-          repeatX: 10,
-          ease: Power2.easeInOut,
-        });
+        // gsap.to(this.textureParams, {
+        //   duration: 12,
+        //   // repeatX: 10,
+        //   repeatX: 10,
+        //   ease: Power2.easeInOut,
+        // });
 
-        gsap.to(this.textureParams, {
-          duration: 4,
-          repeatX: 0.3,
-          ease: Power1.easeInOut,
-        });
+        // gsap.to(this.textureParams, {
+        //   duration: 4,
+        //   // repeatX: 0.3,
+        //   repeatX: 0.3,
+        //   ease: Power1.easeInOut,
+        // });
 
         gsap.to(this.textureParams, {
           duration: 12,
           offsetX: 8,
           ease: Power2.easeInOut,
+          repeat: -1,
         });
 
         gsap.to(this.cameraShake, {
@@ -870,15 +873,28 @@ const TunnelEffect: React.FC = () => {
         this.tubeMaterial.map!.repeat.set(this.textureParams.repeatX, this.textureParams.repeatY);
       }
 
+      // updateCameraPosition() {
+      //   this.mouse.position.x += (this.mouse.target.x - this.mouse.position.x) / 50;
+      //   this.mouse.position.y += (this.mouse.target.y - this.mouse.position.y) / 50;
+
+      //   this.mouse.ratio.x = this.mouse.position.x / window.innerWidth;
+      //   this.mouse.ratio.y = this.mouse.position.y / window.innerHeight;
+
+      //   this.camera.position.x = this.mouse.ratio.x * 0.044 - 0.025 + this.cameraShake.x;
+      //   this.camera.position.y = this.mouse.ratio.y * 0.044 - 0.025;
+      // }
       updateCameraPosition() {
-        this.mouse.position.x += (this.mouse.target.x - this.mouse.position.x) / 50;
-        this.mouse.position.y += (this.mouse.target.y - this.mouse.position.y) / 50;
+        this.mouse.position.x += (this.mouse.target.x - this.mouse.position.x) / 250;
+        this.mouse.position.y += (this.mouse.target.y - this.mouse.position.y) / 250;
 
         this.mouse.ratio.x = this.mouse.position.x / window.innerWidth;
         this.mouse.ratio.y = this.mouse.position.y / window.innerHeight;
 
-        this.camera.position.x = this.mouse.ratio.x * 0.044 - 0.025 + this.cameraShake.x;
-        this.camera.position.y = this.mouse.ratio.y * 0.044 - 0.025;
+        const maxX = 0.005; // Set maximum movement in x-direction
+        const maxY = 0.005; // Set maximum movement in y-direction
+
+        this.camera.position.x = THREE.MathUtils.clamp(this.mouse.ratio.x * 0.044 - 0.025 + this.cameraShake.x, -maxX, maxX);
+        this.camera.position.y = THREE.MathUtils.clamp(this.mouse.ratio.y * 0.044 - 0.025, -maxY, maxY);
       }
 
       updateCurve() {
@@ -920,7 +936,7 @@ const TunnelEffect: React.FC = () => {
     const loader = new THREE.TextureLoader();
     loader.crossOrigin = "Anonymous";
     loader.load(
-      "img/galaxyTexture.jpg",
+      "img/lines.jpg",
       (texture) => {
         document.body.classList.remove("loading");
         new Tunnel(texture);
