@@ -2,8 +2,8 @@
 //Renders the visual representation of the game board
 
 import React from 'react';
-import Column from './Column';
-import Board from '../classes/Board';
+import Column from '../Column/Column';
+import Board from '../../classes/Board';
 
 interface BoardProps {
   board: Board;

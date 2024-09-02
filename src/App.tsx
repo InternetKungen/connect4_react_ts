@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import Board from './classes/Board';
 import Player from './classes/Player';
-import BoardComponent from './component/BoardComponent';
-import GameOverComponent from './component/GameOverComponent';
+import BoardComponent from './components/BoardComponent/BoardComponent';
+import GameOverComponent from './components/GameOverComponent/GameOverComponent';
 import StartPage from './Pages/Startpage';
-import Rules from './component/GameRules/Rules';
+import Rules from './components/GameRules/Rules';
 import { GameState } from './utils/Types';
 import './index.css';
 
