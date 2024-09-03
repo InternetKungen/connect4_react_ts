@@ -7,7 +7,6 @@ import StartPage from './Pages/Startpage';
 import Rules from './components/GameRules/Rules';
 import { GameState } from './utils/Types';
 import './index.css';
-import ComputerMenu from './component/ComputerMenu';
 
 function App() {
   // State to manage the current view
