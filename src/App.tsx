@@ -3,7 +3,7 @@ import Board from './classes/Board';
 import Player from './classes/Player';
 import BoardComponent from './components/BoardComponent/BoardComponent';
 import GameOverComponent from './components/GameOverComponent/GameOverComponent';
-import StartPage from './Pages/Startpage';
+import StartPage from './components/StartPage/StartPage';
 import Rules from './components/GameRules/Rules';
 import { GameState } from './utils/Types';
 import './index.css';
