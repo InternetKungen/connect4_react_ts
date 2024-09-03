@@ -5,6 +5,7 @@ import Player from './classes/Player';
 import BoardComponent from './component/BoardComponent';
 import GameOverComponent from './component/GameOverComponent';
 import './index.css';
+import ComputerMenu from './component/ComputerMenu';
 
 function App() {
   //Set up the starting game board with useState
@@ -28,7 +29,7 @@ function App() {
     newBoard.dropDisc(column);
     setBoard(newBoard);
   };
-// Handle function resetting the game 
+// Handle function resetting the game
   const handleReset = () => {
     const newBoard = new Board();
     newBoard.stateUpdater = () => setBoard(newBoard);
@@ -44,7 +45,7 @@ function App() {
     }
   };
 
-  
+
   // if player names are not set, render the form to do so.
   if (!playerX || !playerO) {
     return (
@@ -72,6 +73,7 @@ function App() {
           <br />
           <button type="submit">Start Game</button>
         </form>
+        <ComputerMenu />
       </div>
     );
   }
