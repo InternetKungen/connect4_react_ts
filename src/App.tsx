@@ -7,6 +7,8 @@ import StartPage from './Pages/Startpage';
 import Rules from './components/GameRules/Rules';
 import { GameState } from './utils/Types';
 import './index.css';
+import ComputerMenu from './components/ComputerMenu/ComputerMenu';
+
 
 function App() {
   // State to manage the current view
@@ -14,6 +16,7 @@ function App() {
   const [board, setBoard] = useState(new Board());
   const [playerX, setPlayerX] = useState<Player | null>(null);
   const [playerO, setPlayerO] = useState<Player | null>(null);
+  const [difficulty, setDifficulty] = useState<'easy' | 'hard' | null>(null)
 
   // Handler to start the game (Player vs Player)
   const handleStartGame = () => {
@@ -23,8 +26,14 @@ function App() {
   // Handler to start the game against AI
   const handleStartAI = () => {
     // Logic for AI game initialization can go here
-    setGameState('game-board');
+    setGameState('difficulty-selection');
   };
+
+  const handleSelectedDifficulty = (selectedDifficulty: 'easy' | 'hard') => {
+    setDifficulty(selectedDifficulty);
+    setPlayerO(new Player('Computer', 'O'));
+    setGameState('game-board')
+  }
 
   // Handler to show the game rules
   const handleShowRules = () => {
@@ -43,9 +52,30 @@ function App() {
     newBoard.winner = board.winner;
     newBoard.stateUpdater = () => setBoard(newBoard);
 
+    //Player makes a move
     newBoard.dropDisc(column);
     setBoard(newBoard);
+    console.log("Player move made");
+
+    //Computer makes a move
+    if (newBoard.currentPlayerColor === playerO.color) {
+    setTimeout(() => {
+      const computerMove = getComputerMove(newBoard);
+      newBoard.dropDisc(computerMove);
+      setBoard(newBoard);
+      console.log("Computer move made");
+      }, 1700);
+    }
   };
+
+  const getComputerMove = (board: Board): number => {
+    if (difficulty === 'easy') {
+      const availableColumns = board.getAvailableColumns();
+      return availableColumns[Math.floor(Math.random() * availableColumns.length)];
+    }
+    return 0; // Placeholder for hard computer logic
+  };
+
 // Handle function resetting the game
 
   // Handler to reset the game
@@ -91,6 +121,10 @@ function App() {
           setGameState={setGameState}
         />
       );
+    case 'difficulty-selection':
+      return (
+        <ComputerMenu onSelectDifficulty={handleSelectedDifficulty}/>
+      )
     case 'game-board':
       if (!playerX || !playerO) {
         return (

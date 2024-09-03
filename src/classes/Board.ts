@@ -1,13 +1,13 @@
 // src/classes/Board.ts
-import WinCheck from './Wincheck'; 
+import WinCheck from './Wincheck';
 
 export default class Board {
   matrix: Array<Array<string>> = Array.from({ length: 6 }, () => Array(7).fill(' '));
   currentPlayerColor: string = 'X';
   gameOver: boolean = false;
   isADraw: boolean = false;
-  winner: string | null = null; 
-  stateUpdater?: () => void; 
+  winner: string | null = null;
+  stateUpdater?: () => void;
 
   constructor() {
     this.reset();
@@ -16,7 +16,7 @@ export default class Board {
   reset(realReset: boolean = true) {
     this.matrix = Array.from({ length: 6 }, () => Array(7).fill(' '));
     this.currentPlayerColor = 'X';
-    this.winner = null; 
+    this.winner = null;
     this.isADraw = false;
     this.gameOver = false;
     if (realReset && this.stateUpdater) {
@@ -36,7 +36,7 @@ export default class Board {
           this.currentPlayerColor = this.currentPlayerColor === 'X' ? 'O' : 'X';
         }
         if (this.stateUpdater) {
-          this.stateUpdater(); 
+          this.stateUpdater();
         }
         return true;
       }
@@ -66,6 +66,12 @@ export default class Board {
 
   winCheck(): string | false {
     return this.winner || false;
+  }
+
+   // Method to get available columns for making a move
+  getAvailableColumns(): number[] {
+    return this.matrix[0].map((_, colIndex) => colIndex)
+      .filter(colIndex => this.matrix[0][colIndex] === ' ');
   }
 }
 
