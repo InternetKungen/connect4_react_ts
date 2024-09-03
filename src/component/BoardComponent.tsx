@@ -4,7 +4,7 @@
 import React from 'react';
 import Column from './Column';
 import Board from '../classes/Board';
-
+// Definse the type for the props that the BoardComponent expects to receive
 interface BoardProps {
   board: Board;
   onColumnClick: (column: number) => void;
@@ -12,13 +12,13 @@ interface BoardProps {
 
 const BoardComponent: React.FC<BoardProps> = ({ board, onColumnClick }) => {
   return (
-    <div className="board">
+    <div className='board'>
       {board.matrix[0].map((_, columnIndex) => (
         <Column
           key={columnIndex}
           columnIndex={columnIndex}
           onClick={() => onColumnClick(columnIndex)}
-          column={board.matrix.map(row => row[columnIndex]).reverse()}  // Reverse each column's rows for proper display
+          column={board.matrix.map((row) => row[columnIndex]).reverse()} // Reverse each column's rows for proper display
         />
       ))}
     </div>
@@ -26,5 +26,3 @@ const BoardComponent: React.FC<BoardProps> = ({ board, onColumnClick }) => {
 };
 
 export default BoardComponent;
-
-
