@@ -5,7 +5,9 @@ import BoardComponent from './components/BoardComponent/BoardComponent';
 import GameOverComponent from './components/GameOverComponent/GameOverComponent';
 import StartPage from './Pages/Startpage';
 import Rules from './components/GameRules/Rules';
+import PlayerNames from './components/PlayerNames/PlayerNames';
 import { GameState } from './utils/Types';
+
 import './index.css';
 
 function App() {
@@ -64,18 +66,10 @@ function App() {
     }
   };
 
-  // Handle player setup form submission
-  const handlePlayerSetupSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const playerXName = (form.elements.namedItem('playerX') as HTMLInputElement).value;
-    const playerOName = (form.elements.namedItem('playerO') as HTMLInputElement).value;
-    if (playerXName) handleSetPlayer(playerXName, 'X');
-    if (playerOName) handleSetPlayer(playerOName, 'O');
-  };
+
 
   // Conditional rendering based on the current game state
-  switch (gameState) {
+   switch (gameState) {
     case 'main-menu':
       return (
         <StartPage 
@@ -93,22 +87,7 @@ function App() {
     case 'game-board':
       if (!playerX || !playerO) {
         return (
-          <div className="app">
-            <h1>Welcome to Connect 4!</h1>
-            <form onSubmit={handlePlayerSetupSubmit}>
-              <label>
-                Player X Name:
-                <input name="playerX" placeholder="Enter player name" />
-              </label>
-              <br />
-              <label>
-                Player O Name:
-                <input name="playerO" placeholder="Enter player name" />
-              </label>
-              <br />
-              <button type="submit">Start Game</button>
-            </form>
-          </div>
+          <PlayerNames onSetPlayer={handleSetPlayer} />
         );
       }
       return (

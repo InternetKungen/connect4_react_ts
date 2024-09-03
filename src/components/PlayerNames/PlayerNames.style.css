@@ -1,0 +1,50 @@
+/* src/components/PlayerNames/PlayerNames.style.css */
+
+
+
+
+
+.form {
+  font-size: 1.125rem;
+  /* Equivalent to text-lg */
+  margin-bottom: 2rem;
+  /* Equivalent to mb-8 */
+}
+
+.label {
+  display: block;
+  margin-bottom: 1rem;
+  /* Equivalent to mb-4 */
+}
+
+.input {
+  margin-top: 0.5rem;
+  /* Equivalent to mt-2 */
+  padding: 0.5rem;
+  color: #3b82f6;
+  /* Text color similar to text-blue-500 */
+  border-radius: 0.50rem;
+  /* Equivalent to rounded-lg */
+  border: 1px solid #3b82f6;
+  /* Border color similar to text-blue-500 */
+}
+
+.button {
+  background-color: white;
+  color: #3b82f6;
+  /* Text color similar to text-blue-500 */
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  /* Equivalent to py-2 px-4 */
+  border-radius: 0.5rem;
+  /* Equivalent to rounded-lg */
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  /* Equivalent to shadow-lg */
+  transition: box-shadow 300ms;
+  /* Equivalent to transition duration-300 */
+}
+
+.button:hover {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  /* Equivalent to hover:shadow-xl */
+}
