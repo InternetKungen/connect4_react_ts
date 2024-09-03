@@ -41,10 +41,15 @@ function App() {
     newBoard.gameOver = board.gameOver;
     newBoard.isADraw = board.isADraw;
     newBoard.winner = board.winner;
-    newBoard.stateUpdater = () => setBoard(newBoard);
+    newBoard.stateUpdater = () => {
+      setBoard(newBoard);
+      if (newBoard.gameOver) {
+        // Optionally handle game-over logic if needed
+      }
+    };
 
     newBoard.dropDisc(column);
-    setBoard(newBoard);
+    setBoard(newBoard); // Update the board state
   };
 
   // Handler to reset the game
@@ -53,6 +58,7 @@ function App() {
     newBoard.stateUpdater = () => setBoard(newBoard);
     newBoard.reset();
     setBoard(newBoard);
+    setGameState('game-board'); // Optionally reset the game state
   };
 
   // Function to set players' names and colors
@@ -86,9 +92,7 @@ function App() {
       );
     case 'rules':
       return (
-        <Rules
-          setGameState={setGameState}
-        />
+        <Rules setGameState={setGameState} />
       );
     case 'game-board':
       if (!playerX || !playerO) {
@@ -115,7 +119,10 @@ function App() {
         <div className="app">
           <BoardComponent board={board} onColumnClick={handleColumnClick} />
           {board.gameOver && (
-            <GameOverComponent winner={board.winner} onReset={handleReset} />
+            <GameOverComponent 
+              winner={board.winner} 
+              onReset={handleReset} 
+            />
           )}
         </div>
       );
@@ -125,6 +132,7 @@ function App() {
 }
 
 export default App;
+
 
 
 
