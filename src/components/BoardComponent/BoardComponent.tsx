@@ -17,8 +17,8 @@ const BoardComponent: React.FC<BoardProps> = ({ board, onColumnClick }) => {
         <Column
           key={columnIndex}
           columnIndex={columnIndex}
-          onClick={() => onColumnClick(columnIndex)}
-          column={board.matrix.map(row => row[columnIndex]).reverse()}  // Reverse each column's rows for proper display
+          onClick={onColumnClick}
+          column={board.matrix.map(row => row[columnIndex]).reverse()}  
         />
       ))}
     </div>

@@ -1,0 +1,23 @@
+/* src/components/Cell/Cell.css */
+/* Cell styles for the game board */
+.cell {
+  width: 100px;
+  height: 100px;
+  background-color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #ddd;
+  cursor: pointer;
+
+}
+
+/* Styles for the X and O cells */
+.cell.X {
+  background-color: red;
+}
+
+.cell.O {
+  background-color: rgb(0, 89, 255);
+}

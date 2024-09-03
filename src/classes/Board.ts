@@ -1,8 +1,9 @@
 // src/classes/Board.ts
 import WinCheck from './Wincheck'; 
+import { CellValue } from '../utils/Types';  // Adjust the import path as necessary
 
 export default class Board {
-  matrix: Array<Array<string>> = Array.from({ length: 6 }, () => Array(7).fill(' '));
+  matrix: Array<Array<CellValue>> = Array.from({ length: 6 }, () => Array(7).fill(' '));
   currentPlayerColor: string = 'X';
   gameOver: boolean = false;
   isADraw: boolean = false;
