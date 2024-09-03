@@ -1,7 +1,7 @@
 // src/components/Column.tsx
 //Represents a single column in the board.
 import React from 'react';
-import Cell from './Cell';
+import Cell from '../Cell/Cell';
 
 interface ColumnProps {
   columnIndex: number;
