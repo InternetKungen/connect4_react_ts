@@ -295,6 +295,7 @@ const TunnelEffect: React.FC = () => {
         this.camera.position.z = 0.35;
       }
 
+      //--------------------------------------------------------------------------
       // createMesh(texture: THREE.Texture) {
       //   const points: THREE.Vector3[] = [];
 
@@ -340,24 +341,75 @@ const TunnelEffect: React.FC = () => {
       //   this.scene.add(this.tubeMesh);
       // }
 
-        createMesh(texture: THREE.Texture) {
+      // //------------------------------------- funkar men fortfarande errors
+      //   createMesh(texture: THREE.Texture) {
+      //   const points: THREE.Vector3[] = [];
+
+      //   if (this.tubeMesh) {
+      //     this.scene.remove(this.tubeMesh);
+      //     this.tubeMesh.geometry.dispose();
+      //     if (Array.isArray(this.tubeMesh.material)) {
+      //       this.tubeMesh.material.forEach((material) => material.dispose());
+      //     } else {
+      //       this.tubeMesh.material.dispose();
+      //     }
+
+      //     // Nollställ WebGL-programmet för att säkerställa att inga gamla referenser kvarstår
+      //     this.renderer.getContext().useProgram(null);
+      //   }
+
+      //   for (let i = 0; i < 5; i += 1) {
+      //     points.push(new THREE.Vector3(0, 0, 3 * (i / 4)));
+      //   }
+      //   points[4].y = -0.06;
+
+      //   this.curve = new THREE.CatmullRomCurve3(points);
+
+      //   const splinePoints = this.curve.getPoints(70);
+      //   const splineGeometry = new THREE.BufferGeometry().setFromPoints(splinePoints);
+      //   this.splineMesh = new THREE.Line(splineGeometry, new THREE.LineBasicMaterial());
+
+      //   this.tubeMaterial = new THREE.MeshBasicMaterial({
+      //     side: THREE.BackSide,
+      //     map: texture,
+      //   });
+      //   this.tubeMaterial.map!.wrapS = THREE.MirroredRepeatWrapping;
+      //   this.tubeMaterial.map!.wrapT = THREE.MirroredRepeatWrapping;
+      //   this.tubeMaterial.map!.repeat.set(10, 4);
+
+      //   this.tubeGeometry = new THREE.TubeGeometry(this.curve, 70, 0.02, 30, false);
+      //   this.tubeGeometry_o = this.tubeGeometry.clone();
+      //   this.tubeMesh = new THREE.Mesh(this.tubeGeometry, this.tubeMaterial);
+
+      //   this.scene.add(this.tubeMesh);
+      // }
+      //--------------------------------------------
+
+      createMesh(texture: THREE.Texture) {
         const points: THREE.Vector3[] = [];
 
+        // Rensa tidigare mesh och material
         if (this.tubeMesh) {
-          this.scene.remove(this.tubeMesh);
-          this.tubeMesh.geometry.dispose();
-          if (Array.isArray(this.tubeMesh.material)) {
-            this.tubeMesh.material.forEach((material) => material.dispose());
-          } else {
-            this.tubeMesh.material.dispose();
-          }
+            this.scene.remove(this.tubeMesh);
+            this.tubeMesh.geometry.dispose();
+            if (Array.isArray(this.tubeMesh.material)) {
+                this.tubeMesh.material.forEach((material) => material.dispose());
+            } else {
+                this.tubeMesh.material.dispose();
+            }
 
-          // Nollställ WebGL-programmet för att säkerställa att inga gamla referenser kvarstår
-          this.renderer.getContext().useProgram(null);
+          // this.renderer.getContext().useProgram(null);
+          const gl = this.renderer.getContext();
+          const currentProgram = gl.getParameter(gl.CURRENT_PROGRAM);
+
+          // Säkerställ att rätt program är aktivt
+          if (currentProgram !== this.renderer.getContext().getParameter(gl.CURRENT_PROGRAM)) {
+              this.renderer.getContext().useProgram(currentProgram);
+          }
         }
 
-        for (let i = 0; i < 5; i += 1) {
-          points.push(new THREE.Vector3(0, 0, 3 * (i / 4)));
+        for (let i = 0; i < 5; i++) {
+            points.push(new THREE.Vector3(0, 0, 3 * (i / 4)));
         }
         points[4].y = -0.06;
 
@@ -368,18 +420,23 @@ const TunnelEffect: React.FC = () => {
         this.splineMesh = new THREE.Line(splineGeometry, new THREE.LineBasicMaterial());
 
         this.tubeMaterial = new THREE.MeshBasicMaterial({
-          side: THREE.BackSide,
-          map: texture,
+            side: THREE.BackSide,
+            map: texture,
         });
         this.tubeMaterial.map!.wrapS = THREE.MirroredRepeatWrapping;
         this.tubeMaterial.map!.wrapT = THREE.MirroredRepeatWrapping;
         this.tubeMaterial.map!.repeat.set(10, 4);
+        this.tubeMaterial.needsUpdate = true; // Försök med att tvinga en uppdatering
 
         this.tubeGeometry = new THREE.TubeGeometry(this.curve, 70, 0.02, 30, false);
         this.tubeGeometry_o = this.tubeGeometry.clone();
         this.tubeMesh = new THREE.Mesh(this.tubeGeometry, this.tubeMaterial);
 
         this.scene.add(this.tubeMesh);
+
+        // Explicit bind shader program
+        this.renderer.getContext().useProgram(this.renderer.getContext().getParameter(this.renderer.getContext().CURRENT_PROGRAM));
+        this.renderer.getContext().useProgram(null);
       }
       handleEvents() {
         window.addEventListener("resize", this.onResize.bind(this), false);
@@ -419,6 +476,7 @@ const TunnelEffect: React.FC = () => {
           repeat: -1,
         });
 
+        //Removed shaking
         // gsap.to(this.cameraShake, {
         //   duration: 2,
         //   x: 0.01,
@@ -495,25 +553,38 @@ const TunnelEffect: React.FC = () => {
         this.splineMesh.geometry.setFromPoints(newPoints);
       }
 
+      // render() {
+      //   this.updateMaterialOffset();
+      //   this.updateCameraPosition();
+      //   this.updateCurve();
+      //   this.renderer.render(this.scene, this.camera);
+      //   window.requestAnimationFrame(this.render.bind(this));
+      // }
       render() {
+        const gl = this.renderer.getContext();
+        const currentProgram = gl.getParameter(gl.CURRENT_PROGRAM);
+
+        // Ensure the correct program is used before rendering
+        gl.useProgram(currentProgram);
+
         this.updateMaterialOffset();
         this.updateCameraPosition();
         this.updateCurve();
         this.renderer.render(this.scene, this.camera);
         window.requestAnimationFrame(this.render.bind(this));
-      }
+    }
     }
 
     const loader = new THREE.TextureLoader();
-    loader.crossOrigin = "Anonymous";
     loader.load(
-      "img/lines.jpg",
+      'img/lines.jpg',
       (texture) => {
-        document.body.classList.remove("loading");
+        texture.flipY = false; // Se till att FLIP_Y är avstängd
+        texture.premultiplyAlpha = false; // Se till att PREMULTIPLY_ALPHA är avstängd
+        document.body.classList.remove('loading');
         new Tunnel(texture);
       }
     );
-
   }, []);
 
   return <canvas ref={canvasRef} />;
