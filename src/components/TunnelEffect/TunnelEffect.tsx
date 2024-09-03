@@ -126,7 +126,7 @@ const TunnelEffect: React.FC = () => {
         // });
 
         gsap.to(this.textureParams, {
-          duration: 12,
+          duration: 52,
           offsetX: 8,
           ease: Power2.easeInOut,
           repeat: -1,
