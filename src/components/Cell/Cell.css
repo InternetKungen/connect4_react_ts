@@ -3,7 +3,6 @@
   height: 100px; */
   width: calc(70vh / 8 / sqrt(2));
   height: calc(70vh / 8 / sqrt(2));
-  border: 1px solid #000000;
   background: linear-gradient(45deg, #adb4b770 0%, #24242c 100%);
   display: flex;
   align-items: center;
@@ -17,6 +16,14 @@
   right: 1vh;
   border: 1px solid #fbfdfe;
   transition: transform 0.2s ease-in-out;
+}
+
+.cell:nth-child(even) {
+  background: linear-gradient(45deg, #adb4b770 0%, #24242c 100%);
+}
+
+.cell:nth-child(odd) {
+  background: linear-gradient(45deg, #adb4b770 0%, #3a424d 100%);
 }
 
 /* Styles for the X and O cells */
