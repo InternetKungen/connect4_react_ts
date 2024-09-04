@@ -4,16 +4,15 @@ import './Cell.css';
 
 interface CellProps {
   value: string;
+  isAnimating?: boolean;
 }
 
-const Cell: React.FC<CellProps> = ({ value }) => {
+const Cell: React.FC<CellProps> = ({ value, isAnimating }) => {
   return (
-    <div className={`cell ${value}`}>
+    <div className={`cell ${value} ${isAnimating ? 'falling' : ''}`}>
       {value}
     </div>
   );
 };
 
 export default Cell;
-
-
