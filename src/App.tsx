@@ -44,20 +44,11 @@ function App() {
     setGameState('rules');
   };
 
-  //For trubble shooting
-  //  console.log('Current gameState:', gameState);
-  // console.log('Player X:', playerX);
-  // console.log('Player O:', playerO);
 
   // Conditional rendering based on the current game state
   switch (gameState) {
     case 'main-menu':
       return (
-        <StartPage
-          onStart={handleStartGame}
-          onStartAI={handleStartAI}
-          onShowRules={handleShowRules}
-        />
         <div className="app">
         <img className='background-menu' src='./img/background-menu.png' alt="background" />
           <div className='empty-board'></div>
