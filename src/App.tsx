@@ -20,7 +20,10 @@ function App() {
 
   // Handler to start the game (Player vs Player)
   const handleStartGame = () => {
+    setPlayerX(new Player("Player X", 'X', false));
+    setPlayerO(new Player("Player O", 'O', false));
     setGameState('game-board');
+    setDifficulty(null);
   };
 
   // Handler to start the game against AI
@@ -31,8 +34,9 @@ function App() {
 
   const handleSelectedDifficulty = (selectedDifficulty: 'easy' | 'hard') => {
     setDifficulty(selectedDifficulty);
-    setPlayerO(new Player('Computer', 'O'));
-    setGameState('game-board')
+     setPlayerX(new Player("Player X", 'X', false));
+    setPlayerO(new Player('Computer', 'O', true));
+    setGameState('game-board');
   }
 
   // Handler to show the game rules
@@ -55,16 +59,25 @@ function App() {
     //Player makes a move
     newBoard.dropDisc(column);
     setBoard(newBoard);
-    console.log("Player move made");
 
     //Computer makes a move
-    if (newBoard.currentPlayerColor === playerO.color) {
-    setTimeout(() => {
-      const computerMove = getComputerMove(newBoard);
-      newBoard.dropDisc(computerMove);
-      setBoard(newBoard);
-      console.log("Computer move made");
-      }, 1700);
+    if (!newBoard.gameOver && newBoard.currentPlayerColor === playerO.color && playerO.isComputer) {
+      setTimeout(() => {
+        const updatedBoard = new Board();
+        updatedBoard.matrix = newBoard.matrix.map(row => [...row]);
+        updatedBoard.currentPlayerColor = newBoard.currentPlayerColor;
+        updatedBoard.gameOver = newBoard.gameOver;
+        updatedBoard.isADraw = newBoard.isADraw;
+        updatedBoard.winner = newBoard.winner;
+        updatedBoard.stateUpdater = () => setBoard(updatedBoard);
+
+        const computerMove = getComputerMove(updatedBoard);
+        const computerMoveSuccessful = updatedBoard.dropDisc(computerMove);
+
+        if (computerMoveSuccessful) {
+          setBoard(updatedBoard);
+        }
+      }, 700);
     }
   };
 

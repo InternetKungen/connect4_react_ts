@@ -70,8 +70,13 @@ export default class Board {
 
    // Method to get available columns for making a move
   getAvailableColumns(): number[] {
-    return this.matrix[0].map((_, colIndex) => colIndex)
-      .filter(colIndex => this.matrix[0][colIndex] === ' ');
+    const availableColumns: number[] = [];
+    for (let col = 0; col < this.matrix[0].length; col++) {
+      if (this.matrix[0][col] === ' ') {  // Check if the top cell of the column is empty
+        availableColumns.push(col);
+      }
+    }
+    return availableColumns;
   }
 }
 
