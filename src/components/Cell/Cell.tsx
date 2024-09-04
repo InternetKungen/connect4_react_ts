@@ -1,5 +1,6 @@
 // src/components/Cell.tsx
 import React from 'react';
+import './Cell.css';
 
 interface CellProps {
   value: string;

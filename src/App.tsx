@@ -3,7 +3,7 @@ import Board from './classes/Board';
 import Player from './classes/Player';
 import BoardComponent from './components/BoardComponent/BoardComponent';
 import GameOverComponent from './components/GameOverComponent/GameOverComponent';
-import StartPage from './Pages/Startpage';
+import StartPage from './components/StartPage/StartPage';
 import Rules from './components/GameRules/Rules';
 import { GameState } from './utils/Types';
 import './index.css';
@@ -78,11 +78,16 @@ function App() {
   switch (gameState) {
     case 'main-menu':
       return (
+        <div className="app">
+        <img className='background-menu' src='./img/background-menu.png' alt="background" />
+          <div className='empty-board'></div>
+          <img className='logo' src='./img/connect-4-logo.png' alt="logo" />
         <StartPage 
           onStart={handleStartGame} 
           onStartAI={handleStartAI} 
           onShowRules={handleShowRules} 
-        />
+          />
+        </div>
       );
     case 'rules':
       return (
@@ -94,6 +99,9 @@ function App() {
       if (!playerX || !playerO) {
         return (
           <div className="app">
+            <img className='background-menu' src='./img/background-menu.png' alt="background" />
+            <div className='empty-board'></div>
+            <img className='logo' src='./img/connect-4-logo.png' alt="logo" />
             <h1>Welcome to Connect 4!</h1>
             <form onSubmit={handlePlayerSetupSubmit}>
               <label>
@@ -113,6 +121,9 @@ function App() {
       }
       return (
         <div className="app">
+          <img className='background-menu' src="./img/background-menu.png" alt="background" />
+          <div className='empty-board'></div>
+          <img className='logo' src='./img/connect-4-logo.png' alt="logo" />
           <BoardComponent board={board} onColumnClick={handleColumnClick} />
           {board.gameOver && (
             <GameOverComponent winner={board.winner} onReset={handleReset} />

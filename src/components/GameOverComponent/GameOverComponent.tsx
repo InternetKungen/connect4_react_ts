@@ -1,6 +1,7 @@
 // src/components/GameOverComponent.tsx
 //Displays the game-over message and provides options to reset the game
 import React from 'react';
+import './GameOverComponent.css';
 
 interface GameOverComponentProps {
   winner: string | null; 

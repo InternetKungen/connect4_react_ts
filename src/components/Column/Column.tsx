@@ -2,6 +2,7 @@
 //Represents a single column in the board.
 import React from 'react';
 import Cell from '../Cell/Cell';
+import './Column.css';
 
 interface ColumnProps {
   columnIndex: number;
