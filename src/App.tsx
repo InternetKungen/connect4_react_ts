@@ -6,6 +6,7 @@ import GameOverComponent from './components/GameOverComponent/GameOverComponent'
 import StartPage from './components/StartPage/StartPage';
 import Rules from './components/GameRules/Rules';
 import { GameState } from './utils/Types';
+import SetPlayerName from './components/SetPlayerName/SetPlayerName';
 import './index.css';
 
 function App() {
@@ -65,11 +66,7 @@ function App() {
   };
 
   // Handle player setup form submission
-  const handlePlayerSetupSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const playerXName = (form.elements.namedItem('playerX') as HTMLInputElement).value;
-    const playerOName = (form.elements.namedItem('playerO') as HTMLInputElement).value;
+ const handlePlayerSetupSubmit = (playerXName: string, playerOName: string) => {
     if (playerXName) handleSetPlayer(playerXName, 'X');
     if (playerOName) handleSetPlayer(playerOName, 'O');
   };
@@ -79,21 +76,19 @@ function App() {
     case 'main-menu':
       return (
         <div className="app">
-        <img className='background-menu' src='./img/background-menu.png' alt="background" />
+          <img className='background-menu' src='./img/background-menu.png' alt="background" />
           <div className='empty-board'></div>
           <img className='logo' src='./img/connect-4-logo.png' alt="logo" />
-        <StartPage 
-          onStart={handleStartGame} 
-          onStartAI={handleStartAI} 
-          onShowRules={handleShowRules} 
+          <StartPage 
+            onStart={handleStartGame} 
+            onStartAI={handleStartAI} 
+            onShowRules={handleShowRules} 
           />
         </div>
       );
     case 'rules':
       return (
-        <Rules
-          setGameState={setGameState}
-        />
+        <Rules setGameState={setGameState} />
       );
     case 'game-board':
       if (!playerX || !playerO) {
@@ -103,19 +98,7 @@ function App() {
             <div className='empty-board'></div>
             <img className='logo' src='./img/connect-4-logo.png' alt="logo" />
             <h1>Welcome to Connect 4!</h1>
-            <form onSubmit={handlePlayerSetupSubmit}>
-              <label>
-                Player X Name:
-                <input name="playerX" placeholder="Enter player name" />
-              </label>
-              <br />
-              <label>
-                Player O Name:
-                <input name="playerO" placeholder="Enter player name" />
-              </label>
-              <br />
-              <button type="submit">Start Game</button>
-            </form>
+            <SetPlayerName onSubmit={handlePlayerSetupSubmit} />
           </div>
         );
       }
