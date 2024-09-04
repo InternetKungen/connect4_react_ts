@@ -35,7 +35,7 @@ function App() {
 
   const handleSelectedDifficulty = (selectedDifficulty: 'easy' | 'hard') => {
     setDifficulty(selectedDifficulty);
-     setPlayerX(new Player("Player X", 'X', false));
+    setPlayerX(new Player("Player X", 'X', false));
     setPlayerO(new Player('Computer', 'O', true));
     setGameState('game-board');
   }
@@ -53,7 +53,7 @@ function App() {
         <div className="app">
           <img className='background-menu' src='./img/background-menu.png' alt="background" />
           <div className='empty-board'></div>
-          <img className='logo' src='./img/connect-4-logo.png' alt="logo" />
+          <img className='logo-main' src='./img/connect-4-logo.png' alt="logo" />
 
           <StartPage
             onStart={handleStartGame}
@@ -77,10 +77,10 @@ function App() {
             <img className='background-menu' src='./img/background-menu.png' alt="background" />
             <div className='empty-board'></div>
             <img className='logo' src='./img/connect-4-logo.png' alt="logo" />
-            <h1>Welcome to Connect 4!</h1>
+            <h1>Please enter player names</h1>
 
             <SetPlayerName onSubmit={handlePlayerSetupSubmit} />
-             <form onSubmit={(e) => handlePlayerSetupSubmit(e, setPlayerX, setPlayerO)}>
+              <form onSubmit={(e) => handlePlayerSetupSubmit(e, setPlayerX, setPlayerO)}>
               <label>
                 Player X Name:
                 <input name="playerX" placeholder="Enter player name" />
@@ -98,7 +98,7 @@ function App() {
       }
       return (
         <div className="app">
-           <img className='background-menu' src="./img/background-menu.png" alt="background" />
+          <img className='background-menu' src="./img/background-menu.png" alt="background" />
           <div className='empty-board'></div>
           <img className='logo' src='./img/connect-4-logo.png' alt="logo" />
           <BoardComponent
@@ -108,7 +108,7 @@ function App() {
   }/>
           {board.gameOver && (
             <GameOverComponent
-             winner={board.winner} onReset={() => handleReset(setBoard)}/>
+              winner={board.winner} onReset={() => handleReset(setBoard)}/>
           )}
         </div>
       );
