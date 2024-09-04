@@ -270,7 +270,7 @@ const TunnelEffect: React.FC = () => {
       private splineMesh?: THREE.Line;
       private curve?: THREE.CatmullRomCurve3;
       private textureParams: { offsetX: number; offsetY: number; repeatX: number; repeatY: number } | undefined;
-      private cameraShake: {x: number, y: number} = {x: 0, y: 0};
+      // private cameraShake: {x: number, y: number} = {x: 0, y: 0};
 
       constructor(texture: THREE.Texture) {
         this.renderer = new THREE.WebGLRenderer({ antialias: true, canvas: canvasRef.current! });
@@ -464,13 +464,13 @@ const TunnelEffect: React.FC = () => {
           repeatX: 10,
           repeatY: 4,
         };
-        this.cameraShake = {
-          x: 0,
-          y: 0,
-        };
+        // this.cameraShake = {
+        //   x: 0,
+        //   y: 0,
+        // };
 
         gsap.to(this.textureParams, {
-          duration: 72,
+          duration: 172,
           offsetX: 8,
           ease: Power2.easeInOut,
           repeat: -1,
@@ -522,7 +522,7 @@ const TunnelEffect: React.FC = () => {
         const maxX = 0.005;
         const maxY = 0.005;
 
-        this.camera.position.x = THREE.MathUtils.clamp(this.mouse!.ratio.x * 0.044 - 0.025 + this.cameraShake.x, -maxX, maxX);
+        this.camera.position.x = THREE.MathUtils.clamp(this.mouse!.ratio.x * 0.044 - 0.025, -maxX, maxX);
         this.camera.position.y = THREE.MathUtils.clamp(this.mouse!.ratio.y * 0.044 - 0.025, -maxY, maxY);
       }
 
@@ -579,8 +579,8 @@ const TunnelEffect: React.FC = () => {
     loader.load(
       'img/lines.jpg',
       (texture) => {
-        texture.flipY = false; // Se till att FLIP_Y är avstängd
-        texture.premultiplyAlpha = false; // Se till att PREMULTIPLY_ALPHA är avstängd
+        // texture.flipY = false; // Se till att FLIP_Y är avstängd
+        // texture.premultiplyAlpha = false; // Se till att PREMULTIPLY_ALPHA är avstängd
         document.body.classList.remove('loading');
         new Tunnel(texture);
       }
