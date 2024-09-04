@@ -1,5 +1,9 @@
 .column {
   display: flex;
   flex-direction: column-reverse;
-  margin: 1px;
+  margin: 1px;  
+}
+
+.column:hover{
+  cursor: pointer;
 }
