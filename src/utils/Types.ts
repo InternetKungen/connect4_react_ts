@@ -1,5 +1,5 @@
 // define types
 
-export type GameState = 'main-menu' | 'rules' | 'game-board';
+export type GameState = 'main-menu' | 'rules' | 'game-board' |'difficulty-selection'
 
 

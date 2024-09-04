@@ -8,7 +8,8 @@ import Rules from './components/GameRules/Rules';
 import { GameState } from './utils/Types';
 import './index.css';
 import ComputerMenu from './components/ComputerMenu/ComputerMenu';
-
+import { handleColumnClick, handleReset } from './utils/Gamelogic';
+import {  handlePlayerSetupSubmit } from './utils/PlayerManagement';
 
 function App() {
   // State to manage the current view
@@ -28,7 +29,6 @@ function App() {
 
   // Handler to start the game against AI
   const handleStartAI = () => {
-    // Logic for AI game initialization can go here
     setGameState('difficulty-selection');
   };
 
@@ -44,79 +44,9 @@ function App() {
     setGameState('rules');
   };
 
-  // Handler for column clicks on the game board
-  const handleColumnClick = (column: number) => {
-    if (board.gameOver || !playerX || !playerO) return;
-
-    const newBoard = new Board();
-    newBoard.matrix = board.matrix.map(row => [...row]);
-    newBoard.currentPlayerColor = board.currentPlayerColor;
-    newBoard.gameOver = board.gameOver;
-    newBoard.isADraw = board.isADraw;
-    newBoard.winner = board.winner;
-    newBoard.stateUpdater = () => setBoard(newBoard);
-
-    //Player makes a move
-    newBoard.dropDisc(column);
-    setBoard(newBoard);
-
-    //Computer makes a move
-    if (!newBoard.gameOver && newBoard.currentPlayerColor === playerO.color && playerO.isComputer) {
-      setTimeout(() => {
-        const updatedBoard = new Board();
-        updatedBoard.matrix = newBoard.matrix.map(row => [...row]);
-        updatedBoard.currentPlayerColor = newBoard.currentPlayerColor;
-        updatedBoard.gameOver = newBoard.gameOver;
-        updatedBoard.isADraw = newBoard.isADraw;
-        updatedBoard.winner = newBoard.winner;
-        updatedBoard.stateUpdater = () => setBoard(updatedBoard);
-
-        const computerMove = getComputerMove(updatedBoard);
-        const computerMoveSuccessful = updatedBoard.dropDisc(computerMove);
-
-        if (computerMoveSuccessful) {
-          setBoard(updatedBoard);
-        }
-      }, 700);
-    }
-  };
-
-  const getComputerMove = (board: Board): number => {
-    if (difficulty === 'easy') {
-      const availableColumns = board.getAvailableColumns();
-      return availableColumns[Math.floor(Math.random() * availableColumns.length)];
-    }
-    return 0; // Placeholder for hard computer logic
-  };
-
-// Handle function resetting the game
-
-  // Handler to reset the game
-  const handleReset = () => {
-    const newBoard = new Board();
-    newBoard.stateUpdater = () => setBoard(newBoard);
-    newBoard.reset();
-    setBoard(newBoard);
-  };
-
-  // Function to set players' names and colors
-  const handleSetPlayer = (name: string, color: 'X' | 'O') => {
-    if (color === 'X') {
-      setPlayerX(new Player(name, color));
-    } else {
-      setPlayerO(new Player(name, color));
-    }
-  };
-
-  // Handle player setup form submission
-  const handlePlayerSetupSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const form = e.target as HTMLFormElement;
-    const playerXName = (form.elements.namedItem('playerX') as HTMLInputElement).value;
-    const playerOName = (form.elements.namedItem('playerO') as HTMLInputElement).value;
-    if (playerXName) handleSetPlayer(playerXName, 'X');
-    if (playerOName) handleSetPlayer(playerOName, 'O');
-  };
+   console.log('Current gameState:', gameState);
+  console.log('Player X:', playerX);
+  console.log('Player O:', playerO);
 
   // Conditional rendering based on the current game state
   switch (gameState) {
@@ -143,7 +73,7 @@ function App() {
         return (
           <div className="app">
             <h1>Welcome to Connect 4!</h1>
-            <form onSubmit={handlePlayerSetupSubmit}>
+             <form onSubmit={(e) => handlePlayerSetupSubmit(e, setPlayerX, setPlayerO)}>
               <label>
                 Player X Name:
                 <input name="playerX" placeholder="Enter player name" />
@@ -161,9 +91,14 @@ function App() {
       }
       return (
         <div className="app">
-          <BoardComponent board={board} onColumnClick={handleColumnClick} />
+           <BoardComponent
+            board={board}
+            onColumnClick={(column: number) =>
+            handleColumnClick(column, board, playerX, playerO, setBoard, difficulty)
+  }/>
           {board.gameOver && (
-            <GameOverComponent winner={board.winner} onReset={handleReset} />
+            <GameOverComponent
+             winner={board.winner} onReset={() => handleReset(setBoard)}/>
           )}
         </div>
       );
