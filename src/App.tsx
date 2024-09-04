@@ -46,47 +46,6 @@ function App() {
   };
 
 
-  // Handler for column clicks on the game board
-  const handleColumnClick = (column: number) => {
-    if (board.gameOver || !playerX || !playerO) return;
-
-    const newBoard = new Board();
-    newBoard.matrix = board.matrix.map(row => [...row]);
-    newBoard.currentPlayerColor = board.currentPlayerColor;
-    newBoard.gameOver = board.gameOver;
-    newBoard.isADraw = board.isADraw;
-    newBoard.winner = board.winner;
-    newBoard.stateUpdater = () => setBoard(newBoard);
-
-    newBoard.dropDisc(column);
-    setBoard(newBoard);
-  };
-
-  // Handler to reset the game
-  const handleReset = () => {
-    const newBoard = new Board();
-    newBoard.stateUpdater = () => setBoard(newBoard);
-    newBoard.reset();
-    setBoard(newBoard);
-  };
-
-  // Function to set players' names and colors
-  const handleSetPlayer = (name: string, color: 'X' | 'O') => {
-    if (color === 'X') {
-      setPlayerX(new Player(name, color));
-    } else {
-      setPlayerO(new Player(name, color));
-    }
-  };
-
-  // Handle player setup form submission
- const handlePlayerSetupSubmit = (playerXName: string, playerOName: string) => {
-    if (playerXName) handleSetPlayer(playerXName, 'X');
-    if (playerOName) handleSetPlayer(playerOName, 'O');
-  };
-
-
-
   // Conditional rendering based on the current game state
   switch (gameState) {
     case 'main-menu':
@@ -96,10 +55,10 @@ function App() {
           <div className='empty-board'></div>
           <img className='logo' src='./img/connect-4-logo.png' alt="logo" />
 
-          <StartPage 
-            onStart={handleStartGame} 
-            onStartAI={handleStartAI} 
-            onShowRules={handleShowRules} 
+          <StartPage
+            onStart={handleStartGame}
+            onStartAI={handleStartAI}
+            onShowRules={handleShowRules}
           />
         </div>
       );
