@@ -6,7 +6,7 @@
   height: 100%;
   /* background-image: url('/path/to/your/background-image.jpg'); */
   /* Byt ut till den faktiska sökvägen till din bild */
-  background: blue;
+  background: #000;
   background-size: cover;
   background-position: center;
   z-index: -1;

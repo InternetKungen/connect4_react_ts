@@ -1,0 +1,67 @@
+/* Grundläggande reset */
+/* body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+} */
+
+/* code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+} */
+
+/* CSS för app-komponenten */
+/* .app {
+  text-align: center;
+} */
+
+/* Anpassade klasser */
+.start-menu-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  width: 70vh;
+  /* background: linear-gradient(to top, #4d575dd8, #4d575d, #0d0d0d, #0d0d0dd8); */
+  color: white;
+  /* border: 1px solid white; */
+  overflow: visible;
+}
+
+.start-menu-title {
+  height: 30%;
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .start-menu-title {
+    font-size: 4rem;
+  }
+}
+
+.start-menu-button {
+  background-color: transparent;
+  color: white;
+  font-weight: bold;
+  padding: 0.5rem 1rem;
+  border-radius: 0;
+  outline: 1px solid white;
+  transition: box-shadow 300ms;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  background: linear-gradient(to top, #4d575db6, #0d0d0daf);
+  width: 200px;
+}
+
+.start-menu-button:last-child {
+  margin-bottom: 0;
+}
+
+.start-menu-button:hover {
+  outline: 3px solid white;
+}

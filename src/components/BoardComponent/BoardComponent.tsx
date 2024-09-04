@@ -4,6 +4,7 @@
 import React from 'react';
 import Column from '../Column/Column';
 import Board from '../../classes/Board';
+import './BoardComponent.css';
 
 interface BoardProps {
   board: Board;
