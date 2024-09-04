@@ -21,32 +21,11 @@
 
 /* Styles for the X and O cells */
 .cell.X {
-  background: linear-gradient(45deg, #adb4b770 0%, #1f1fb4 100%);
-  transform: scale(1.1);
-  animation: cellColorChangeX 0.5s ease-in-out 1;
-
+  background: linear-gradient(0deg, #adb4b770 0%, #1f1fb4 100%);
+  transform: scale(1.2);
 }
+
 .cell.O {
-  background: linear-gradient(45deg, #adb4b770 0%, #b91818 100%);
-  transform: scale(1.1);
-  animation: cellColorChangeO 0.5s ease-in-out 1;
-}
-
-@keyframes cellColorChangeX {
-  0% {
-    background: transparent;
-  }
-  100% {
-    background:  #1f1fb4;
-  }
-}
-
-@keyframes cellColorChangeO {
-  0% {
-    background: transparent;
-  }
-
-  100% {
-    background: #b91818;
-  }
+  background: linear-gradient(0deg, #adb4b770 0%, #b91818 100%);
+  transform: scale(1.2);
 }
