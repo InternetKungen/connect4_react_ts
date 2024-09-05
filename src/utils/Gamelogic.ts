@@ -1,19 +1,19 @@
 import Board from "../classes/Board"
 import Player from "../classes/Player";
 
-let isPlayerTurn = true;
-
 export const handleColumnClick = (
   column: number,
   board: Board,
   playerX: Player | null,
   playerO: Player | null,
   setBoard: (board: Board) => void,
-  difficulty: "easy" | "hard" | null
+  difficulty: "easy" | "hard" | null,
+  isLocked: boolean,
+  setIsLocked: (locked: boolean) => void
  ) => {
-  if (board.gameOver || !playerX || !playerO || !isPlayerTurn) return;
+  if (board.gameOver || !playerX || !playerO || isLocked) return;
 
-  isPlayerTurn = false;
+  setIsLocked(true);
 
     const newBoard = new Board();
     newBoard.matrix = board.matrix.map(row => [...row]);
@@ -44,10 +44,10 @@ export const handleColumnClick = (
         if (computerMoveSuccessful) {
           setBoard(updatedBoard);
         }
-        isPlayerTurn = true;
+        setIsLocked(false);
       }, 700);
     } else {
-      isPlayerTurn = true;
+      setIsLocked(false);
     }
 };
 

@@ -9,11 +9,12 @@ import './BoardComponent.css';
 interface BoardProps {
   board: Board;
   onColumnClick: (column: number) => void;
+  isLocked: boolean;
 }
 
-const BoardComponent: React.FC<BoardProps> = ({ board, onColumnClick }) => {
+const BoardComponent: React.FC<BoardProps> = ({ board, onColumnClick, isLocked }) => {
   return (
-    <div className="board">
+    <div className={`board ${isLocked ? 'locked' : ''}`}>
       {board.matrix[0].map((_, columnIndex) => (
         <Column
           key={columnIndex}
