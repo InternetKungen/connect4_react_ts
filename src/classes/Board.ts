@@ -28,7 +28,7 @@ export default class Board {
       this.stateUpdater();
     }
   }
-  // Method to drop a disc into a column
+  // Method to drop a disc into a column and update the board if successful
   dropDisc(column: number): boolean {
     if (this.gameOver) return false; // if the game is over, do nothing and return false
 

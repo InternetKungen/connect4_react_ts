@@ -1,5 +1,5 @@
 // src/components/BoardComponent.tsx
-//Renders the visual representation of the game board
+// Renders the visual representation of the game board
 
 import React from 'react';
 import Column from './Column';
