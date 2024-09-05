@@ -75,5 +75,32 @@
 }
 
 .start-menu-button:hover {
-  outline: 3px solid white;
+  /* outline: 3px solid white; */
+  animation: buttonHover 0.8s ease-in-out infinite;
+}
+
+@keyframes buttonHover {
+  0%, 100% {
+    outline: 2px solid white;
+  }
+  50% {
+    outline: 5px double white;
+  }
+}
+
+.start-menu-button:active {
+  color: black;
+  background: linear-gradient(to top, #c2c2c2, #fafafa);
+  animation: buttonActive 0.1s ease-in-out 1;
+  outline: 1px solid rgb(32, 32, 32) !important;
+}
+
+@keyframes buttonActive {
+  0%, 100% {
+    background: linear-gradient(to top, #c2c2c2, #fafafa);
+  }
+  50% {
+    background: linear-gradient(to top, #4d575db6,
+      #0d0d0daf);
+  }
 }
