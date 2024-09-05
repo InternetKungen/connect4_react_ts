@@ -35,7 +35,6 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
             <button onClick={handleContinue}>Continue</button>
             <button onClick={() => { handleCloseMenu(); onRestart(); }}>Restart</button>
             <button onClick={() => { handleCloseMenu(); onQuit(); }}>Quit</button>
-            <button onClick={handleCloseMenu}>Close Menu</button>
           </div>
         </div>
       )}

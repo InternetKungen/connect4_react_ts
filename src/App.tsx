@@ -42,6 +42,8 @@ function App() {
 
   const handleQuit = () => {
     setGameState('main-menu');
+     handleReset(setBoard);
+    
   };
 
   const handleSelectedDifficulty = (selectedDifficulty: 'easy' | 'hard') => {

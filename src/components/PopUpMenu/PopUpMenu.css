@@ -6,8 +6,8 @@
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #4CAF50;
-  color: white;
+  background-color: #dfd8d8;
+  color: rgb(0, 0, 0);
   border: none;
   border-radius: 5px;
 }
@@ -25,7 +25,7 @@
 }
 
 .menu-modal-content {
-  background-color: white;
+  background-color: rgb(255, 255, 255);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
@@ -40,12 +40,12 @@
   padding: 10px 20px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #f0f0f0;
+  background-color: #ffffff;
   border: none;
   border-radius: 5px;
   width: 100%;
 }
 
 .menu-modal-content button:hover {
-  background-color: #ddd;
+  background-color: #ffffff;
 }
