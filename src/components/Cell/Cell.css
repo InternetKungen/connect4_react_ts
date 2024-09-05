@@ -20,17 +20,22 @@
 
 /* När pjäsen "faller" */
 .cell.falling {
-  background-color: yellow;
   animation: fall 0.4s ease-out forwards;
 }
 
 @keyframes fall {
   from {
-    background-color: rgba(255, 255, 0, 0.7);
+    background-color: #fcfefcd0;
+    outline: 2px solid #fcfefc;
+    box-shadow: 0 0 100px #fcfefc;
+    transform: scale(1.3), rotate(-45deg);
   }
 
   to {
     background-color: transparent;
+    outline: 0px solid #fcfefc;
+    box-shadow: 0 0 0 #fcfefc;
+    transform: scale(1), rotate(-45deg);;
   }
 }
 
@@ -51,10 +56,57 @@
 /* Styles for the X and O cells */
 .cell.X {
   background: linear-gradient(0deg, #adb4b770 0%, #1f1fb4 100%);
+  animation: cellAnimaitonX 0.2s ease-out forwards;
   transform: scale(1.2);
 }
 
 .cell.O {
   background: linear-gradient(0deg, #adb4b770 0%, #b91818 100%);
   transform: scale(1.2);
+  animation: cellAnimaitonO 0.2s ease-out forwards;
+}
+
+@keyframes cellAnimaitonX {
+  0% {
+    background: linear-gradient(45deg, #adb4b770 0%, #24242c 100%);
+    transform: scale(1), rotate(-45deg), translateY(0px);
+    box-shadow: 0 0 100px #ffffff;
+  }
+  10% {
+    transform: translateY(20px); 
+    box-shadow: 0 0 200px #ffffff;
+  }
+  50% {
+    transform: scale(0.9);
+    background: white;
+  }
+  100% {
+    background: linear-gradient(0deg, #adb4b770 0%, #1f1fb4 100%);
+    transform: scale(1.2) rotate(0), translateY(0px);
+    box-shadow: 0 0 0 #ffffff;
+  }
+}
+
+@keyframes cellAnimaitonO {
+  0% {
+    background: linear-gradient(45deg, #adb4b770 0%, #24242c 100%);
+    transform: scale(1), rotate(-45deg), translateY(0px);
+    box-shadow: 0 0 100px #ffffff;
+  }
+
+  10% {
+    transform: translateY(20px);
+    box-shadow: 0 0 200px #ffffff;
+  }
+
+  50% {
+    transform: scale(0.9);
+    background: white;
+  }
+
+  100% {
+    background: linear-gradient(0deg, #adb4b770 0%, #b91818 100%);
+    transform: scale(1.2) rotate(0), translateY(0px);
+    box-shadow: 0 0 0 #ffffff;
+  }
 }
