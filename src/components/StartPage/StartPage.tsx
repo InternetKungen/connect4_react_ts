@@ -11,8 +11,8 @@ interface StartPageProps {
 const StartPage: React.FC<StartPageProps> = ({ onStart, onStartAI, onShowRules }) => {
   return (
     <div className="start-menu-container">
-      <h1 className="start-menu-title">Welcome to Connect-4!</h1>
-      
+      <h1 className="start-menu-title"></h1>
+      <div className='start-menu-button-container'>
       <button
         onClick={onStart}
         className="start-menu-button"
@@ -23,14 +23,15 @@ const StartPage: React.FC<StartPageProps> = ({ onStart, onStartAI, onShowRules }
         onClick={onStartAI}
         className="start-menu-button"
       >
-        Player vs AI
+        PLAYER VS CPU
       </button>
       <button
         onClick={onShowRules}
         className="start-menu-button"
       >
         GAME RULES
-      </button>
+        </button>
+      </div>
     </div>
   );
 };
