@@ -19,7 +19,8 @@ function App() {
   const [playerX, setPlayerX] = useState<Player | null>(null);
   const [playerO, setPlayerO] = useState<Player | null>(null);
   const [difficulty, setDifficulty] = useState<'easy' | 'hard' | null>(null)
-  const [playerSetupRequired, setPlayerSetupRequired] = useState<boolean>(false); // New state
+  const [playerSetupRequired, setPlayerSetupRequired] = useState<boolean>(false);
+  const [isLocked, setIsLocked] = useState<boolean>(false)
 
    // State to store player names
   const [playerXName, setPlayerXName] = useState<string>('');
@@ -43,7 +44,7 @@ function App() {
   const handleQuit = () => {
     setGameState('main-menu');
      handleReset(setBoard);
-    
+
   };
 
   const handleSelectedDifficulty = (selectedDifficulty: 'easy' | 'hard') => {
@@ -59,7 +60,7 @@ function App() {
   };
 
     // Handler for PopUpMenu button click
- 
+
 
   // Function to handle player name setup and transition to game board
   const handlePlayerSetupSubmit = (playerXName: string, playerOName: string) => {
@@ -123,12 +124,12 @@ function App() {
           <BoardComponent
             board={board}
             onColumnClick={(column: number) =>
-              handleColumnClick(column, board, playerX, playerO, setBoard, difficulty)
-            }
+              handleColumnClick(column, board, playerX, playerO, setBoard, difficulty, isLocked, setIsLocked)
+            } isLocked={isLocked}
           />
-            <PopUpMenu 
+            <PopUpMenu
             onRestart={handleRestart}
-            onQuit={handleQuit} 
+            onQuit={handleQuit}
           />
           {board.gameOver && (
             <GameOverComponent

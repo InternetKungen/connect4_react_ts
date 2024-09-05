@@ -9,16 +9,17 @@ import './BoardComponent.css';
 interface BoardProps {
   board: Board;
   onColumnClick: (column: number) => void;
+  isLocked: boolean;
 }
 
-const BoardComponent: React.FC<BoardProps> = ({ board, onColumnClick }) => {
+const BoardComponent: React.FC<BoardProps> = ({ board, onColumnClick, isLocked }) => {
   return (
-    <div className="board">
+    <div className={`board ${isLocked ? 'locked' : ''}`}>
       {board.matrix[0].map((_, columnIndex) => (
         <Column
           key={columnIndex}
           columnIndex={columnIndex}
-          onClick={() => onColumnClick(columnIndex)}
+          onClick={() => !isLocked && onColumnClick(columnIndex)}
           column={board.matrix.map(row => row[columnIndex]).reverse()}
           currentPlayer={board.currentPlayerColor}
           gameOver={board.gameOver} // Skickar gameOver till kolumnerna
