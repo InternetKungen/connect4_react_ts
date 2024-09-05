@@ -54,7 +54,7 @@
 }
 
 /* Styles for the X and O cells */
-.cell.X {
+/* .cell.X {
   background: linear-gradient(0deg, #adb4b770 0%, #1f1fb4 100%);
   animation: cellAnimaitonX 0.2s ease-out forwards;
   transform: scale(1.2);
@@ -64,7 +64,7 @@
   background: linear-gradient(0deg, #adb4b770 0%, #b91818 100%);
   transform: scale(1.2);
   animation: cellAnimaitonO 0.2s ease-out forwards;
-}
+} */
 
 @keyframes cellAnimaitonX {
   0% {
@@ -140,6 +140,17 @@
   outline: 2px solid #1f1fb4;
   /* animation: backgroundFadeIn 1.2s ease-out forwards; */
 }
+.cell.highlightedX::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #adb4b770 0%, #1f1fb4 100%);
+  animation: backgroundFadeIn 1.2s ease-out forwards;
+}
+
 .cell.highlightedO {
   /* background: linear-gradient(45deg, #adb4b770 0%, #b91818b4 100%); */
   transform: rotate(-45deg);
@@ -148,14 +159,45 @@
   outline: 2px solid #b91818b4;
 }
 
-/* @keyframes backgroundFadeIn {
+.cell.highlightedO::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, #adb4b770 0%, #b91818b4 100%);
+  animation: backgroundFadeIn 1.2s ease-out forwards;
+}
+
+@keyframes backgroundFadeIn {
   0% {
-    background: linear-gradient(45deg, #adb4b770 0%, #24242c 100%);
+    opacity: 0;
   }
   100% {
-    background: linear-gradient(45deg, #adb4b770 0%, #1f1fb4 100%);
+    opacity: 0.4;
   }
-} */
+}
+
+.cell::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: none;
+  /* transition: background 0.2s ease-in-out; */
+  z-index: -1;
+  /* Sätt under det vanliga cellinnehållet */
+}
+
+/* Inaktivera ::after effekten för .X och .O */
+.cell.X::after,
+.cell.O::after {
+  background: none;
+  /* Ta bort eller justera ::after effekten */
+}
 
 .cell.X {
   background: linear-gradient(0deg, #adb4b770 0%, #1f1fb4 100%);
