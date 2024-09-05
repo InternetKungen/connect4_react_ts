@@ -1,6 +1,8 @@
 import Board from "../classes/Board"
 import Player from "../classes/Player";
 
+let isPlayerTurn = true;
+
 export const handleColumnClick = (
   column: number,
   board: Board,
@@ -9,7 +11,9 @@ export const handleColumnClick = (
   setBoard: (board: Board) => void,
   difficulty: "easy" | "hard" | null
  ) => {
-    if (board.gameOver || !playerX || !playerO) return;
+  if (board.gameOver || !playerX || !playerO || !isPlayerTurn) return;
+
+  isPlayerTurn = false;
 
     const newBoard = new Board();
     newBoard.matrix = board.matrix.map(row => [...row]);
@@ -40,7 +44,10 @@ export const handleColumnClick = (
         if (computerMoveSuccessful) {
           setBoard(updatedBoard);
         }
+        isPlayerTurn = true;
       }, 700);
+    } else {
+      isPlayerTurn = true;
     }
 };
 
