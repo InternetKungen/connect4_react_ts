@@ -110,3 +110,24 @@
     box-shadow: 0 0 0 #ffffff;
   }
 }
+
+.cell.highlighted {
+  transition: outline 0.2s ease-in-out;
+  outline: 3px solid rgba(255, 255, 255, 0.5);
+  /* Highlight när musen är över */
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  /* Ger en glödande effekt */
+  /* animation: columnHighlight 1s ease-out forwards; */
+  /* perspective: 1000px; */
+}
+
+@keyframes columnHighlight {
+  0% {
+    transform:translateZ(0), rotate(-45deg);
+    box-shadow: 0 0 0px rgba(255, 255, 255, 0.5);
+  }
+  100% {
+    transform: translateZ(100px), rotate(-45deg);
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.5);
+  } 
+}
