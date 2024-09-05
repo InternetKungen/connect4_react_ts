@@ -17,9 +17,9 @@
   /* Positionen från toppen av skärmen */
   /* transform: translate(-150%, -50%); */
   /* Centrerar pricken horisontellt */
-  left: 4.1vh;
-  width: 1vh;
-  height: 1vh;
+  left: 4.25vh;
+  width: 0.5vh;
+  height: 0.5vh;
   /* transform: translateX(4.11vh); */
   background-color: #fbfcfe;
   border-radius: 50%;
