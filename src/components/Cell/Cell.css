@@ -111,15 +111,15 @@
   }
 }
 
-.cell.highlighted {
+/* .cell.highlighted {
   transition: outline 0.2s ease-in-out;
-  outline: 3px solid rgba(255, 255, 255, 0.5);
+  outline: 3px solid rgba(255, 255, 255, 0.5); */
   /* Highlight när musen är över */
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+  /* box-shadow: 0 0 15px rgba(255, 255, 255, 0.5); */
   /* Ger en glödande effekt */
   /* animation: columnHighlight 1s ease-out forwards; */
   /* perspective: 1000px; */
-}
+/* } */
 
 @keyframes columnHighlight {
   0% {
@@ -130,4 +130,47 @@
     transform: translateZ(100px), rotate(-45deg);
     box-shadow: 0 0 50px rgba(255, 255, 255, 0.5);
   } 
+}
+
+.cell.highlightedX {
+  /* background: linear-gradient(45deg, #adb4b770 0%, #1f1fb4b4 100%); */
+  transform: rotate(-45deg);
+  box-shadow: 0 0 150px #afafff52;
+  /* border: 1px solid #1f1fb4; */
+  outline: 2px solid #1f1fb4;
+  /* animation: backgroundFadeIn 1.2s ease-out forwards; */
+}
+.cell.highlightedO {
+  /* background: linear-gradient(45deg, #adb4b770 0%, #b91818b4 100%); */
+  transform: rotate(-45deg);
+  box-shadow: 0 0 150px #ffa4a467;
+  /* border: 1px solid #b91818b4; */
+  outline: 2px solid #b91818b4;
+}
+
+/* @keyframes backgroundFadeIn {
+  0% {
+    background: linear-gradient(45deg, #adb4b770 0%, #24242c 100%);
+  }
+  100% {
+    background: linear-gradient(45deg, #adb4b770 0%, #1f1fb4 100%);
+  }
+} */
+
+.cell.X {
+  background: linear-gradient(0deg, #adb4b770 0%, #1f1fb4 100%);
+  animation: cellAnimaitonX 0.2s ease-out forwards;
+  transform: scale(1.2);
+  box-shadow: 0 0 0px #1f1fb4;
+  /* border: 1px solid #fbfdfe; */
+  outline: 0px solid #1f1fb4;
+}
+
+.cell.O {
+  background: linear-gradient(0deg, #adb4b770 0%, #b91818 100%);
+  transform: scale(1.2);
+  animation: cellAnimaitonO 0.2s ease-out forwards;
+  box-shadow: 0 0 0px #b91818b4;
+  /* border: 1px solid #fbfdfe; */
+  outline: 0px solid #b91818b4;
 }

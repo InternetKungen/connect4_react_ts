@@ -10,11 +10,11 @@ interface CellProps {
   highlightColor?: string;
 }
 
-const Cell: React.FC<CellProps> = ({ value, isAnimating, isHighlighted, highlightColor }) => {
+const Cell: React.FC<CellProps> = ({ value, isAnimating, isHighlighted, highlightColor, player }) => {
   return (
     <div
-      className={`cell ${value} ${isAnimating ? 'falling' : ''} ${isHighlighted ? 'highlighted' : ''}`}
-      style={isHighlighted ? { backgroundColor: highlightColor } : {}}
+      className={`cell ${value} ${isAnimating ? 'falling' : ''} ${isHighlighted ? `highlighted${highlightColor}` : ''}`} // cell.highlighted.X collide with styles cell.X and cell.O
+      // style={isHighlighted ? { backgroundColor: highlightColor } : {}} // highlightColor is 'X' or 'O' - there's no such color.
     >
       {!isAnimating && value}
     </div>
