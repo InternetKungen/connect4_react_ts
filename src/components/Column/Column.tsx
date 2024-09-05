@@ -8,10 +8,11 @@ interface ColumnProps {
   columnIndex: number;
   onClick: (columnIndex: number) => void;
   column: Array<string>;
-  currentPlayer: string;  // Nytt: Lägger till nuvarande spelare
+  currentPlayer: string; 
+  gameOver: boolean;
 }
 
-const Column: React.FC<ColumnProps> = ({ columnIndex, onClick, column, currentPlayer }) => {
+const Column: React.FC<ColumnProps> = ({ columnIndex, onClick, column, currentPlayer, gameOver }) => {
   const [animateIndex, setAnimateIndex] = useState<number | null>(null);  // Index för animationens position
   const [falling, setFalling] = useState<boolean>(false);  // Indikator om animationen pågår
   const [fallingPlayer, setFallingPlayer] = useState<string | null>(null);  // Håller reda på spelarens pjäs som faller
@@ -35,7 +36,7 @@ const Column: React.FC<ColumnProps> = ({ columnIndex, onClick, column, currentPl
   }, [animateIndex, falling, onClick, columnIndex, column]);
 
   const handleClick = () => {
-    if (!falling) {
+    if (!falling && !gameOver) {
       const firstEmptyCell = column.findIndex((cell) => cell === ' ');
       
       if (firstEmptyCell !== -1) {
@@ -48,7 +49,7 @@ const Column: React.FC<ColumnProps> = ({ columnIndex, onClick, column, currentPl
   };
 
   return (
-    <div className="column" onClick={falling ? undefined : handleClick}>
+    <div className="column" onClick={falling || gameOver ? undefined : handleClick}>
       {column.map((cell, rowIndex) => (
         <Cell
           key={rowIndex}

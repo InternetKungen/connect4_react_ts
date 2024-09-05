@@ -19,7 +19,9 @@ const BoardComponent: React.FC<BoardProps> = ({ board, onColumnClick }) => {
           key={columnIndex}
           columnIndex={columnIndex}
           onClick={() => onColumnClick(columnIndex)}
-          column={board.matrix.map(row => row[columnIndex]).reverse()}  // Reverse each column's rows for proper display
+          column={board.matrix.map(row => row[columnIndex]).reverse()}
+          currentPlayer={board.currentPlayerColor}
+          gameOver={board.gameOver} // Skickar gameOver till kolumnerna
         />
       ))}
     </div>
