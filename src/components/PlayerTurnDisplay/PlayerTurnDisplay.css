@@ -12,7 +12,7 @@
   width: 18vh;
   position: relative;
   height: 18vh;
-  transition: box-shadow 0.5s ease;
+  transition: box-shadow 0.1s ease-in;
 }
 
 .player {
@@ -22,7 +22,7 @@
   justify-content: center;
   align-items: center;
   position: absolute;
-  transition: transform 0.5s ease;
+  transition: transform 0.1s ease-in;
   z-index: 0;
 }
 
