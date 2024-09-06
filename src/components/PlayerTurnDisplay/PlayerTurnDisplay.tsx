@@ -16,8 +16,8 @@ const PlayerTurnDisplay: React.FC<PlayerTurnDisplayProps> = ({ playerTurn }) => 
   return (
     <div className="player-turn-display">
       <div className={`player-container ${isPlayerXTurn ? 'left-active' : 'right-active'}`}>
-        <div className="player player-x">Player X</div>
-        <div className="player player-o">Player O</div>
+        <div className="player player-x"></div>
+        <div className="player player-o"></div>
       </div>
     </div>
   );
