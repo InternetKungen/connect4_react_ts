@@ -74,7 +74,9 @@ const handleStartAI = () => {
 
   if (aiSetup) {
     // If it's AI setup, go to difficulty selection
-    setGameState('difficulty-selection');
+      setPlayerO(new Player('AI', 'O', true)); // Set AI as Player O
+      setPlayerOName('AI'); // Set AI's name for display purposes
+      setGameState('difficulty-selection');
   } else {
     // If it's PvP setup, set Player O and start the game
     if (playerOName) {
