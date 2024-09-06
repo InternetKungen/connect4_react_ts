@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Board from './classes/Board';
 import Player from './classes/Player';
 import BoardComponent from './components/BoardComponent/BoardComponent';
+import PlayerTurnDisplay from './components/PlayerTurnDisplay/PlayerTurnDisplay';
 import GameOverComponent from './components/GameOverComponent/GameOverComponent';
 import StartPage from './components/StartPage/StartPage';
 import Rules from './components/GameRules/Rules';
@@ -121,6 +122,8 @@ function App() {
           <img className='background-menu' src="./img/background-menu.png" alt="background" />
           <div className='empty-board'></div>
           <img className='logo' src='./img/connect-4-logo.png' alt="logo" />
+          <PlayerTurnDisplay playerTurn={board.currentPlayerColor as "X" | "O"} />
+
           <BoardComponent
             board={board}
             onColumnClick={(column: number) =>
