@@ -5,6 +5,10 @@
   width: 70vh;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  top: 48.2%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .board.locked {
