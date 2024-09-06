@@ -1,5 +1,6 @@
 import Board from "../classes/Board"
 import Player from "../classes/Player";
+import { getBestMove } from "../classes/AiHardMode"; // Import the hard mode AI logic
 
 export const handleColumnClick = (
   column: number,
@@ -14,7 +15,7 @@ export const handleColumnClick = (
   if (board.gameOver || !playerX || !playerO || isLocked) return;
 
   setIsLocked(true);
-
+ // Create a copy of the current board
     const newBoard = new Board();
     newBoard.matrix = board.matrix.map(row => [...row]);
     newBoard.currentPlayerColor = board.currentPlayerColor;
@@ -51,12 +52,21 @@ export const handleColumnClick = (
     }
 };
 
+
+
+// Function to handle the computer's move based on the selected difficulty
 export const getComputerMove = (board: Board, difficulty: "easy" | "hard" | null): number => {
-    if (difficulty === 'easy') {
-      const availableColumns = board.getAvailableColumns();
-      return availableColumns[Math.floor(Math.random() * availableColumns.length)];
-    }
-    return 0; // Placeholder for hard computer logic
+  if (difficulty === "easy") {
+    // Easy mode: Randomly select an available column
+    const availableColumns = board.getAvailableColumns();
+    return availableColumns[Math.floor(Math.random() * availableColumns.length)];
+  } else if (difficulty === "hard") {
+    // Hard mode: Use the minimax algorithm to select the best move
+    return getBestMove(board);
+  }
+
+  // Fallback case (should not occur if difficulty is properly set)
+  return 0;
 };
 
 export const handleReset = (setBoard: (board: Board) => void) => {
