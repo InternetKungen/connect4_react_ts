@@ -98,7 +98,12 @@ function App() {
       );
     case 'difficulty-selection':
       return (
-        <ComputerMenu onSelectDifficulty={handleSelectedDifficulty} />
+        <div className='app'>
+           <img className='background-menu' src="./img/background-menu.png" alt="background" />
+          <div className='empty-board'></div>
+          <img className='logo' src='./img/connect-4-logo.png' alt="logo" />
+          <ComputerMenu onSelectDifficulty={handleSelectedDifficulty} />
+        </div>
       );
     case 'game-board':
       if (playerSetupRequired) {
