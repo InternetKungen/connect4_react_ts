@@ -25,6 +25,7 @@ function App() {
    // State to store player names
   const [playerXName, setPlayerXName] = useState<string>('');
   const [playerOName, setPlayerOName] = useState<string>('');
+  
 
   // Handler to start the game (Player vs Player)
    const handleStartGame = () => {
