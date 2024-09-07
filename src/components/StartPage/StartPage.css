@@ -104,3 +104,127 @@
       #0d0d0daf);
   }
 }
+
+.start-menu-animation-display {
+
+  position: absolute;
+  width: 36vh;
+  height: 36vh;
+  /* margin: 20px auto; */
+  overflow: visible;
+  /* background: blue; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* top: calc(49.5vh - 18vh); */
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.logo-main {
+  width: 24vh;
+  height: 24vh;
+  position: absolute;
+  top: calc(18vh - 12vh);
+  left: calc(18vh - 12.5vh);
+  /* animation: fadeIn 2.5s ease-in-out; */
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+  /* animation: fadeIn 0.5s ease-in-out 1 forwards; */
+}
+
+.logo-hidden {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.start-menu-animation-cutting-frame {
+  position: relative;
+  width: 24.5vh;
+  height: 24.5vh;
+  overflow: hidden;
+  /* background: green; */
+  transform: rotate(45deg);
+  border: 1px solid #f1f1ec62;
+  /* outline: 1px solid #605d58; */
+  transition: opacity 0.5s ease-in-out;
+  margin-bottom: 1vh;
+}
+
+.start-menu-animation-box {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  transform: rotate(-45deg);
+  overflow: visible;
+  right: 10vh;
+  top: 5vh;
+}
+
+.animation {
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  display: flex;
+  justify-content: space-between;
+  transition: transform 0.5s ease-in-out;
+}
+
+.left-moving-box,
+.right-moving-box,
+.right-moving-box-cpu {
+  width: 23vh;
+  height: 23vh;
+  /* background-color: red; */
+  transition: transform 0.2s ease-in;
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+}
+
+.left-moving-box {
+  transform: translateX(-150%);
+  background: url('./img/pvp-left.png') no-repeat center center / cover;
+}
+
+.right-moving-box {
+  transform: translateX(150%);
+  background: url('./img/pvp-right.png') no-repeat center center / cover;
+}
+
+.right-moving-box-cpu {
+  transform: translateX(150%);
+  background: url('./img/cpu-right.png') no-repeat center center / cover;
+}
+
+.animate-left {
+  transform: translateX(-20%);
+  transition: transform 0.25s ease-in, opacity 0.5s ease-in-out;
+  opacity: 1;  
+}
+
+
+.animate-right {
+  transform: translateX(20%);
+  transition: transform 0.25s ease-in, opacity 0.5s ease-in-out;
+  opacity: 1;
+}
+
+.animate-left.hidden {
+  display: visible;
+  opacity: 0;
+  transform: translateX(-150%);
+}
+
+.animate-left.hidden {
+  display: visible;
+  opacity: 0;
+  transform: translateX(150%);
+}

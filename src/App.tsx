@@ -84,7 +84,7 @@ function App() {
         <div className="app">
           <img className='background-menu' src='./img/background-menu.png' alt="background" />
           <div className='empty-board'></div>
-          <img className='logo-main' src='./img/connect-4-logo.png' alt="logo" />
+          {/* <img className='logo-main' src='./img/connect-4-logo.png' alt="logo" /> */}
 
           <StartPage
             onStart={handleStartGame}
@@ -102,7 +102,7 @@ function App() {
         <div className='app'>
            <img className='background-menu' src="./img/background-menu.png" alt="background" />
           <div className='empty-board'></div>
-          <img className='logo' src='./img/connect-4-logo.png' alt="logo" />
+          {/* <img className='logo' src='./img/connect-4-logo.png' alt="logo" /> */}
           <ComputerMenu onSelectDifficulty={handleSelectedDifficulty} />
         </div>
       );
@@ -112,7 +112,7 @@ function App() {
           <div className="app">
             <img className='background-menu' src='./img/background-menu.png' alt="background" />
             <div className='empty-board'></div>
-            <img className='logo' src='./img/connect-4-logo.png' alt="logo" />
+            {/* <img className='logo' src='./img/connect-4-logo.png' alt="logo" /> */}
             <h1>Please enter player names</h1>
 
             <SetPlayerName onSubmit={handlePlayerSetupSubmit} />
@@ -126,7 +126,7 @@ function App() {
         <div className="app">
           <img className='background-menu' src="./img/background-menu.png" alt="background" />
           <div className='empty-board'></div>
-          <img className='logo' src='./img/connect-4-logo.png' alt="logo" />
+          {/* <img className='logo' src='./img/connect-4-logo.png' alt="logo" /> */}
           <PlayerTurnDisplay playerTurn={board.currentPlayerColor as "X" | "O"} />
 
           <BoardComponent

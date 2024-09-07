@@ -64,7 +64,7 @@ body {
   position: absolute;
   top: calc(50% - 12vh);
   left: calc((50% - 12vh) - 1px);
-  animation: fadeIn 2.5s ease-in-out;
+  /* animation: fadeIn 2.5s ease-in-out; */
 }
 
 @keyframes fadeIn {
