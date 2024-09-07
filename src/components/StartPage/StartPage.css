@@ -211,6 +211,12 @@
   opacity: 1;
 }
 
+.right-moving-box-cpu.animate-right {
+  transform: translateX(15%);
+  transition: transform 0.25s ease-in, opacity 0.5s ease-in-out;
+  opacity: 1;
+}
+
 .animate-left.hidden {
   display: visible;
   opacity: 0;
@@ -225,12 +231,16 @@
 
 .middle-static-box {
   background: url('./img/vs-screen.png') no-repeat center center / cover;
-  width: 22vh;
-  height: 22vh;
+  width: 8.5vh;
+  height: 8.5vh;
   background-size: contain;
   background-position: center;
   will-change: opacity;
   opacity: 0;
+  z-index: -1;
+  position: absolute;
+  top: 7vh;
+  left: 10vh;
 }
 
 .show-vs-screen {
