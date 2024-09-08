@@ -20,31 +20,34 @@ function App() {
   const [playerX, setPlayerX] = useState<Player | null>(null);
   const [playerO, setPlayerO] = useState<Player | null>(null);
   const [difficulty, setDifficulty] = useState<'easy' | 'hard' | null>(null)
-  const [playerSetupRequired, setPlayerSetupRequired] = useState<boolean>(false);
+
   const [isLocked, setIsLocked] = useState<boolean>(false);
+  const [aiSetup, setAiSetup] = useState<boolean>(false);
 
    // State to store player names
   const [playerXName, setPlayerXName] = useState<string>('');
   const [playerOName, setPlayerOName] = useState<string>('');
+  
 
   // Handler to start the game (Player vs Player)
-   const handleStartGame = () => {
-    setPlayerSetupRequired(true); // Indicate that player setup is required
-    setGameState('game-board');
-  };
+  const handleStartGame = () => {
+  setAiSetup(false); // Ensure AI setup is not active
+  setGameState('player-name-setup'); // Go to player name setup
+};
 
   // Handler to start the game against AI
-  const handleStartAI = () => {
-    setGameState('difficulty-selection');
-  };
+const handleStartAI = () => {
+  setAiSetup(true); // Activate AI setup
+  setGameState('player-name-setup'); // Go to player name setup
+};
 
-   const handleRestart = () => {
+  const handleRestart = () => {
     handleReset(setBoard);
   };
 
   const handleQuit = () => {
     setGameState('main-menu');
-     handleReset(setBoard);
+    handleReset(setBoard);
 
   };
 
@@ -64,18 +67,26 @@ function App() {
 
 
   // Function to handle player name setup and transition to game board
-  const handlePlayerSetupSubmit = (playerXName: string, playerOName: string) => {
+  const handlePlayerSetupSubmit = (playerXName: string, playerOName?: string) => {
     if (playerXName) {
       setPlayerX(new Player(playerXName, 'X', false));
       setPlayerXName(playerXName);
     }
+
+  if (aiSetup) {
+    // If it's AI setup, go to difficulty selection
+      setPlayerO(new Player('AI', 'O', true)); // Set AI as Player O
+      setPlayerOName('AI'); // Set AI's name for display purposes
+      setGameState('difficulty-selection');
+  } else {
+    // If it's PvP setup, set Player O and start the game
     if (playerOName) {
       setPlayerO(new Player(playerOName, 'O', false));
       setPlayerOName(playerOName);
     }
-    setPlayerSetupRequired(false);
     setGameState('game-board');
-  };
+  }
+};
 
   // Conditional rendering based on the current game state
   switch (gameState) {
@@ -97,28 +108,26 @@ function App() {
       return (
         <Rules setGameState={setGameState} />
       );
+    case 'player-name-setup':
+      return (
+        <div className="app">
+          <img className='background-menu' src='./img/background-menu.png' alt="background" />
+          <div className='empty-board'></div>
+          <img className='logo' src='./img/connect-4-logo.png' alt="logo" />
+          <h1>{aiSetup ? "Enter your name" : "Please enter player names"}</h1>
+          <SetPlayerName onSubmit={handlePlayerSetupSubmit} isAiSetup={aiSetup} />
+        </div>
+      );
     case 'difficulty-selection':
       return (
         <div className='app'>
-           <img className='background-menu' src="./img/background-menu.png" alt="background" />
+          <img className='background-menu' src="./img/background-menu.png" alt="background" />
           <div className='empty-board'></div>
           {/* <img className='logo' src='./img/connect-4-logo.png' alt="logo" /> */}
           <ComputerMenu onSelectDifficulty={handleSelectedDifficulty} />
         </div>
       );
     case 'game-board':
-      if (playerSetupRequired) {
-        return (
-          <div className="app">
-            <img className='background-menu' src='./img/background-menu.png' alt="background" />
-            <div className='empty-board'></div>
-            {/* <img className='logo' src='./img/connect-4-logo.png' alt="logo" /> */}
-            <h1>Please enter player names</h1>
-
-            <SetPlayerName onSubmit={handlePlayerSetupSubmit} />
-          </div>
-        );
-      }
       if (!playerX || !playerO) {
         return <div>Loading player setup...</div>;
       }
@@ -136,7 +145,7 @@ function App() {
             }
             isLocked={isLocked}
           />
-            <PopUpMenu
+          <PopUpMenu
             onRestart={handleRestart}
             onQuit={handleQuit}
           />
@@ -156,7 +165,6 @@ function App() {
 }
 
 export default App;
-
 
 
 
