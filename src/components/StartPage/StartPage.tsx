@@ -24,16 +24,17 @@ const StartPage: React.FC<StartPageProps> = ({ onStart, onStartAI, onShowRules }
         />
         
         <div className="start-menu-animation-cutting-frame">
+          <div className={`start-menu-animation-box-background ${hoveredButton ? 'darken-background' : ''}`}></div>
           <div className="start-menu-animation-box">
-            <div className={`animation ${hoveredButton === 'pvp' ? '' : 'hidden'}`}>
-              <div className={`left-moving-box ${hoveredButton === 'pvp' ? 'animate-left' : ''}`}></div>
-              <div className={`middle-static-box ${hoveredButton === 'pvp' ? 'show-vs-screen' : ''}`}></div>
-              <div className={`right-moving-box ${hoveredButton === 'pvp' ? 'animate-right' : ''}`}></div>
+              <div className={`animation ${hoveredButton === 'pvp' ? '' : 'hidden'}`}>
+                <div className={`left-moving-box ${hoveredButton === 'pvp' ? 'animate-left' : ''}`}></div>
+                <div className={`middle-static-box ${hoveredButton === 'pvp' ? 'show-vs-screen' : ''}`}>VS</div>
+                <div className={`right-moving-box ${hoveredButton === 'pvp' ? 'animate-right' : ''}`}></div>
             </div>
 
             <div className={`animation ${hoveredButton === 'cpu' ? '' : 'hidden'}`}>
               <div className={`left-moving-box ${hoveredButton === 'cpu' ? 'animate-left' : ''}`}></div>
-              <div className={`middle-static-box ${hoveredButton === 'cpu' ? 'show-vs-screen' : ''}`}></div>
+              <div className={`middle-static-box ${hoveredButton === 'cpu' ? 'show-vs-screen' : ''}`}>VS</div>
               <div className={`right-moving-box-cpu ${hoveredButton === 'cpu' ? 'animate-right' : ''}`}></div>
             </div>
           </div>
