@@ -192,6 +192,7 @@
   display: flex;
   justify-content: space-between;
   transition: transform 0.5s ease-in-out;
+  will-change: transform;
 }
 
 .left-moving-box,
@@ -203,12 +204,15 @@
   background-size: cover;
   background-position: center;
   will-change: transform;
+  z-index: 2 !important;
+  position: relative;
 }
 
 .left-moving-box {
   transform: translateX(-150%);
   background: url('./img/pvp-left.png') no-repeat center center / cover;
 }
+
 
 .right-moving-box {
   transform: translateX(150%);
@@ -233,23 +237,69 @@
   opacity: 1;
 }
 
+/* .animate-left.hidden {
+  display: visible;
+  opacity: 0;
+  transform: translateX(150%);
+} */
+
+/* back glow left-moving-box */
+
+.left-moving-box-glow,
+.right-moving-box-glow {
+  content: '';
+  position: absolute;
+  width: 1vh;
+  height: 1vh;
+  /* background: url('./img/pvp-left.png') no-repeat center center / cover; */
+  /* background-size: cover;
+  background-position: center; */
+  filter: blur(15px);
+  z-index: -2 !important;
+  will-change: opacity;
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
+  border-radius: 50%;
+}
+
+.left-moving-box-glow {
+  box-shadow: 0 0 100px 50px blue;
+  top: 10vh;
+  left: 10vh;
+}
+
+.right-moving-box-glow{
+  box-shadow: 0 0 100px 50px red;
+  right: 10vh;
+  top: 10vh;
+}
+
+.right-moving-box-glow.show-glow,
+.left-moving-box-glow.show-glow{
+  transition: opacity 2.5s ease-in-out;
+  opacity: 0.6;
+}
+
+/* {
+  transition: opacity 2.5s ease-in-out;
+  opacity: 0.2;
+} */
+
+
+
 .right-moving-box-cpu.animate-right {
   transform: translateX(12%);
   transition: transform 0.25s ease-in, opacity 0.5s ease-in-out;
   opacity: 1;
 }
 
-.animate-left.hidden {
+/* .animate-left.hidden {
   display: visible;
   opacity: 0;
   transform: translateX(-150%);
-}
+} */
 
-.animate-left.hidden {
-  display: visible;
-  opacity: 0;
-  transform: translateX(150%);
-}
+
 
 .middle-static-box {
   /* background: url('./img/vs-screen.png') no-repeat center center / cover; */
