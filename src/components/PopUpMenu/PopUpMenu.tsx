@@ -11,15 +11,15 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
 
   const handleOpenMenu = () => {
-    setIsMenuOpen(true);
+    setIsMenuOpen(true); // Open the menu
   };
 
   const handleCloseMenu = () => {
-    setIsMenuOpen(false);
+    setIsMenuOpen(false); // Close the menu
   };
 
   const handleContinue = () => {
-    setIsMenuOpen(false);
+    setIsMenuOpen(false); // Close the menu without restarting or quitting
   };
 
   return (
@@ -33,8 +33,22 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
           <div className="menu-modal-content">
             <h2>Game Menu</h2>
             <button onClick={handleContinue}>Continue</button>
-            <button onClick={() => { handleCloseMenu(); onRestart(); }}>Restart</button>
-            <button onClick={() => { handleCloseMenu(); onQuit(); }}>Quit</button>
+            <button
+              onClick={() => {
+                handleCloseMenu();
+                onRestart();
+              }}
+            >
+              Restart
+            </button>
+            <button
+              onClick={() => {
+                handleCloseMenu();
+                onQuit();
+              }}
+            >
+              Quit
+            </button>
           </div>
         </div>
       )}
@@ -43,4 +57,3 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
 };
 
 export default PopUpMenu;
-

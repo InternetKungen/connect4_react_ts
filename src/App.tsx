@@ -19,14 +19,12 @@ function App() {
   const [board, setBoard] = useState(new Board());
   const [playerX, setPlayerX] = useState<Player | null>(null);
   const [playerO, setPlayerO] = useState<Player | null>(null);
-  // Scores states to keep track of the respective players' scores throughout the game
+  // States to keep track of the respective players' scores throughout the game
   const [playerXScore, setPlayerXScore] = useState<number>(0); // Player X's score
   const [playerOScore, setPlayerOScore] = useState<number>(0); // Player O's score
   const [difficulty, setDifficulty] = useState<'easy' | 'hard' | null>(null);
-  const [playerSetupRequired, setPlayerSetupRequired] =
-    useState<boolean>(false);
+  const [playerSetupRequired, setPlayerSetupRequired] = useState<boolean>(false);
   const [isLocked, setIsLocked] = useState<boolean>(false);
-
   // State to store player names
   const [playerXName, setPlayerXName] = useState<string>('');
   const [playerOName, setPlayerOName] = useState<string>('');
@@ -41,14 +39,20 @@ function App() {
   const handleStartAI = () => {
     setGameState('difficulty-selection');
   };
-
+  // Reset the board and scores
   const handleRestart = () => {
     handleReset(setBoard);
+    setPlayerXScore(0);
+    setPlayerOScore(0);
   };
-
+  // Render the main menu screen and reset the board, scores, and player names
   const handleQuit = () => {
     setGameState('main-menu');
     handleReset(setBoard);
+    setPlayerXScore(0);
+    setPlayerOScore(0);
+    setPlayerXName('');
+    setPlayerOName('');
   };
 
   const handleSelectedDifficulty = (selectedDifficulty: 'easy' | 'hard') => {
@@ -66,10 +70,7 @@ function App() {
   // Handler for PopUpMenu button click
 
   // Function to handle player name setup and transition to game board
-  const handlePlayerSetupSubmit = (
-    playerXName: string,
-    playerOName: string
-  ) => {
+  const handlePlayerSetupSubmit = (playerXName: string, playerOName: string) => {
     if (playerXName) {
       setPlayerX(new Player(playerXName, 'X', false));
       setPlayerXName(playerXName);
@@ -95,18 +96,10 @@ function App() {
   switch (gameState) {
     case 'main-menu':
       return (
-        <div className='app'>
-          <img
-            className='background-menu'
-            src='./img/background-menu.png'
-            alt='background'
-          />
-          <div className='empty-board'></div>
-          <img
-            className='logo-main'
-            src='./img/connect-4-logo.png'
-            alt='logo'
-          />
+        <div className="app">
+          <img className="background-menu" src="./img/background-menu.png" alt="background" />
+          <div className="empty-board"></div>
+          <img className="logo-main" src="./img/connect-4-logo.png" alt="logo" />
 
           <StartPage
             onStart={handleStartGame}
@@ -122,14 +115,10 @@ function App() {
     case 'game-board':
       if (playerSetupRequired) {
         return (
-          <div className='app'>
-            <img
-              className='background-menu'
-              src='./img/background-menu.png'
-              alt='background'
-            />
-            <div className='empty-board'></div>
-            <img className='logo' src='./img/connect-4-logo.png' alt='logo' />
+          <div className="app">
+            <img className="background-menu" src="./img/background-menu.png" alt="background" />
+            <div className="empty-board"></div>
+            <img className="logo" src="./img/connect-4-logo.png" alt="logo" />
             <h1>Please enter player names</h1>
 
             <SetPlayerName onSubmit={handlePlayerSetupSubmit} />
@@ -140,14 +129,10 @@ function App() {
         return <div>Loading player setup...</div>;
       }
       return (
-        <div className='app'>
-          <img
-            className='background-menu'
-            src='./img/background-menu.png'
-            alt='background'
-          />
-          <div className='empty-board'></div>
-          <img className='logo' src='./img/connect-4-logo.png' alt='logo' />
+        <div className="app">
+          <img className="background-menu" src="./img/background-menu.png" alt="background" />
+          <div className="empty-board"></div>
+          <img className="logo" src="./img/connect-4-logo.png" alt="logo" />
 
           <ScoreBoard
             playerXName={playerXName || 'Player X'} // Player X's name
