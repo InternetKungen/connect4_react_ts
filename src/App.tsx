@@ -20,7 +20,7 @@ function App() {
   const [playerX, setPlayerX] = useState<Player | null>(null);
   const [playerO, setPlayerO] = useState<Player | null>(null);
   const [difficulty, setDifficulty] = useState<'easy' | 'hard' | null>(null)
- 
+
   const [isLocked, setIsLocked] = useState<boolean>(false);
   const [aiSetup, setAiSetup] = useState<boolean>(false);
 
@@ -41,13 +41,13 @@ const handleStartAI = () => {
   setGameState('player-name-setup'); // Go to player name setup
 };
 
-   const handleRestart = () => {
+  const handleRestart = () => {
     handleReset(setBoard);
   };
 
   const handleQuit = () => {
     setGameState('main-menu');
-     handleReset(setBoard);
+    handleReset(setBoard);
 
   };
 
@@ -67,11 +67,11 @@ const handleStartAI = () => {
 
 
   // Function to handle player name setup and transition to game board
- const handlePlayerSetupSubmit = (playerXName: string, playerOName?: string) => {
-  if (playerXName) {
-    setPlayerX(new Player(playerXName, 'X', false));
-    setPlayerXName(playerXName);
-  }
+  const handlePlayerSetupSubmit = (playerXName: string, playerOName?: string) => {
+    if (playerXName) {
+      setPlayerX(new Player(playerXName, 'X', false));
+      setPlayerXName(playerXName);
+    }
 
   if (aiSetup) {
     // If it's AI setup, go to difficulty selection
@@ -89,13 +89,14 @@ const handleStartAI = () => {
 };
 
   // Conditional rendering based on the current game state
-   switch (gameState) {
+  switch (gameState) {
     case 'main-menu':
       return (
         <div className="app">
           <img className='background-menu' src='./img/background-menu.png' alt="background" />
           <div className='empty-board'></div>
-          <img className='logo-main' src='./img/connect-4-logo.png' alt="logo" />
+          {/* <img className='logo-main' src='./img/connect-4-logo.png' alt="logo" /> */}
+
           <StartPage
             onStart={handleStartGame}
             onStartAI={handleStartAI}
@@ -120,9 +121,9 @@ const handleStartAI = () => {
     case 'difficulty-selection':
       return (
         <div className='app'>
-           <img className='background-menu' src="./img/background-menu.png" alt="background" />
+          <img className='background-menu' src="./img/background-menu.png" alt="background" />
           <div className='empty-board'></div>
-          <img className='logo' src='./img/connect-4-logo.png' alt="logo" />
+          {/* <img className='logo' src='./img/connect-4-logo.png' alt="logo" /> */}
           <ComputerMenu onSelectDifficulty={handleSelectedDifficulty} />
         </div>
       );
@@ -134,7 +135,7 @@ const handleStartAI = () => {
         <div className="app">
           <img className='background-menu' src="./img/background-menu.png" alt="background" />
           <div className='empty-board'></div>
-          <img className='logo' src='./img/connect-4-logo.png' alt="logo" />
+          {/* <img className='logo' src='./img/connect-4-logo.png' alt="logo" /> */}
           <PlayerTurnDisplay playerTurn={board.currentPlayerColor as "X" | "O"} />
 
           <BoardComponent
