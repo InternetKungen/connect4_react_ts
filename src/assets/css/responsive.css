@@ -78,19 +78,19 @@
 
   /*PlayerTurnDisplay.css - in file*/
   /* .player-turn-display {
-    top: calc(50vw - 9vw);
+    top: calc(50vh - 9vw);
   }
-
+  
   .player-container {
     width: 18vw;
     height: 18vw;
   }
-
+  
   .player {
     width: 9vw;
     height: 18vw;
   }
-
+  
   .player-container.left-active::after {
     width: 0vw;
     height: 0vw;
@@ -98,13 +98,13 @@
     top: 9vw;
     left: 9vw;
   }
-
+  
   .player-container.right-active::after {
     width: 0vw;
     height: 0vw;
     box-shadow: 0 0 10vw 10vw rgba(255, 0, 0, 0.226);
     top: 9vw;
-    right: 9vh
+    left: 9vw;
   } */
 
   /*PopUpMenu.css*/
@@ -118,59 +118,59 @@
     height: 70vw;
     width: 70vw;
   }
-
+  
   .start-menu-button-container {
     bottom: -8vw;
   }
-
+  
   .start-menu-animation-display {
     width: 36vw;
     height: 36vw;
   }
-
+  
   .logo-main {
     width: 24vw;
     height: 24vw;
     top: calc(18vw - 12vw);
     left: calc(18vw - 12.5vw);
   }
-
+  
   .start-menu-animation-cutting-frame {
     width: 24.5vw;
     height: 24.5vw;
     margin-bottom: 1vw;
   }
-
+  
   .start-menu-animation-box {
     right: 10vw;
     top: 5vw;
   }
-
+  
   .left-moving-box,
   .right-moving-box,
   .right-moving-box-cpu {
     width: 23vw;
     height: 23vw;
   }
-
+  
   .left-moving-box-glow,
   .right-moving-box-glow {
     width: 1vw;
     height: 1vw;
   }
-
+  
   .left-moving-box-glow {
     box-shadow: 0 0 10vw 4vw blue;
     top: 10vw;
     left: 10vw;
   }
-
+  
   .right-moving-box-glow {
     box-shadow: 0 0 10vw 4vw red;
     top: 10vw;
-    left: 10vw;
+    right: 10vw;
   }
-
+  
   .middle-static-box {
     font-size: 2vw;
     width: 8.5vw;

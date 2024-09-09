@@ -1,7 +1,4 @@
-/* @import url('../../assets/css/responsive.css'); */
 .cell {
-  /* width: 100px;
-  height: 100px; */
   width: calc(70vh / 8 / sqrt(2));
   height: calc(70vh / 8 / sqrt(2));
   background: linear-gradient(45deg, #adb4b770 0%, #24242c 100%);
@@ -134,13 +131,11 @@
 }
 
 .cell.highlightedX {
-  /* background: linear-gradient(45deg, #adb4b770 0%, #1f1fb4b4 100%); */
   transform: rotate(-45deg);
   box-shadow: 0 0 150px #afafff52;
-  /* border: 1px solid #1f1fb4; */
   outline: 2px solid #1f1fb4;
-  /* animation: backgroundFadeIn 1.2s ease-out forwards; */
 }
+
 .cell.highlightedX::after {
   content: '';
   position: absolute;
@@ -153,10 +148,8 @@
 }
 
 .cell.highlightedO {
-  /* background: linear-gradient(45deg, #adb4b770 0%, #b91818b4 100%); */
   transform: rotate(-45deg);
   box-shadow: 0 0 150px #ffa4a467;
-  /* border: 1px solid #b91818b4; */
   outline: 2px solid #b91818b4;
 }
 
@@ -190,14 +183,12 @@
   background: none;
   /* transition: background 0.2s ease-in-out; */
   z-index: -1;
-  /* Sätt under det vanliga cellinnehållet */
 }
 
 /* Inaktivera ::after effekten för .X och .O */
 .cell.X::after,
 .cell.O::after {
   background: none;
-  /* Ta bort eller justera ::after effekten */
 }
 
 .cell.X {

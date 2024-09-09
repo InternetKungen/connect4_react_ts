@@ -1,14 +1,11 @@
-/* @import url('../../assets/css/responsive.css'); */
 .background {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  /* Byt ut till den faktiska sökvägen till din bild */
   background: url('./img/lines.jpg');
   background-size: cover;
   background-position: center;
   z-index: -4;
-  /* Se till att den ligger bakom spelet */
 }
