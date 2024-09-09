@@ -1,6 +1,6 @@
 // components/PopUpMenu/PopUpMenu.tsx
-import React, { useState } from 'react';
-import './PopUpMenu.css'; // Import the CSS file for styling
+import React, { useState, useEffect } from 'react';
+import './PopUpMenu.css'; // Assuming this is where your styles are
 
 interface PopUpMenuProps {
   onRestart: () => void;
@@ -9,6 +9,20 @@ interface PopUpMenuProps {
 
 const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+
+  // Bind ESC key to open/close the menu
+  useEffect(() => {
+    const handleKeydown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setIsMenuOpen((prev) => !prev); // Toggle menu visibility
+      }
+    };
+
+    window.addEventListener('keydown', handleKeydown);
+    return () => {
+      window.removeEventListener('keydown', handleKeydown);
+    };
+  }, []);
 
   const handleOpenMenu = () => {
     setIsMenuOpen(true);
@@ -43,4 +57,5 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
 };
 
 export default PopUpMenu;
+
 
