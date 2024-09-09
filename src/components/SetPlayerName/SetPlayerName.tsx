@@ -40,7 +40,9 @@ const SetPlayerName: React.FC<SetPlayerNameProps> = ({ onSubmit, isAiSetup, back
 
  return (
     <div className="set-player-name-container">
-      <form onSubmit={handleFormSubmit} className="set-player-name-form">
+     <form onSubmit={handleFormSubmit} className="set-player-name-form">
+         <button className="back-button" onClick={backSpace}>Back</button>
+     
         <label>
           Player X Name:
           <input name="playerX" placeholder="Enter player name" className="input-field" required />
@@ -52,7 +54,6 @@ const SetPlayerName: React.FC<SetPlayerNameProps> = ({ onSubmit, isAiSetup, back
           </label>
         )}
         <div className="button-container">
-          <button type="button" className="back-button" onClick={() => window.history.back()}>Back</button>
           <button type="submit" className="submit-button">Start Game</button>
         </div>
      </form>

@@ -56,23 +56,33 @@
 
 /* Style for the back button */
 .back-button {
-  padding: 15px 15px;
+  position: absolute;
+  top: 10px;
+  /* Adjust this as needed */
+  right: 10px;
+  /* Adjust this as needed */
+  padding: 0.4rem 1rem;
   background: linear-gradient(to top, #4d575db6, #0d0d0daf);
   color: white;
-  border-radius: 0;
   border: 1px solid white;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
   transition: background 300ms, outline 300ms, box-shadow 300ms;
-  margin-top: 10px; /* Space above the button */
-  margin-bottom: 10px; /* Space below the button */
+  z-index: 10;
+  /* Ensure it is above other elements */
 }
 
-/* Position the Back button relative to the Submit button */
-.back-button-container {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
+/* Make sure hover and active styles are consistent */
+.back-button:hover {
+  animation: buttonHover 0.8s ease-in-out infinite;
+}
+
+.back-button:active {
+  background: linear-gradient(to top, #c2c2c2, #fafafa);
+  color: black;
+  outline: 1px solid rgb(32, 32, 32);
+  animation: buttonActive 0.1s ease-in-out 1;
 }
 
 /* The hover and active animation from buttons */
