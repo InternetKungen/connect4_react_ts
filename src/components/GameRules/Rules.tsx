@@ -1,8 +1,9 @@
 import React from 'react';
+import { GameState } from '../../utils/Types'; // Adjust the import path accordingly
 import './rules.css';
 
 interface RulesProps {
-  setGameState: React.Dispatch<React.SetStateAction<string>>;
+  setGameState: React.Dispatch<React.SetStateAction<GameState>>;
 }
 
 export default function Rules(props: RulesProps) {
@@ -26,7 +27,7 @@ export default function Rules(props: RulesProps) {
             <li><span>Blue goes first in the first game.</span></li>
             <li><span>Players take turns placing discs into the grid.</span></li>
             <li><span>The game ends when one of the players has a row of 4 of their discs in a row</span></li>
-            <li><span>The row can be vertical, horizontal or diagonal.</span></li>
+            <li><span>The row can be vertical, horizontal, or diagonal.</span></li>
           </ol>
         </div>
       </div>
@@ -36,3 +37,4 @@ export default function Rules(props: RulesProps) {
     </div>
   );
 }
+

@@ -5,6 +5,7 @@ export type GameState =
   | 'rules'
   | 'player-name-setup'
   | 'difficulty-selection'
-  | 'game-board';
+  | 'game-board'
+  | 'game-over'
 
 
