@@ -22,16 +22,15 @@
   border-radius: 5px;
   font-size: 18px;
   color: white;
-    /* Increase font size for larger text */
-  }
-  
-  .input-field::placeholder {
-      color: rgba(255, 255, 255, 0.7);
-      /* Slightly transparent white for placeholders */
-    }
+  /* Increase font size for larger text */
+}
+
+.input-field::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+  /* Slightly transparent white for placeholders */
+}
 
 /* Style for the submit button */
-
 .submit-button {
   padding: 15px 15px;
   background: linear-gradient(to top, #4d575db6, #0d0d0daf);
@@ -41,6 +40,7 @@
   cursor: pointer;
   font-size: 16px;
   transition: background 300ms, outline 300ms, box-shadow 300ms;
+  margin-top: 10px; /* Space above the button */
 }
 
 .submit-button:hover {
@@ -54,9 +54,29 @@
   animation: buttonActive 0.1s ease-in-out 1;
 }
 
+/* Style for the back button */
+.back-button {
+  padding: 15px 15px;
+  background: linear-gradient(to top, #4d575db6, #0d0d0daf);
+  color: white;
+  border-radius: 0;
+  border: 1px solid white;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 300ms, outline 300ms, box-shadow 300ms;
+  margin-top: 10px; /* Space above the button */
+  margin-bottom: 10px; /* Space below the button */
+}
+
+/* Position the Back button relative to the Submit button */
+.back-button-container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
 /* The hover and active animation from buttons */
 @keyframes buttonHover {
-
   0%,
   100% {
     outline: 2px solid white;
@@ -68,7 +88,6 @@
 }
 
 @keyframes buttonActive {
-
   0%,
   100% {
     background: linear-gradient(to top, #c2c2c2, #fafafa);
@@ -78,3 +97,4 @@
     background: linear-gradient(to top, #4d575db6, #0d0d0daf);
   }
 }
+
