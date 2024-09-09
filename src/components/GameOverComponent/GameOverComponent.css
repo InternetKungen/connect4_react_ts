@@ -21,7 +21,7 @@
 
 /* Modal content styles */
 .modal-content {
-  background: #fff;
+  background: #000000;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -32,15 +32,16 @@
 
 /* Button styles */
 .modal-content button {
-  background-color: #007bff;
+  background-color: #9a9a9a;
   /* Bootstrap primary color */
-  color: #fff;
+  color: #000000;
   border: none;
   padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
   margin-top: 10px;
+  width: 100%
 }
 
 /* Button hover effect */
