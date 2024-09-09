@@ -3,16 +3,26 @@
 .rules-container {
     max-width: 480px;
     margin: 10vh auto;
-    background-color: #0d0d0d; 
+    background-color: #3b3b3b;
     padding: 3.4rem 2rem;
-    border-radius: 4rem;
-    box-shadow: 0px 4px 8px rgba(255, 255, 255, 0.1); 
+    border-radius: 2rem;
+    box-shadow: 0px 4px 12px rgba(255, 255, 255, 0.2);
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 2px solid #eeefea; 
-    color: white; 
+    border: 2px solid #eeefea;
+    color: white;
     animation: fadeInApp 0.5s ease-in-out;
+
+    /* New height rules */
+    min-height: 60vh;
+    /* Ensures the board has a minimum height */
+    height: auto;
+    /* Allows it to expand based on content */
+    max-height: 80vh;
+    /* Prevents it from exceeding a certain height */
+    overflow-y: auto;
+    /* Enables scrolling if content exceeds the container height */
 }
 
 .rules-content {
@@ -24,40 +34,46 @@
     margin-top: 3rem;
 }
 
+/* Heading styles */
 h2 {
-    color: white; 
-    font-size: 2rem;
-    margin-bottom: 1rem;
+    color: white;
+    font-size: 2.4rem;
+    /* Slightly larger for emphasis */
+    margin-bottom: 1.2rem;
     text-shadow:
         -2px -2px 0 black,
         2px -2px 0 black,
         -2px 2px 0 black,
-        2px 2px 0 black; 
-    font-family: "Orbitron", sans-serif; 
+        2px 2px 0 black;
+    /* Strong text shadow for depth */
+    font-family: "Orbitron", sans-serif;
+    /* Same futuristic font */
 }
 
 h3 {
-    color: #adafb5; 
-    font-size: 1.6rem;
-    margin: 1.6rem 0;
+    color: #adafb5;
+    font-size: 1.8rem;
+    /* Slightly larger for readability */
+    margin: 1.8rem 0;
     text-shadow:
         -2px -2px 0 black,
         2px -2px 0 black,
         -2px 2px 0 black,
-        2px 2px 0 black; 
+        2px 2px 0 black;
     font-family: "Orbitron", sans-serif;
 }
 
 p {
-    opacity: 0.8;
-    color: white; 
+    opacity: 0.85;
+    color: white;
     text-shadow:
         -2px -2px 0 black,
         2px -2px 0 black,
         -2px 2px 0 black,
-        2px 2px 0 black; 
+        2px 2px 0 black;
 }
 
+/* Ordered list styles */
 ol {
     list-style-type: none;
     padding-left: 0;
@@ -68,21 +84,26 @@ ol li {
     display: flex;
     margin-bottom: 1rem;
     counter-increment: rule-counter;
-    color: white; 
+    color: white;
+    /* Light text to match the theme */
+    font-size: 1.2rem;
 }
 
 ol li:before {
     content: counter(rule-counter) ".";
     font-weight: 700;
     margin-right: 1rem;
-    color: white;
+    color: #eeefea;
+    /* White counter color for better visibility */
 }
 
+/* Styling for individual rule text */
 span {
-    opacity: 0.8;
+    opacity: 0.85;
     color: white;
 }
 
+/* Button container */
 .button-container {
     display: flex;
     justify-content: center;
@@ -90,25 +111,62 @@ span {
     width: 100%;
 }
 
+/* Accept button styling */
 .accept-button {
     background-color: #ffffff;
     color: rgb(0, 0, 0);
-    padding: 10px 20px;
+    padding: 12px 24px;
+    /* Slightly larger button for better visibility */
     border: none;
+    border-radius: 8px;
+    /* Rounder corners to match the theme */
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+    /* Add a transform effect */
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+    /* Button shadow to stand out */
+}
+
+/* Accept button inherits global button styles */
+.accept-button {
+    background-color: transparent;
+    /* Transparent background to match global theme */
+    color: white;
+    /* Same text color as other buttons */
+    padding: 10px 20px;
+    border: 2px solid #eeefea;
+    /* White border matching global button style */
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    /* Transition for smooth hover animation */
+    box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
+    /* Soft shadow for depth */
+    font-family: "Orbitron", sans-serif;
+    /* Ensure consistent font */
+    font-size: 1.2rem;
+    /* Font size matching global buttons */
 }
 
+/* Hover effect matches the global button hover */
 .accept-button:hover {
-    background-color: #03a60e;
+    background-color: #eeefea;
+    /* White background on hover */
+    color: #0d0d0d;
+    /* Dark text color on hover for contrast */
+    transform: scale(1.05);
+    /* Slight scaling for interaction */
+    box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+    /* Brighter shadow on hover */
 }
 
+/* Fade-in animation keyframes */
 @keyframes fadeInApp {
     from {
         transform: scale(0);
         opacity: 0;
     }
+
     to {
         transform: scale(1);
         opacity: 1;
