@@ -97,7 +97,7 @@ const handleStartAI = () => {
     }
   };
 
-  
+
   // Conditional rendering based on the current game state
   switch (gameState) {
     case 'main-menu':
@@ -105,8 +105,6 @@ const handleStartAI = () => {
         <div className="app">
           <img className='background-menu' src='./img/background-menu.png' alt="background" />
           <div className='empty-board'></div>
-          {/* <img className='logo-main' src='./img/connect-4-logo.png' alt="logo" /> */}
-
           <StartPage
             onStart={handleStartGame}
             onStartAI={handleStartAI}
@@ -129,7 +127,7 @@ const handleStartAI = () => {
             onSubmit={handlePlayerSetupSubmit}
             isAiSetup={aiSetup}
             backSpace={handleBackSpace} // Pass the backSpace function
-            />
+          />
         </div>
       );
     case 'difficulty-selection':
@@ -137,7 +135,6 @@ const handleStartAI = () => {
         <div className='app'>
           <img className='background-menu' src="./img/background-menu.png" alt="background" />
           <div className='empty-board'></div>
-          {/* <img className='logo' src='./img/connect-4-logo.png' alt="logo" /> */}
           <ComputerMenu onSelectDifficulty={handleSelectedDifficulty} />
         </div>
       );
@@ -149,9 +146,7 @@ const handleStartAI = () => {
         <div className="app">
           <img className='background-menu' src="./img/background-menu.png" alt="background" />
           <div className='empty-board'></div>
-          {/* <img className='logo' src='./img/connect-4-logo.png' alt="logo" /> */}
           <PlayerTurnDisplay playerTurn={board.currentPlayerColor as "X" | "O"} />
-
           <BoardComponent
             board={board}
             onColumnClick={(column: number) =>
