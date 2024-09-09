@@ -1,4 +1,5 @@
 @media screen and (max-width: 100vh) {
+  /* index.css */
   body {
     height: 100vh;
     overflow: hidden;
@@ -17,7 +18,7 @@
   }
 
   .background-menu {
-    will-change: opacity, transform;
+    /* will-change: opacity, transform; */
     opacity: 1;
     /* animation: fadeInAfter 1s ease-in-out 1; */
     width: 88vw;
@@ -58,34 +59,38 @@
     width: 70vw;
   }
 
-  /*Cell.css*/
-  .cell {
+  /*Cell.css - in file*/ 
+  /* .cell {
     width: calc(70vw / 8 / sqrt(2));
     height: calc(70vw / 8 / sqrt(2));
     margin-top: 2.4vw;
     margin-left: 2.4vw;
     right: 1vw;
-  }
+  } */
 
-  /*Column.css*/
-  .column:hover::after {
+  /*Column.css - in file*/
+  /* .column:hover::after {
     top: 1vw;
     left: 4.25vw;
     width: 0.5vw;
     height: 0.5vw;
-  }
-  /*PlayerTurnDisplay.css*/
-  .player-turn-display {
+  } */
+
+  /*PlayerTurnDisplay.css - in file*/
+  /* .player-turn-display {
     top: calc(50vw - 9vw);
   }
+
   .player-container {
     width: 18vw;
     height: 18vw;
   }
+
   .player {
     width: 9vw;
     height: 18vw;
   }
+
   .player-container.left-active::after {
     width: 0vw;
     height: 0vw;
@@ -93,21 +98,23 @@
     top: 9vw;
     left: 9vw;
   }
+
   .player-container.right-active::after {
     width: 0vw;
     height: 0vw;
     box-shadow: 0 0 10vw 10vw rgba(255, 0, 0, 0.226);
     top: 9vw;
-    left: 9vw;
-  }
+    right: 9vh
+  } */
+
   /*PopUpMenu.css*/
   .menu-modal-content::before {
     top: 18vw;
     left: 19.5vw;
   }
 
-  /*StartPage.css*/
-  .start-menu-container {
+  /*StartPage.css - in file*/
+  /* .start-menu-container {
     height: 70vw;
     width: 70vw;
   }
@@ -170,5 +177,5 @@
     height: 8.5vw;
     top: 10vw;
     left: 10vw;
-  }
-}
+  }*/
+} 
