@@ -37,12 +37,12 @@ const SetPlayerName: React.FC<SetPlayerNameProps> = ({ onSubmit, isAiSetup }) =>
     <form onSubmit={handleFormSubmit} className="set-player-name-form">
       <label>
         Player X Name:
-        <input name="playerX" placeholder="Enter player name" className="input-field" />
+        <input name="playerX" placeholder="Enter player name" className="input-field" required/>
       </label>
       {!isAiSetup && (
         <label>
           Player O Name:
-          <input name="playerO" placeholder="Enter player name" className="input-field" />
+          <input name="playerO" placeholder="Enter player name" className="input-field" required />
         </label>
       )}
       <button type="submit" className="submit-button">Start Game</button>
