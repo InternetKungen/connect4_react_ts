@@ -21,9 +21,9 @@ body {
   height: 100vh;
   text-shadow:
       -2px -2px 0 black,
-      2px -2px 0 black,
-      -2px 2px 0 black,
-      2px 2px 0 black;
+      1px -1px 0 black,
+      -1px 1px 0 black,
+      1px 1px 0 black;
     /* Skapar en svart "stroke" runt texten */
   /* Gradient background for the whole page */
 }
