@@ -263,13 +263,13 @@
 }
 
 .left-moving-box-glow {
-  box-shadow: 0 0 100px 50px blue;
+  box-shadow: 0 0 10vh 4vh blue;
   top: 10vh;
   left: 10vh;
 }
 
 .right-moving-box-glow{
-  box-shadow: 0 0 100px 50px red;
+  box-shadow: 0 0 10vh 4vh red;
   right: 10vh;
   top: 10vh;
 }
