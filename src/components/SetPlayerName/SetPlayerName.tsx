@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './SetPlayerName.css'; // Ensure the correct path
 
 interface SetPlayerNameProps {
@@ -15,6 +15,23 @@ const SetPlayerName: React.FC<SetPlayerNameProps> = ({ onSubmit, isAiSetup }) =>
 
     onSubmit(playerXName, playerOName);
   };
+
+    // Use effect to listen for Enter key
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        const submitButton = document.querySelector('.submit-button') as HTMLButtonElement;
+        submitButton?.click(); // Simulate a button click
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('keydown', handleKeyPress);
+    };
+  }, []);
 
   return (
     <form onSubmit={handleFormSubmit} className="set-player-name-form">
