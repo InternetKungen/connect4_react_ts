@@ -1,51 +1,38 @@
-import { Box, Typography, IconButton } from '@mui/material';
-import { Dispatch, SetStateAction } from 'react';
-import { GameState } from '../../utils/Types';
-import AcceptIcon from '../Icons/AcceptIcon';
-import { rulesRootStyles } from './Rules.style';
-import Fade from '@mui/material/Fade';
+import React from 'react';
+import './rules.css';
 
 interface RulesProps {
-  setGameState: Dispatch<SetStateAction<GameState>>;
+  setGameState: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export default function Rules(props: RulesProps) {
   function onAcceptClick() {
     props.setGameState('main-menu');
   }
+
   return (
-    <Fade in={true}>
-      <Box>
-        <Box maxWidth={480} sx={rulesRootStyles}>
-          <Typography variant='h2'>Rules</Typography>
-          <div className='ruleBlock'>
-            <Typography variant='h3'>Objective</Typography>
-            <Typography>Be the first player to connect 4 of the same colored discs in a row (either vertically, horizontally, or diagonally).</Typography>
-          </div>
-          <div className='ruleBlock'>
-            <Typography variant='h3'>How to play</Typography>
-            <ol>
-              <li>
-                <span>Red goes first in the first game.</span>
-              </li>
-              <li>
-                <span>Players must alternate turns, and only one disc can be dropped in each turn.</span>
-              </li>
-              <li>
-                <span>The game ends when there is a 4-in-a-row or a stalemate.</span>
-              </li>
-              <li>
-                <span>The starter of the previous game goes second on the next game.</span>
-              </li>
-            </ol>
-          </div>
-        </Box>
-        <div className='button-container'>
-          <IconButton className='icon-button' aria-label='accept' onClick={onAcceptClick}>
-            <AcceptIcon />
-          </IconButton>
+    <div className="rules-container">
+      <div className="rules-content">
+        <h2>Rules</h2>
+        <div className="rule-block">
+          <h3>Objective</h3>
+          <p>
+            Be the first player to connect 4 of the same colored discs in a row (either vertically, horizontally, or diagonally).
+          </p>
         </div>
-      </Box>
-    </Fade>
+        <div className="rule-block">
+          <h3>How to play</h3>
+          <ol>
+            <li><span>Blue goes first in the first game.</span></li>
+            <li><span>Players take turns placing discs into the grid.</span></li>
+            <li><span>The game ends when one of the players has a row of 4 of their discs in a row</span></li>
+            <li><span>The row can be vertical, horizontal or diagonal.</span></li>
+          </ol>
+        </div>
+      </div>
+      <div className="button-container">
+        <button className="accept-button" onClick={onAcceptClick}>Accept</button>
+      </div>
+    </div>
   );
 }
