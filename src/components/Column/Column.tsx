@@ -8,27 +8,27 @@ interface ColumnProps {
   columnIndex: number;
   onClick: (columnIndex: number) => void;
   column: Array<string>;
-  currentPlayer: string; 
+  currentPlayer: string;
   gameOver: boolean;
 }
 
 const Column: React.FC<ColumnProps> = ({ columnIndex, onClick, column, currentPlayer, gameOver }) => {
-  const [animateIndex, setAnimateIndex] = useState<number | null>(null);  // Index för animationens position
-  const [falling, setFalling] = useState<boolean>(false);  // Indikator om animationen pågår
-  const [fallingPlayer, setFallingPlayer] = useState<string | null>(null);  // Håller reda på spelarens pjäs som faller
+  const [animateIndex, setAnimateIndex] = useState<number | null>(null);  // Animation's position index
+  const [falling, setFalling] = useState<boolean>(false);  // Indicator if the animation is in progress
+  const [fallingPlayer, setFallingPlayer] = useState<string | null>(null);  // Tracks the player's falling piece
   const [highlightedCell, setHighlightedCell] = useState<number | null>(null);
 
   useEffect(() => {
-    // Kör animationen om `animateIndex` är satt och om animationen pågår
+    // Run the animation if animateIndex is set and the animation is in progress
     if (animateIndex !== null && falling) {
       const timeoutId = setTimeout(() => {
         if (animateIndex > 0 && column[animateIndex - 1] === ' ') {
-          // Flytta animeringen uppåt om nästa cell är tom
+          // Move the animation upward if the next cell is empty
           setAnimateIndex(animateIndex - 1);
         } else {
-          // Stoppa animeringen när vi når den första lediga platsen
+          // Stop the animation when the first available spot is reached
           setFalling(false);
-          onClick(columnIndex);  // Lägger pjäsen på korrekt plats i spelet
+          onClick(columnIndex);  // Place the piece in the correct spot on the game board
         }
       }, 30);
 
@@ -36,27 +36,27 @@ const Column: React.FC<ColumnProps> = ({ columnIndex, onClick, column, currentPl
     }
   }, [animateIndex, falling, onClick, columnIndex, column]);
 
-   // När musen går in i kolumnen
+   // When the mouse enters the column
   const handleMouseEnter = () => {
     const firstEmptyCell = column.findIndex((cell) => cell === ' ');
     if (firstEmptyCell !== -1) {
-      setHighlightedCell(firstEmptyCell); // Markera första tomma cellen
+      setHighlightedCell(firstEmptyCell); // Highlight the first empty cell
     }
   };
 
   // När musen lämnar kolumnen
   const handleMouseLeave = () => {
-    setHighlightedCell(null); // Ta bort markeringen
+    setHighlightedCell(null); // Remove the highlight
   };
   const handleClick = () => {
     if (!falling && !gameOver) {
       const firstEmptyCell = column.findIndex((cell) => cell === ' ');
-      
+
       if (firstEmptyCell !== -1) {
-        // Sätt den fallande pjäsen till aktuell spelare
+        // Set the falling piece to the current player
         setFallingPlayer(currentPlayer);
-        setAnimateIndex(column.length - 1);  // Börja från botten (index column.length - 1)
-        setFalling(true);  // Starta animeringen
+        setAnimateIndex(column.length - 1);  // Start from the bottom (index column.length - 1)
+        setFalling(true);  // Start the animation
       }
     }
   };
@@ -74,8 +74,8 @@ const Column: React.FC<ColumnProps> = ({ columnIndex, onClick, column, currentPl
           value={falling && rowIndex === animateIndex ? '' : cell}
           isAnimating={falling && rowIndex === animateIndex}
           player={falling && rowIndex === animateIndex ? fallingPlayer! : cell}
-          isHighlighted={rowIndex === highlightedCell} // Markera cellen
-          highlightColor={currentPlayer} // Färg som matchar spelarens färg
+          isHighlighted={rowIndex === highlightedCell} // Highlight the cell
+          highlightColor={currentPlayer} // Color that matches the player's color
         />
       ))}
     </div>
