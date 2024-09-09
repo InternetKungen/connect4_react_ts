@@ -10,7 +10,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5);
+  background: #3b3b3b(0, 0, 0, 0.5);
   /* Semi-transparent background */
   display: flex;
   align-items: center;
@@ -21,12 +21,13 @@
 
 /* Modal content styles */
 .modal-content {
-  background: #000000;
+  background: #3b3b3b;
   padding: 20px;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
   text-align: center;
   width: 300px;
+  font-size: 1.2rem;
   /* You can adjust the width as needed */
 }
 
@@ -34,18 +35,24 @@
 .modal-content button {
   background-color: #9a9a9a;
   /* Bootstrap primary color */
-  color: #000000;
+  color: #ffffff;
   border: none;
-  padding: 10px 20px;
-  border-radius: 4px;
+  padding: 12px 24px;
+  border-radius: 8px;
   cursor: pointer;
-  font-size: 16px;
+  transition: background-color 0.3s ease, transform 0.2s;
+  box-shadow:  0 0 8px rgba(255, 255, 255, 0.3);
+  font-family: "Orbitron", sans-serif;
+  font-size: 1.2rem;
   margin-top: 10px;
   width: 100%
 }
 
 /* Button hover effect */
 .modal-content button:hover {
-  background-color: #0056b3;
+  background-color: #eeefea;
+  color: #0d0d0d;
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
   /* Darker shade for hover */
 }
