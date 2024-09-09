@@ -20,7 +20,7 @@
   .background-menu {
     /* will-change: opacity, transform; */
     opacity: 1;
-    /* animation: fadeInAfter 1s ease-in-out 1; */
+    animation: fadeInAfter 1s ease-in-out 1;
     width: 88vw;
     height: 94vw;
     top: calc(50vh - 46.6vw);
@@ -33,7 +33,7 @@
       transform: scale(0);
     }
 
-    75% {
+    35% {
       opacity: 0;
       transform: scale(0);
     }
