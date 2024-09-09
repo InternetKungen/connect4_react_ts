@@ -22,6 +22,13 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
     setIsMenuOpen(false); // Close the menu without restarting or quitting
   };
 
+  // Function to handle closing the menu if clicking outside the menu content
+  const handleClickOutside = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).classList.contains('menu-modal-overlay')) {
+      handleCloseMenu(); // Close the menu if click is on the overlay
+    }
+  };
+
   return (
     <>
       <button className="popup-menu-button" onClick={handleOpenMenu}>
@@ -29,7 +36,7 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
       </button>
 
       {isMenuOpen && (
-        <div className="menu-modal-overlay">
+        <div className="menu-modal-overlay" onClick={handleClickOutside}>
           <div className="menu-modal-content">
             <h2>Game Menu</h2>
             <button onClick={handleContinue}>Continue</button>
