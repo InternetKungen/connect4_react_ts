@@ -4,9 +4,10 @@ import './SetPlayerName.css'; // Ensure the correct path
 interface SetPlayerNameProps {
   onSubmit: (playerXName: string, playerOName?: string) => void;
   isAiSetup: boolean; // Add this prop
+  backSpace: () => void; // Add this prop for back navigation
 }
 
-const SetPlayerName: React.FC<SetPlayerNameProps> = ({ onSubmit, isAiSetup }) => {
+const SetPlayerName: React.FC<SetPlayerNameProps> = ({ onSubmit, isAiSetup, backSpace }) => {
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const form = e.target as HTMLFormElement;
@@ -16,12 +17,14 @@ const SetPlayerName: React.FC<SetPlayerNameProps> = ({ onSubmit, isAiSetup }) =>
     onSubmit(playerXName, playerOName);
   };
 
-    // Use effect to listen for Enter key
+  // Use effect to listen for Enter key
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.key === 'Enter') {
         const submitButton = document.querySelector('.submit-button') as HTMLButtonElement;
         submitButton?.click(); // Simulate a button click
+      } else if (e.key === 'Escape') {
+        backSpace(); // Call the onBack function
       }
     };
 
@@ -31,10 +34,13 @@ const SetPlayerName: React.FC<SetPlayerNameProps> = ({ onSubmit, isAiSetup }) =>
     return () => {
       window.removeEventListener('keydown', handleKeyPress);
     };
-  }, []);
+  }, [backSpace]);
 
   return (
     <form onSubmit={handleFormSubmit} className="set-player-name-form">
+      <button type="button" className="popup-menu-button" onClick={backSpace}>
+        Back
+      </button> {/* Back Button styled like Menu button */}
       <label>
         Player X Name:
         <input name="playerX" placeholder="Enter player name" className="input-field" />
@@ -51,4 +57,5 @@ const SetPlayerName: React.FC<SetPlayerNameProps> = ({ onSubmit, isAiSetup }) =>
 };
 
 export default SetPlayerName;
+
 

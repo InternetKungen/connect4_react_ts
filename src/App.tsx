@@ -88,6 +88,16 @@ const handleStartAI = () => {
   }
 };
 
+  // Back navigation handler
+  const handleBackSpace = () => {
+    if (gameState === 'player-name-setup') {
+      setGameState('main-menu');
+    } else {
+      // Handle other back navigation cases if necessary
+    }
+  };
+
+  
   // Conditional rendering based on the current game state
   switch (gameState) {
     case 'main-menu':
@@ -115,7 +125,11 @@ const handleStartAI = () => {
           <div className='empty-board'></div>
           <img className='logo' src='./img/connect-4-logo.png' alt="logo" />
           <h1>{aiSetup ? "Enter your name" : "Please enter player names"}</h1>
-          <SetPlayerName onSubmit={handlePlayerSetupSubmit} isAiSetup={aiSetup} />
+          <SetPlayerName
+            onSubmit={handlePlayerSetupSubmit}
+            isAiSetup={aiSetup}
+            backSpace={handleBackSpace} // Pass the backSpace function
+            />
         </div>
       );
     case 'difficulty-selection':
