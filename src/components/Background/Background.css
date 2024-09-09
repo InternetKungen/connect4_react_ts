@@ -5,11 +5,10 @@
   left: 0;
   width: 100vw;
   height: 100vh;
-  /* background-image: url('/path/to/your/background-image.jpg'); */
   /* Byt ut till den faktiska sökvägen till din bild */
-  background: #000;
+  background: url('./img/lines.jpg');
   background-size: cover;
   background-position: center;
-  z-index: -1;
+  z-index: -4;
   /* Se till att den ligger bakom spelet */
 }

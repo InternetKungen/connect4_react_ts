@@ -1,6 +1,6 @@
 /* src/index.css */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
-@import url('./assets/css/responsive.css');
+/* @import url('./assets/css/responsive.css'); */
 *,
 *::before,
 *::after {
@@ -28,7 +28,8 @@ body {
     /* Skapar en svart "stroke" runt texten */
   /* Gradient background for the whole page */
   overflow: hidden;
-  will-change: auto;
+  will-change: opacity;
+  animation: fadeIn 2.5s ease-in-out 1;
 }
 
 /* Main application container */
@@ -49,7 +50,7 @@ body {
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.507);
   /* background: radial-gradient(circle, #5353537e 0%, #494f5c42 100%); */
   /* will-change: opacity, transform; */
-  animation: fadeInApp 0.5s ease-in-out 1;
+  /* animation: fadeInApp 0.5s ease-in-out 1; */
 }
 
 .logo {
@@ -79,7 +80,7 @@ body {
   }
 }
 
-@keyframes fadeInApp {
+/* @keyframes fadeInApp {
   from {
     transform: scale(0);
     opacity: 0;
@@ -89,11 +90,12 @@ body {
     transform: scale(1);
     opacity: 1;
   }
-}
+} */
 
 .background-menu { 
   /* background: url('./assets/img/background-menu.png') no-repeat center center; */
-  background-blend-mode:color-dodge;
+  /* background-blend-mode:color-dodge; */
+  background-size: cover;
   overflow: visible;
   position: absolute;
   bottom: 0px;
@@ -103,7 +105,7 @@ body {
   position: absolute;
   bottom: calc((50% - 47vh) - 4px);
   right: calc((50% - 44vh) + 4px);
-  /* will-change: transform, opacity; */
+  /* will-change: transform; */
 }
 
 .empty-board {
@@ -235,7 +237,7 @@ body {
   }
 
   .background-menu {
-    will-change: opacity, transform;
+    /* will-change: opacity, transform; */
     opacity: 1;
     /* animation: fadeInAfter 1s ease-in-out 1; */
     width: 88vw;

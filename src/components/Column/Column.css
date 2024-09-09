@@ -69,7 +69,7 @@
   }
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 100vh) {
   .column:hover::after {
       top: 1vw;
       left: 4.25vw;

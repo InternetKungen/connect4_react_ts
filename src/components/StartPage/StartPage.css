@@ -328,7 +328,7 @@
   opacity: 0;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 100vh) {
   .start-menu-container {
       height: 70vw;
       width: 70vw;
@@ -383,7 +383,7 @@
   .right-moving-box-glow {
     box-shadow: 0 0 10vw 4vw red;
     top: 10vw;
-    left: 10vw;
+    right: 10vw;
   }
 
   .middle-static-box {
