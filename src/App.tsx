@@ -108,6 +108,20 @@ function App() {
     }
   };
 
+    // Back navigation handler
+  const handleBackSpace = () => {
+    if (gameState === 'player-name-setup') {
+      setGameState('main-menu');
+    } else {
+      setGameState('main-menu');
+      handleReset(setBoard);
+      setPlayerXName('');
+      setPlayerOName('');
+      setPlayerX(null);
+      setPlayerO(null);
+    }
+  };
+
   // Conditional rendering based on the current game state
   switch (gameState) {
     case 'main-menu':
@@ -130,7 +144,7 @@ function App() {
       );
     case 'rules':
       return <Rules setGameState={setGameState} />;
-    case 'player-name-setup':
+      case 'player-name-setup':
       return (
         <div className='app'>
           <img
@@ -144,6 +158,7 @@ function App() {
           <SetPlayerName
             onSubmit={handlePlayerSetupSubmit}
             isAiSetup={aiSetup}
+            backSpace={handleBackSpace} // Pass the backSpace function
           />
         </div>
       );
@@ -156,7 +171,6 @@ function App() {
             alt='background'
           />
           <div className='empty-board'></div>
-          {/* <img className='logo' src='./img/connect-4-logo.png' alt="logo" /> */}
           <ComputerMenu onSelectDifficulty={handleSelectedDifficulty} />
         </div>
       );
@@ -172,7 +186,6 @@ function App() {
             alt='background'
           />
           <div className='empty-board'></div>
-          {/* <img className="logo" src="./img/connect-4-logo.png" alt="logo" /> */}
 
           <ScoreBoard
             playerXName={playerXName || 'Player X'} // Player X's name
