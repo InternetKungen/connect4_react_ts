@@ -3,14 +3,22 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  padding: 10px 20px;
+  padding: 0.4rem 1rem;
+  /* Matching padding */
   font-size: 16px;
   cursor: pointer;
-  background-color: #dfd8d8;
-  color: rgb(0, 0, 0);
-  border: none;
+  color: white;
+  border: 1px solid white;
+  /* Matching border */
   border-radius: 5px;
+  /* Matching border radius */
+  background: linear-gradient(to top, #4d575db6, #0d0d0daf);
+  /* Matching gradient background */
+  transition: background 300ms, color 300ms, outline 300ms, box-shadow 300ms;
+  /* Matching transitions */
 }
+
+
 
 .menu-modal-overlay {
   position: fixed;
@@ -22,20 +30,69 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: visible;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleInBackground {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.menu-modal-content::before {
+  content: '';
+  position: absolute;
+  top: 18vh;
+  left: 19.5vw;
+  width: 60%;
+  /* Gör bilden lika bred som föräldern */
+  height: 60%;
+  background: url('./img/popup-menu-background.png') center center no-repeat;
+  background-size: contain;
+    /* Anpassa storleken på bilden */
+  z-index: -1;
+  /* transform: scale(0.7); */
+  overflow: visible;
+  animation: scaleInBackground 0.5s ease-out;
 }
 
 .menu-modal-content {
-  background-color: rgb(255, 255, 255);
+  /* background-color: rgb(255, 255, 255); */
   padding: 20px;
   border-radius: 10px;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); */
+  /* overflow: visible; */
 }
 
 .menu-modal-content h2 {
   margin-top: 0;
+  text-align: center;
 }
 
-.menu-modal-content button {
+@keyframes scaleInButton {
+  0% {
+    transform: scale(0), translateY(10px);
+  }
+
+  100% {
+    transform: scale(1), translateY(0);
+  }
+}
+
+/* .menu-modal-content button {
   margin-top: 10px;
   padding: 10px 20px;
   font-size: 16px;
@@ -44,8 +101,64 @@
   border: none;
   border-radius: 5px;
   width: 100%;
+  animation: scaleInButton 0.5s ease-in-out;
 }
 
 .menu-modal-content button:hover {
   background-color: #ffffff;
+} */
+
+.menu-modal-content button {
+  /* background-color: transparent; */
+  color: white;
+  font-weight: bold;
+  padding: 0.4rem 1rem;
+  border-radius: 0;
+  outline: 1px solid white;
+  transition: box-shadow 300ms;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  background: linear-gradient(to top, #4d575db6, #0d0d0daf);
+  width: 100%;
+}
+
+.menu-modal-content button:last-child {
+  margin-bottom: 0;
+}
+
+.menu-modal-content button:hover {
+  /* outline: 3px solid white; */
+  animation: buttonHover 0.8s ease-in-out infinite;
+}
+
+@keyframes buttonHover {
+
+  0%,
+  100% {
+    outline: 2px solid white;
+  }
+
+  50% {
+    outline: 5px double white;
+  }
+}
+
+.menu-modal-content button:active {
+  color: black;
+  background: linear-gradient(to top, #c2c2c2, #fafafa);
+  animation: buttonActive 0.1s ease-in-out 1;
+  outline: 1px solid rgb(32, 32, 32) !important;
+}
+
+@keyframes buttonActive {
+
+  0%,
+  100% {
+    background: linear-gradient(to top, #c2c2c2, #fafafa);
+  }
+
+  50% {
+    background: linear-gradient(to top, #4d575db6,
+        #0d0d0daf);
+  }
 }

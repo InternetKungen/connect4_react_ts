@@ -1,14 +1,16 @@
+import './ComputerMenu.css';
+
 interface ComputerDifficulty {
   onSelectDifficulty: (difficulty: 'easy' | 'hard') => void;
 }
 
 const ComputerMenu: React.FC<ComputerDifficulty> = ({onSelectDifficulty}) => {
   return (
-    <div>
+    <section className="computer-menu">
       <h3>Select Difficulty</h3>
-      <button onClick={() => onSelectDifficulty('easy')}>Easy</button>
-      <button onClick={() => onSelectDifficulty('hard')}>Hard</button>
-    </div>
+      <button className="button" onClick={() => onSelectDifficulty('easy')}>Easy</button>
+      <button className="button" onClick={() => onSelectDifficulty('hard')}>Hard</button>
+    </section>
   )
 }
 

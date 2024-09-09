@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Board from './classes/Board';
 import Player from './classes/Player';
 import BoardComponent from './components/BoardComponent/BoardComponent';
+import PlayerTurnDisplay from './components/PlayerTurnDisplay/PlayerTurnDisplay';
 import GameOverComponent from './components/GameOverComponent/GameOverComponent';
 import StartPage from './components/StartPage/StartPage';
 import Rules from './components/GameRules/Rules';
@@ -22,24 +23,28 @@ function App() {
   // States to keep track of the respective players' scores throughout the game
   const [playerXScore, setPlayerXScore] = useState<number>(0); // Player X's score
   const [playerOScore, setPlayerOScore] = useState<number>(0); // Player O's score
-  const [difficulty, setDifficulty] = useState<'easy' | 'hard' | null>(null);
-  const [playerSetupRequired, setPlayerSetupRequired] = useState<boolean>(false);
+
   const [isLocked, setIsLocked] = useState<boolean>(false);
+  const [difficulty, setDifficulty] = useState<'easy' | 'hard' | null>(null);
+
+  const [aiSetup, setAiSetup] = useState<boolean>(false);
+
   // State to store player names
   const [playerXName, setPlayerXName] = useState<string>('');
   const [playerOName, setPlayerOName] = useState<string>('');
 
   // Handler to start the game (Player vs Player)
   const handleStartGame = () => {
-    setPlayerSetupRequired(true); // Indicate that player setup is required
-    setGameState('game-board');
+    setAiSetup(false); // Ensure AI setup is not active
+    setGameState('player-name-setup'); // Go to player name setup
   };
 
   // Handler to start the game against AI
   const handleStartAI = () => {
-    setGameState('difficulty-selection');
+    setAiSetup(true); // Activate AI setup
+    setGameState('player-name-setup'); // Go to player name setup
   };
-  // Reset the board and scores
+
   const handleRestart = () => {
     handleReset(setBoard);
     setPlayerXScore(0);
@@ -70,17 +75,28 @@ function App() {
   // Handler for PopUpMenu button click
 
   // Function to handle player name setup and transition to game board
-  const handlePlayerSetupSubmit = (playerXName: string, playerOName: string) => {
+  const handlePlayerSetupSubmit = (
+    playerXName: string,
+    playerOName?: string
+  ) => {
     if (playerXName) {
       setPlayerX(new Player(playerXName, 'X', false));
       setPlayerXName(playerXName);
     }
-    if (playerOName) {
-      setPlayerO(new Player(playerOName, 'O', false));
-      setPlayerOName(playerOName);
+
+    if (aiSetup) {
+      // If it's AI setup, go to difficulty selection
+      setPlayerO(new Player('AI', 'O', true)); // Set AI as Player O
+      setPlayerOName('AI'); // Set AI's name for display purposes
+      setGameState('difficulty-selection');
+    } else {
+      // If it's PvP setup, set Player O and start the game
+      if (playerOName) {
+        setPlayerO(new Player(playerOName, 'O', false));
+        setPlayerOName(playerOName);
+      }
+      setGameState('game-board');
     }
-    setPlayerSetupRequired(false);
-    setGameState('game-board');
   };
 
   // Score Update Function that checks the winner after each game ends
@@ -96,10 +112,14 @@ function App() {
   switch (gameState) {
     case 'main-menu':
       return (
-        <div className="app">
-          <img className="background-menu" src="./img/background-menu.png" alt="background" />
-          <div className="empty-board"></div>
-          <img className="logo-main" src="./img/connect-4-logo.png" alt="logo" />
+        <div className='app'>
+          <img
+            className='background-menu'
+            src='./img/background-menu.png'
+            alt='background'
+          />
+          <div className='empty-board'></div>
+          {/* <img className='logo-main' src='./img/connect-4-logo.png' alt="logo" /> */}
 
           <StartPage
             onStart={handleStartGame}
@@ -110,35 +130,59 @@ function App() {
       );
     case 'rules':
       return <Rules setGameState={setGameState} />;
+    case 'player-name-setup':
+      return (
+        <div className='app'>
+          <img
+            className='background-menu'
+            src='./img/background-menu.png'
+            alt='background'
+          />
+          <div className='empty-board'></div>
+          <img className='logo' src='./img/connect-4-logo.png' alt='logo' />
+          <h1>{aiSetup ? 'Enter your name' : 'Please enter player names'}</h1>
+          <SetPlayerName
+            onSubmit={handlePlayerSetupSubmit}
+            isAiSetup={aiSetup}
+          />
+        </div>
+      );
     case 'difficulty-selection':
-      return <ComputerMenu onSelectDifficulty={handleSelectedDifficulty} />;
+      return (
+        <div className='app'>
+          <img
+            className='background-menu'
+            src='./img/background-menu.png'
+            alt='background'
+          />
+          <div className='empty-board'></div>
+          {/* <img className='logo' src='./img/connect-4-logo.png' alt="logo" /> */}
+          <ComputerMenu onSelectDifficulty={handleSelectedDifficulty} />
+        </div>
+      );
     case 'game-board':
-      if (playerSetupRequired) {
-        return (
-          <div className="app">
-            <img className="background-menu" src="./img/background-menu.png" alt="background" />
-            <div className="empty-board"></div>
-            <img className="logo" src="./img/connect-4-logo.png" alt="logo" />
-            <h1>Please enter player names</h1>
-
-            <SetPlayerName onSubmit={handlePlayerSetupSubmit} />
-          </div>
-        );
-      }
       if (!playerX || !playerO) {
         return <div>Loading player setup...</div>;
       }
       return (
-        <div className="app">
-          <img className="background-menu" src="./img/background-menu.png" alt="background" />
-          <div className="empty-board"></div>
-          <img className="logo" src="./img/connect-4-logo.png" alt="logo" />
+        <div className='app'>
+          <img
+            className='background-menu'
+            src='./img/background-menu.png'
+            alt='background'
+          />
+          <div className='empty-board'></div>
+          {/* <img className="logo" src="./img/connect-4-logo.png" alt="logo" /> */}
 
           <ScoreBoard
             playerXName={playerXName || 'Player X'} // Player X's name
             playerOName={playerOName || 'Player O'} // Player O's name (or AI's name)
             playerXScore={playerXScore} // Pass Player X's score
             playerOScore={playerOScore} // Pass Player O's score
+          />
+
+          <PlayerTurnDisplay
+            playerTurn={board.currentPlayerColor as 'X' | 'O'}
           />
 
           <BoardComponent

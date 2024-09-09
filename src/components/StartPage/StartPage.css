@@ -104,3 +104,225 @@
       #0d0d0daf);
   }
 }
+
+.start-menu-animation-display {
+
+  position: absolute;
+  width: 36vh;
+  height: 36vh;
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  will-change: transform;
+  /* top: calc(49.5vh - 18vh); */
+}
+
+/* @keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+} */
+
+.logo-main {
+  width: 24vh;
+  height: 24vh;
+  position: absolute;
+  top: calc(18vh - 12vh);
+  left: calc(18vh - 12.5vh);
+  opacity: 1;
+  will-change: opacity;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.logo-hidden {
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.start-menu-animation-cutting-frame {
+  position: relative;
+  width: 24.5vh;
+  height: 24.5vh;
+  overflow: hidden;
+  transform: rotate(45deg);
+  border: 1px solid #f1f1ec62;
+  /* outline: 1px solid #605d58; */
+  /* transition: opacity 0.5s ease-in-out; */
+  margin-bottom: 1vh;
+}
+
+.start-menu-animation-box {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  transform: rotate(-45deg);
+  overflow: visible;
+  right: 10vh;
+  top: 5vh;
+  /* transition: background-color 0.5s ease; */
+}
+
+.start-menu-animation-box-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  will-change: opacity, background-color;
+  transition: opacity 2s ease, background-color 2s ease;
+  opacity: 0;
+}
+
+.start-menu-animation-box-background.darken-background {
+  background: radial-gradient(#202020ea ,#0d0d0dc7, #0d0d0d00, #0d0d0d00);
+  background-color: #181823;
+  opacity: 0.4;
+  transition: opacity 1s ease;
+}
+
+.animation {
+  position: absolute;
+  width: 120%;
+  height: 120%;
+  display: flex;
+  justify-content: space-between;
+  transition: transform 0.5s ease-in-out;
+  will-change: transform;
+}
+
+.left-moving-box,
+.right-moving-box,
+.right-moving-box-cpu {
+  width: 23vh;
+  height: 23vh;
+  transition: transform 0.2s ease-in;
+  background-size: cover;
+  background-position: center;
+  will-change: transform;
+  z-index: 2 !important;
+  position: relative;
+}
+
+.left-moving-box {
+  transform: translateX(-150%);
+  background: url('./img/pvp-left.png') no-repeat center center / cover;
+}
+
+
+.right-moving-box {
+  transform: translateX(150%);
+  background: url('./img/pvp-right.png') no-repeat center center / cover;
+}
+
+.right-moving-box-cpu {
+  transform: translateX(150%);
+  background: url('./img/cpu-right.png') no-repeat center center / cover;
+}
+
+.animate-left {
+  transform: translateX(-20%);
+  transition: transform 0.25s ease-in, opacity 0.5s ease-in-out;
+  opacity: 1;  
+}
+
+
+.animate-right {
+  transform: translateX(15%);
+  transition: transform 0.25s ease-in, opacity 0.5s ease-in-out;
+  opacity: 1;
+}
+
+/* .animate-left.hidden {
+  display: visible;
+  opacity: 0;
+  transform: translateX(150%);
+} */
+
+/* back glow left-moving-box */
+
+.left-moving-box-glow,
+.right-moving-box-glow {
+  content: '';
+  position: absolute;
+  width: 1vh;
+  height: 1vh;
+  /* background: url('./img/pvp-left.png') no-repeat center center / cover; */
+  /* background-size: cover;
+  background-position: center; */
+  filter: blur(15px);
+  z-index: -2 !important;
+  will-change: opacity;
+  transition: opacity 0.5s ease-in-out;
+  opacity: 0;
+  border-radius: 50%;
+}
+
+.left-moving-box-glow {
+  box-shadow: 0 0 10vh 4vh blue;
+  top: 10vh;
+  left: 10vh;
+}
+
+.right-moving-box-glow{
+  box-shadow: 0 0 10vh 4vh red;
+  right: 10vh;
+  top: 10vh;
+}
+
+.right-moving-box-glow.show-glow,
+.left-moving-box-glow.show-glow{
+  transition: opacity 2.5s ease-in-out;
+  opacity: 0.6;
+}
+
+/* {
+  transition: opacity 2.5s ease-in-out;
+  opacity: 0.2;
+} */
+
+
+
+.right-moving-box-cpu.animate-right {
+  transform: translateX(12%);
+  transition: transform 0.25s ease-in, opacity 0.5s ease-in-out;
+  opacity: 1;
+}
+
+/* .animate-left.hidden {
+  display: visible;
+  opacity: 0;
+  transform: translateX(-150%);
+} */
+
+
+
+.middle-static-box {
+  /* background: url('./img/vs-screen.png') no-repeat center center / cover; */
+  text-align: center;
+  font-size: 2vh;
+  width: 8.5vh;
+  height: 8.5vh;
+  /* background-size: contain; */
+  /* background-position: center; */
+  will-change: opacity;
+  opacity: 0;
+  z-index: -1;
+  position: absolute;
+  top: 10vh;
+  left: 10vh;
+}
+
+.show-vs-screen {
+  transition: opacity 0.5s ease-in-out;
+  opacity: 1; 
+}
+
+.show-vs-screen.hidden {
+  display: visible;
+  opacity: 0;
+}
