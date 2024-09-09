@@ -224,6 +224,7 @@ function App() {
                 updateScore(); // Update the score after the game is over
                 handleReset(setBoard); // Reset the game board for a new game
               }}
+              onQuit={handleQuit}
             />
           )}
         </div>

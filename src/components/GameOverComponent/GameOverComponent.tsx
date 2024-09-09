@@ -7,14 +7,16 @@ import './GameOverComponent.css';
 interface ModalProps {
   winner: string | null;
   onClose: () => void;
+  onQuit: () => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ winner, onClose }) => {
+const Modal: React.FC<ModalProps> = ({ winner, onClose, onQuit }) => {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
         <p>{winner ? `${winner} has won!` : "It's a tie!"}</p>
         <button onClick={onClose}>Play Again</button>
+        <button onClick={onQuit}>Back to Menu</button>
       </div>
     </div>
   );
@@ -25,9 +27,10 @@ interface GameOverComponentProps {
   playerXName: string;
   playerOName: string;
   onReset: () => void;
+  onQuit: () => void;
 }
 
-const GameOverComponent: React.FC<GameOverComponentProps> = ({ winner, playerXName, playerOName, onReset }) => {
+const GameOverComponent: React.FC<GameOverComponentProps> = ({ winner, playerXName, playerOName, onReset, onQuit }) => {
   const [isModalOpen, setIsModalOpen] = useState(true);
 
   const handleCloseModal = () => {
@@ -40,7 +43,7 @@ const GameOverComponent: React.FC<GameOverComponentProps> = ({ winner, playerXNa
 
   return (
     <div className="game-over">
-      {isModalOpen && <Modal winner={winnerName} onClose={handleCloseModal} />}
+      {isModalOpen && <Modal winner={winnerName} onClose={handleCloseModal} onQuit={onQuit} />}
     </div>
   );
 };
