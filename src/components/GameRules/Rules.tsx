@@ -23,7 +23,7 @@ export default function Rules(props: RulesProps) {
         <div className="rule-block">
           <h3>How to play</h3>
           <ol>
-            <li><span>Red goes first in the first game.</span></li>
+            <li><span>Blue goes first in the first game.</span></li>
             <li><span>Players take turns placing discs into the grid.</span></li>
             <li><span>The game ends when one of the players has a row of 4 of their discs in a row</span></li>
             <li><span>The row can be vertical, horizontal or diagonal.</span></li>
