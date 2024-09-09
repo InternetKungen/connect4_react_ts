@@ -1,3 +1,4 @@
+/* @import url('../../assets/css/responsive.css'); */
 .column {
   display: flex;
   flex-direction: column-reverse;
@@ -66,4 +67,13 @@
     opacity: 0.9;
     outline: 7px double #fbfcfe;
   }
+}
+
+@media screen and (max-width: 1000px) {
+  .column:hover::after {
+      top: 1vw;
+      left: 4.25vw;
+      width: 0.5vw;
+      height: 0.5vw;
+    }
 }

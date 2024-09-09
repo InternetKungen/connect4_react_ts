@@ -1,3 +1,4 @@
+/* @import url('../../assets/css/responsive.css'); */
 .cell {
   /* width: 100px;
   height: 100px; */
@@ -215,4 +216,14 @@
   box-shadow: 0 0 0px #b91818b4;
   /* border: 1px solid #fbfdfe; */
   outline: 0px solid #b91818b4;
+}
+
+@media screen and (max-width: 100vh) {
+  .cell {
+    width: calc(70vw / 8 / sqrt(2));
+    height: calc(70vw / 8 / sqrt(2));
+    margin-top: 2.4vw;
+    margin-left: 2.4vw;
+    right: 1vw;
+  }
 }

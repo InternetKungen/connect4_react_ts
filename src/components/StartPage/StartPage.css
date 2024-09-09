@@ -1,3 +1,4 @@
+/* @import url('../../assets/css/responsive.css'); */
 /* Grundläggande reset */
 /* body {
   margin: 0;
@@ -268,7 +269,7 @@
   left: 10vh;
 }
 
-.right-moving-box-glow{
+.right-moving-box-glow {
   box-shadow: 0 0 10vh 4vh red;
   right: 10vh;
   top: 10vh;
@@ -325,4 +326,71 @@
 .show-vs-screen.hidden {
   display: visible;
   opacity: 0;
+}
+
+@media screen and (max-width: 1000px) {
+  .start-menu-container {
+      height: 70vw;
+      width: 70vw;
+    }
+  
+  .start-menu-button-container {
+    bottom: -8vw;
+  }
+
+  .start-menu-animation-display {
+    width: 36vw;
+    height: 36vw;
+  }
+
+  .logo-main {
+    width: 24vw;
+    height: 24vw;
+    top: calc(18vw - 12vw);
+    left: calc(18vw - 12.5vw);
+  }
+
+  .start-menu-animation-cutting-frame {
+    width: 24.5vw;
+    height: 24.5vw;
+    margin-bottom: 1vw;
+  }
+
+  .start-menu-animation-box {
+    right: 10vw;
+    top: 5vw;
+  }
+
+  .left-moving-box,
+  .right-moving-box,
+  .right-moving-box-cpu {
+    width: 23vw;
+    height: 23vw;
+  }
+
+  .left-moving-box-glow,
+  .right-moving-box-glow {
+    width: 1vw;
+    height: 1vw;
+  }
+
+  .left-moving-box-glow {
+    box-shadow: 0 0 10vw 4vw blue;
+    top: 10vw;
+    left: 10vw;
+  }
+
+  .right-moving-box-glow {
+    box-shadow: 0 0 10vw 4vw red;
+    top: 10vw;
+    left: 10vw;
+  }
+
+  .middle-static-box {
+    font-size: 2vw;
+    width: 8.5vw;
+    height: 8.5vw;
+    top: 10vw;
+    left: 10vw;
+  }
 }

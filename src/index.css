@@ -1,5 +1,6 @@
 /* src/index.css */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap');
+@import url('./assets/css/responsive.css');
 *,
 *::before,
 *::after {
@@ -26,6 +27,8 @@ body {
       2px 2px 0 black;
     /* Skapar en svart "stroke" runt texten */
   /* Gradient background for the whole page */
+  overflow: hidden;
+  will-change: auto;
 }
 
 /* Main application container */
@@ -45,8 +48,8 @@ body {
   color: white;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.507);
   /* background: radial-gradient(circle, #5353537e 0%, #494f5c42 100%); */
-  will-change: opacity;
-  animation: fadeInApp 0.5s ease-in-out;
+  /* will-change: opacity, transform; */
+  animation: fadeInApp 0.5s ease-in-out 1;
 }
 
 .logo {
@@ -209,4 +212,187 @@ body {
 .rules-board ol {
   color: #666;
   /* Change the color of paragraph and list text */
+}
+
+@media screen and (max-width: 100vh) {
+  body {
+    height: 100vh;
+    overflow: hidden;
+    will-change: opacity, transform;
+  }
+
+  .app {
+    height: 70vw;
+    width: 70vw;
+    
+  }
+
+  .logo {
+    width: 11vw;
+    height: 11vw;
+    /* top: 4vh; */
+    left: calc((50% - 5.5vw) - 1px);
+  }
+
+  .background-menu {
+    will-change: opacity, transform;
+    opacity: 1;
+    /* animation: fadeInAfter 1s ease-in-out 1; */
+    width: 88vw;
+    height: 94vw;
+    top: calc(50vh - 46.6vw);
+    left: 5.5vw;
+  }
+
+  @keyframes fadeInAfter {
+    0% {
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    75% {
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  .empty-board {
+    height: 70vw;
+    width: 70vw;
+  }
+
+  .rules-container {
+    min-height: 100vw;
+  }
+
+  /*BoardComponent.css*/
+  .board {
+    height: 70vw;
+    width: 70vw;
+  }
+
+  /*Cell.css*/
+  .cell {
+    width: calc(70vw / 8 / sqrt(2));
+    height: calc(70vw / 8 / sqrt(2));
+    margin-top: 2.4vw;
+    margin-left: 2.4vw;
+    right: 1vw;
+  }
+
+  /*Column.css*/
+  .column:hover::after {
+    top: 1vw;
+    left: 4.25vw;
+    width: 0.5vw;
+    height: 0.5vw;
+  }
+
+  /*PlayerTurnDisplay.css*/
+  .player-turn-display {
+    top: calc(50vw - 9vw);
+  }
+
+  .player-container {
+    width: 18vw;
+    height: 18vw;
+  }
+
+  .player {
+    width: 9vw;
+    height: 18vw;
+  }
+
+  .player-container.left-active::after {
+    width: 0vw;
+    height: 0vw;
+    box-shadow: 0 0 10vw 10vw rgba(0, 0, 255, 0.226);
+    top: 9vw;
+    left: 9vw;
+  }
+
+  .player-container.right-active::after {
+    width: 0vw;
+    height: 0vw;
+    box-shadow: 0 0 10vw 10vw rgba(255, 0, 0, 0.226);
+    top: 9vw;
+    left: 9vw;
+  }
+
+  /*PopUpMenu.css*/
+  .menu-modal-content::before {
+    top: 18vw;
+    left: 19.5vw;
+  }
+
+  /*StartPage.css*/
+  .start-menu-container {
+    height: 70vw;
+    width: 70vw;
+  }
+
+  .start-menu-button-container {
+    bottom: -8vw;
+  }
+
+  .start-menu-animation-display {
+    width: 36vw;
+    height: 36vw;
+  }
+
+  .logo-main {
+    width: 24vw;
+    height: 24vw;
+    top: calc(18vw - 12vw);
+    left: calc(18vw - 12.5vw);
+  }
+
+  .start-menu-animation-cutting-frame {
+    width: 24.5vw;
+    height: 24.5vw;
+    margin-bottom: 1vw;
+  }
+
+  .start-menu-animation-box {
+    right: 10vw;
+    top: 5vw;
+  }
+
+  .left-moving-box,
+  .right-moving-box,
+  .right-moving-box-cpu {
+    width: 23vw;
+    height: 23vw;
+  }
+
+  .left-moving-box-glow,
+  .right-moving-box-glow {
+    width: 1vw;
+    height: 1vw;
+  }
+
+  .left-moving-box-glow {
+    box-shadow: 0 0 10vw 4vw blue;
+    top: 10vw;
+    left: 10vw;
+  }
+
+  .right-moving-box-glow {
+    box-shadow: 0 0 10vw 4vw red;
+    top: 10vw;
+    left: 10vw;
+  }
+
+  .middle-static-box {
+    font-size: 2vw;
+    width: 8.5vw;
+    height: 8.5vw;
+    top: 10vw;
+    left: 10vw;
+  }
 }
