@@ -1,6 +1,6 @@
 // StartPage.tsx
 import React, { useState } from 'react';
-import './StartPage.css';
+import './StartMenu.css';
 
 interface StartPageProps {
   onStart: () => void; // Define the type for the onStart function
