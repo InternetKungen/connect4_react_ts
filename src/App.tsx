@@ -32,7 +32,6 @@ function App() {
   const [playerOName, setPlayerOName] = useState<string>('');
   // Timer state
   const [timeLeft, setTimeLeft] = useState<number>(10); // 30 seconds per turn
-  const [turnTimer, setTurnTimer] = useState<number | null>(null); // Reference to the interval
 
   // Handler to start the game (Player vs Player)
   const handleStartGame = () => {
@@ -76,7 +75,10 @@ function App() {
   };
 
   // Function to handle player name setup and transition to game board
-  const handlePlayerSetupSubmit = (playerXName: string, playerOName?: string) => {
+  const handlePlayerSetupSubmit = (
+    playerXName: string,
+    playerOName?: string
+  ) => {
     if (playerXName) {
       setPlayerX(new Player(playerXName, 'X', false));
       setPlayerXName(playerXName);
@@ -100,24 +102,34 @@ function App() {
 
   // Timer logic
   useEffect(() => {
-    if (gameState === 'game-board') {
-      setTimeLeft(10); // Ensure the timer starts at 10 at the beginning of the game
-    }
-
-    if (timeLeft === 0) {
-      handleTimeout(); // Handle what happens when the timer runs out
-    } else {
+    // Only run the timer if the game is on the board
+    if (gameState === 'game-board' && timeLeft > 0 && !board.gameOver) {
       const timerId = setTimeout(() => {
         setTimeLeft((prevTime) => prevTime - 1);
       }, 1000);
 
-      setTurnTimer(timerId); // Store the timer ID for clearing later
+      return () => clearTimeout(timerId); // Clear the timer on unmount or reset
     }
 
-    return () => {
-      if (turnTimer) clearTimeout(turnTimer); // Clear the timer when unmounted or reset
-    };
-  }, [timeLeft, gameState]);
+    // If the timer hits zero, handle the timeout
+    if (timeLeft === 0 && !board.gameOver) {
+      handleTimeout();
+    }
+  }, [timeLeft, gameState, board.gameOver]);
+
+  // This useEffect ensures the timer is reset when game bord renders
+  useEffect(() => {
+    if (gameState === 'game-board') {
+      resetTimer();
+    }
+  }, [gameState]);
+
+  // Stop the timer when game is over
+  /* useEffect(() => {
+    if (board.gameOver) {
+      handleGameOver(); // Stop the timer when game is over
+    }
+  }, [board.gameOver]); */
 
   // Handle when the timer runs out
   const handleTimeout = () => {
@@ -138,12 +150,19 @@ function App() {
         return newBoard;
       });
     }
-    setTimeLeft(10); // Reset timer after switch
+    resetTimer(); // Reset timer after switch
   };
 
   // Function to reset timer after each move
   const resetTimer = () => {
     setTimeLeft(10); // Reset timer to initial value
+  };
+  // Function to stop the timer and reset the timer display
+  const handleGameOver = () => {
+    if (board.gameOver) {
+      clearTimeout(turnTimer);
+      setTimeLeft(0);
+    }
   };
 
   // Score Update Function that checks the winner after each game ends
@@ -173,9 +192,13 @@ function App() {
   switch (gameState) {
     case 'main-menu':
       return (
-        <div className="app">
-          <img className="background-menu" src="./img/background-menu.png" alt="background" />
-          <div className="empty-board"></div>
+        <div className='app'>
+          <img
+            className='background-menu'
+            src='./img/background-menu.png'
+            alt='background'
+          />
+          <div className='empty-board'></div>
           {/* <img className='logo-main' src='./img/connect-4-logo.png' alt="logo" /> */}
 
           <StartPage
@@ -189,10 +212,14 @@ function App() {
       return <Rules setGameState={setGameState} />;
     case 'player-name-setup':
       return (
-        <div className="app">
-          <img className="background-menu" src="./img/background-menu.png" alt="background" />
-          <div className="empty-board"></div>
-          <img className="logo" src="./img/connect-4-logo.png" alt="logo" />
+        <div className='app'>
+          <img
+            className='background-menu'
+            src='./img/background-menu.png'
+            alt='background'
+          />
+          <div className='empty-board'></div>
+          <img className='logo' src='./img/connect-4-logo.png' alt='logo' />
           <h1>{aiSetup ? 'Enter your name' : 'Please enter player names'}</h1>
           <SetPlayerName
             onSubmit={handlePlayerSetupSubmit}
@@ -203,9 +230,13 @@ function App() {
       );
     case 'difficulty-selection':
       return (
-        <div className="app">
-          <img className="background-menu" src="./img/background-menu.png" alt="background" />
-          <div className="empty-board"></div>
+        <div className='app'>
+          <img
+            className='background-menu'
+            src='./img/background-menu.png'
+            alt='background'
+          />
+          <div className='empty-board'></div>
           <ComputerMenu onSelectDifficulty={handleSelectedDifficulty} />
         </div>
       );
@@ -214,16 +245,22 @@ function App() {
         return <div>Loading player setup...</div>;
       }
       return (
-        <div className="app">
-          <img className="background-menu" src="./img/background-menu.png" alt="background" />
-          <div className="empty-board"></div>
+        <div className='app'>
+          <img
+            className='background-menu'
+            src='./img/background-menu.png'
+            alt='background'
+          />
+          <div className='empty-board'></div>
           <ScoreBoard
             playerXName={playerXName || 'Player X'} // Player X's name
             playerOName={playerOName || 'Player O'} // Player O's name (or AI's name)
             playerXScore={playerXScore} // Pass Player X's score
             playerOScore={playerOScore} // Pass Player O's score
           />
-          <PlayerTurnDisplay playerTurn={board.currentPlayerColor as 'X' | 'O'} />
+          <PlayerTurnDisplay
+            playerTurn={board.currentPlayerColor as 'X' | 'O'}
+          />
           <BoardComponent
             board={board}
             onColumnClick={(column: number) => {
@@ -251,7 +288,8 @@ function App() {
               onReset={() => {
                 updateScore(); // Update the score after the game is over
                 handleReset(setBoard); // Reset the game board for a new game
-                resetTimer(); // Reset timer after game over
+                resetTimer(); // Reset timer the game is over
+                handleGameOver();
               }}
               onQuit={handleQuit}
             />
