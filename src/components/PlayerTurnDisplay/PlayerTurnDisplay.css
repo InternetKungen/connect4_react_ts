@@ -1,3 +1,4 @@
+/* @import url('../../assets/css/responsive.css'); */
 .player-turn-display {
   position: absolute;
   display: flex;
@@ -84,4 +85,36 @@
   left: 9vh;
   border-radius: 50%;
   transition: box-shadow 0.5s ease;
+}
+
+@media screen and (max-width: 100vh) {
+.player-turn-display {
+  top: calc(50vh - 9vw);
+}
+
+.player-container {
+  width: 18vw;
+  height: 18vw;
+}
+
+.player {
+  width: 9vw;
+  height: 18vw;
+}
+
+.player-container.left-active::after {
+  width: 0vw;
+  height: 0vw;
+  box-shadow: 0 0 10vw 10vw rgba(0, 0, 255, 0.226);
+  top: 9vw;
+  left: 9vw;
+}
+
+.player-container.right-active::after {
+  width: 0vw;
+  height: 0vw;
+  box-shadow: 0 0 10vw 10vw rgba(255, 0, 0, 0.226);
+  top: 9vw;
+  left: 9vw;
+}
 }

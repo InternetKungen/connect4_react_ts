@@ -4,14 +4,14 @@ import Player from './classes/Player';
 import BoardComponent from './components/BoardComponent/BoardComponent';
 import PlayerTurnDisplay from './components/PlayerTurnDisplay/PlayerTurnDisplay';
 import GameOverComponent from './components/GameOverComponent/GameOverComponent';
-import StartPage from './components/StartPage/StartPage';
+import StartMenu from './components/StartMenu/StartMenu';
 import Rules from './components/GameRules/Rules';
 import { GameState } from './utils/Types';
 import SetPlayerName from './components/SetPlayerName/SetPlayerName';
 import './index.css';
 import ComputerMenu from './components/ComputerMenu/ComputerMenu';
 import PopUpMenu from './components/PopUpMenu/PopUpMenu';
-import { handleColumnClick, handleReset } from './utils/Gamelogic';
+import { handleColumnClick, handleReset } from './utils/gameUtils';
 import ScoreBoard from './components/ScoreBoard/ScoreBoard'; // Import the new ScoreBoard component
 
 function App() {
@@ -135,7 +135,7 @@ function App() {
           <div className='empty-board'></div>
           {/* <img className='logo-main' src='./img/connect-4-logo.png' alt="logo" /> */}
 
-          <StartPage
+          <StartMenu
             onStart={handleStartGame}
             onStartAI={handleStartAI}
             onShowRules={handleShowRules}

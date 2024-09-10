@@ -1,16 +1,21 @@
-// components/PopUpMenu/PopUpMenu.tsx
+// PopUpMenu component handle open and closed in game menu
+// comes with three functions
+// "Continue" Allows player to close the menu and return to the game
+// "Restart" trigger reset function and restart the board
+// "Quit" Exists the current game and trigger quit function back to menu 
+
 import React, { useState, useEffect } from 'react';
-import './PopUpMenu.css'; // Assuming this is where your styles are
+import './PopUpMenu.css'; 
 
 interface PopUpMenuProps {
-  onRestart: () => void;
-  onQuit: () => void;
+  onRestart: () => void; // Function to restart the game
+  onQuit: () => void;// Function to quit the game
 }
 
 const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false); // state to track if the menu is open or closed
 
-  // Bind ESC key to open/close the menu
+  // useEffect to bind the ESC key to opening/closing the menu
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
