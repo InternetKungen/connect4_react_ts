@@ -11,7 +11,7 @@ import SetPlayerName from './components/SetPlayerName/SetPlayerName';
 import './index.css';
 import ComputerMenu from './components/ComputerMenu/ComputerMenu';
 import PopUpMenu from './components/PopUpMenu/PopUpMenu';
-import { handleColumnClick, handleReset } from './utils/Gamelogic';
+import { handleColumnClick, handleReset } from './utils/gameUtils';
 import ScoreBoard from './components/ScoreBoard/ScoreBoard'; // Import the new ScoreBoard component
 
 function App() {
