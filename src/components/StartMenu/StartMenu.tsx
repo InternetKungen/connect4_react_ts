@@ -1,16 +1,18 @@
-// StartPage.tsx
+// This is StartMenu page which is the landing / first page you encounter when you start up the game 
 import React, { useState } from 'react';
 import './StartMenu.css';
 
-interface StartPageProps {
-  onStart: () => void; // Define the type for the onStart function
-  onStartAI: () => void; // New handler for starting PLAYER VS AI
-  onShowRules: () => void; // New handler for showing game rules
+interface StartMenuProps {
+  onStart: () => void; // Function that starts Player vs Player 
+  onStartAI: () => void; // Function that starts Player vs Ai Mode / Computer 
+  onShowRules: () => void; // Function that shows Game Rules
 }
 
-const StartPage: React.FC<StartPageProps> = ({ onStart, onStartAI, onShowRules }) => {
+const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules }) => {
+  // useState hook to track which button is being hovered over
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
   return (
+    // Main container for the start menu
     <div className="start-menu-container">
       <h1 className="start-menu-title"></h1>
       
@@ -76,5 +78,5 @@ const StartPage: React.FC<StartPageProps> = ({ onStart, onStartAI, onShowRules }
   );
 };
 
-export default StartPage;
+export default StartMenu;
 
