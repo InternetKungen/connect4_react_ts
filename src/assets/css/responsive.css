@@ -186,6 +186,16 @@
     margin-top: 9.6vw;
     margin-left: 0;
   } */
+
+  /*ScoreBoard.css*/
+  /* .scoreboard {
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: white;
+    font-family: 'Bungee Hairline', sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  } */
 } 
 
 @media screen and (max-width: 780px) {
