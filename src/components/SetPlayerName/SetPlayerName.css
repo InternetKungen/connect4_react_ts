@@ -1,4 +1,4 @@
-/* Center the form and style it */
+/* Center the form and give it a shadow */
 .set-player-name-form {
   display: flex;
   flex-direction: column;
@@ -12,28 +12,26 @@
   /* Adjust this value to move the form down */
 }
 
-/* Style for the input fields to make them bigger */
+/* Style the input fields to make them bigger and more readable */
 .input-field {
   width: 100%;
   padding: 15px;
   background: linear-gradient(to top, #4d575db6, #0d0d0daf);
-  /* Increase padding for larger input size */
   margin: 10px 0;
   border: 2px solid #ffffff;
   border-radius: 5px;
   font-size: 18px;
   color: white;
-  /* Increase font size for larger text */
 }
 
 .input-field::placeholder {
   color: rgba(255, 255, 255, 0.7);
-  /* Slightly transparent white for placeholders */
+  /* Slightly transparent placeholder text */
 }
 
-/* Style for the submit button */
+/* Style the "Start Game" submit button */
 .submit-button {
-  padding: 15px 15px;
+  padding: 15px;
   background: linear-gradient(to top, #4d575db6, #0d0d0daf);
   color: white;
   border-radius: 0;
@@ -41,13 +39,15 @@
   cursor: pointer;
   font-size: 16px;
   transition: background 300ms, outline 300ms, box-shadow 300ms;
-  margin-top: 10px; /* Space above the button */
+  margin-top: 10px;
 }
 
+/* Animation for submit button when hovering */
 .submit-button:hover {
   animation: buttonHover 0.8s ease-in-out infinite;
 }
 
+/* Change style when submit button is clicked */
 .submit-button:active {
   background: linear-gradient(to top, #c2c2c2, #fafafa);
   color: black;
@@ -55,13 +55,11 @@
   animation: buttonActive 0.1s ease-in-out 1;
 }
 
-/* Style for the back button */
+/* Style the "Back" button in the top corner */
 .back-button {
   position: absolute;
   top: 10px;
-  /* Adjust this as needed */
   right: 10px;
-  /* Adjust this as needed */
   padding: 0.4rem 1rem;
   background: linear-gradient(to top, #4d575db6, #0d0d0daf);
   color: white;
@@ -71,14 +69,14 @@
   font-size: 16px;
   transition: background 300ms, outline 300ms, box-shadow 300ms;
   z-index: 10;
-  /* Ensure it is above other elements */
 }
 
-/* Make sure hover and active styles are consistent */
+/* Hover effect for the "Back" button */
 .back-button:hover {
   animation: buttonHover 0.8s ease-in-out infinite;
 }
 
+/* Active state for the "Back" button when clicked */
 .back-button:active {
   background: linear-gradient(to top, #c2c2c2, #fafafa);
   color: black;
@@ -86,8 +84,9 @@
   animation: buttonActive 0.1s ease-in-out 1;
 }
 
-/* The hover and active animation from buttons */
+/* Keyframe animation for button hover effects */
 @keyframes buttonHover {
+
   0%,
   100% {
     outline: 2px solid white;
@@ -98,7 +97,9 @@
   }
 }
 
+/* Keyframe animation for button active state */
 @keyframes buttonActive {
+
   0%,
   100% {
     background: linear-gradient(to top, #c2c2c2, #fafafa);
