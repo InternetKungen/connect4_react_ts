@@ -9,7 +9,7 @@
 /* General body styles */
 body {
   margin: 0;
-  font-family: "Orbitron", sans-serif;
+  font-family: 'Orbitron', sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
   font-style: normal;
@@ -19,12 +19,8 @@ body {
   align-items: center;
   flex-direction: column;
   height: 100vh;
-  text-shadow:
-      -2px -2px 0 black,
-      1px -1px 0 black,
-      -1px 1px 0 black,
-      1px 1px 0 black;
-    /* Skapar en svart "stroke" runt texten */
+  text-shadow: -2px -2px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
+  /* Skapar en svart "stroke" runt texten */
   /* Gradient background for the whole page */
 }
 
@@ -88,9 +84,9 @@ body {
   }
 }
 
-.background-menu { 
+.background-menu {
   /* background: url('./assets/img/background-menu.png') no-repeat center center; */
-  background-blend-mode:color-dodge;
+  background-blend-mode: color-dodge;
   overflow: visible;
   position: absolute;
   bottom: 0px;
