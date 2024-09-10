@@ -178,4 +178,34 @@
     top: 10vw;
     left: 10vw;
   }*/
+
+  /*SetPlayerName.css - in file*/
+  /* .set-player-name-form {
+    padding: 1.8vw;
+    width: 26.1vw;
+    margin-top: 9.6vw;
+    margin-left: 0;
+  } */
 } 
+
+@media screen and (max-width: 780px) {
+  /*SetPlayerName.css - in file*/
+  /* h1 {
+    font-size: 4vw;
+  }
+
+  .set-player-name-form {
+    width: 60vw;
+    margin-top: 0;
+    padding: 0;
+  }
+
+  .set-player-name-form.input-field {
+    width: 80%;
+    margin: 10px 0;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
+    font-size: 18px;
+    color: white;
+  } */
+}
