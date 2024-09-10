@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
-import { gsap, Power1, Power2 } from 'gsap';
-import { RoughEase } from 'gsap/EasePack';
+import { gsap, Power2 } from 'gsap';
 
 const TunnelEffect: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
