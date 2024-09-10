@@ -28,6 +28,7 @@ function App() {
   const [difficulty, setDifficulty] = useState<'easy' | 'hard' | null>(null);
 
   const [aiSetup, setAiSetup] = useState<boolean>(false);
+  const [boardHistory, setBoardHistory] = useState<Board[]>([]);
 
   // State to store player names
   const [playerXName, setPlayerXName] = useState<string>('');
@@ -105,6 +106,18 @@ function App() {
       setPlayerXScore((prevScore) => prevScore + 1); // Increment Player X score if  win
     } else if (board.winner === 'O') {
       setPlayerOScore((prevScore) => prevScore + 1); // Increment Player O (or AI) score if win
+    }
+  };
+  // Undo-Move handler
+  const handleUndoMove = () => {
+    //Checking if there's any history to undo
+    if (boardHistory.length > 0) {
+      //Retrieving the last board state from history
+      const previousBoard = boardHistory[boardHistory.length - 1];
+      //Updating the board history, removing the last state
+      setBoardHistory(prevHistory => prevHistory.slice(0, -1));//Removing the last state from history
+      //Setting the board to previous state
+      setBoard(previousBoard);
     }
   };
 
@@ -200,7 +213,8 @@ function App() {
 
           <BoardComponent
             board={board}
-            onColumnClick={(column: number) =>
+            onColumnClick={(column: number) => {
+              setBoardHistory(prevHistory => [...prevHistory, board]);
               handleColumnClick(
                 column,
                 board,
@@ -211,10 +225,17 @@ function App() {
                 isLocked,
                 setIsLocked
               )
-            }
+            }}
             isLocked={isLocked}
           />
+          {/* Adds the undo button */}
+          <div className="undo-container">
+          <button onClick={handleUndoMove} disabled={boardHistory.length === 0}>Undo Move</button>
+          {/* Disables the button if there's no previous board states*/}
+          </div>
+
           <PopUpMenu onRestart={handleRestart} onQuit={handleQuit} />
+
           {board.gameOver && (
             <GameOverComponent
               winner={board.winner}
