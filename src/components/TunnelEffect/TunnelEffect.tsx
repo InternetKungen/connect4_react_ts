@@ -163,8 +163,8 @@ const TunnelEffect: React.FC = () => {
         const distanceToEdgeX = Math.min(this.mouse!.ratio.x, 1 - this.mouse!.ratio.x);
         const distanceToEdgeY = Math.min(this.mouse!.ratio.y, 1 - this.mouse!.ratio.y);
 
-        const edgeEasingX = Math.pow(distanceToEdgeX, 1.5); //Deacceleration
-        const edgeEasingY = Math.pow(distanceToEdgeY, 1.5);
+        const edgeEasingX = Math.pow(distanceToEdgeX, 0.55); //Deacceleration
+        const edgeEasingY = Math.pow(distanceToEdgeY, 0.55);
 
         this.camera.position.x = THREE.MathUtils.clamp(
           (this.mouse!.ratio.x * 0.044 - 0.022) * edgeEasingX, -maxX, maxX);
