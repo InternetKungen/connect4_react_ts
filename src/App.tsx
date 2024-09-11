@@ -31,7 +31,7 @@ function App() {
   const [playerXName, setPlayerXName] = useState<string>('');
   const [playerOName, setPlayerOName] = useState<string>('');
   // Timer state
-  const [timeLeft, setTimeLeft] = useState<number>(10); // 30 seconds per turn
+  const [timeLeft, setTimeLeft] = useState<number>(30); // 30 seconds per turn
 
   // Handler to start the game (Player vs Player)
   const handleStartGame = () => {
@@ -155,12 +155,11 @@ function App() {
 
   // Function to reset timer after each move
   const resetTimer = () => {
-    setTimeLeft(10); // Reset timer to initial value
+    setTimeLeft(30); // Reset timer to initial value
   };
   // Function to stop the timer and reset the timer display
   const handleGameOver = () => {
     if (board.gameOver) {
-      clearTimeout(turnTimer);
       setTimeLeft(0);
     }
   };
