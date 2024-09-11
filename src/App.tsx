@@ -107,11 +107,14 @@ function App() {
     } else if (board.winner === 'O') {
       setPlayerOScore((prevScore) => prevScore + 1); // Increment Player O (or AI) score if win
     }
+
+    setBoardHistory([]); //Clearing the board history when theres a win/draw in a game
   };
+
   // Undo-Move handler
   const handleUndoMove = () => {
-    //Checking if there's any history to undo
-    if (boardHistory.length > 0) {
+    //Checking if there's any history to undo, checking that the game is not over before making the undo move
+    if (boardHistory.length > 0 && !board.gameOver) {
       //Retrieving the last board state from history
       const previousBoard = boardHistory[boardHistory.length - 1];
       //Updating the board history, removing the last state
@@ -168,6 +171,7 @@ function App() {
           <div className='empty-board'></div>
           <img className='logo' src='./img/connect-4-logo.png' alt='logo' />
           <h1>{aiSetup ? 'Enter your name' : 'Please enter player names'}</h1>
+
           <SetPlayerName
             onSubmit={handlePlayerSetupSubmit}
             isAiSetup={aiSetup}
@@ -184,6 +188,7 @@ function App() {
             alt='background'
           />
           <div className='empty-board'></div>
+          
           <ComputerMenu onSelectDifficulty={handleSelectedDifficulty} />
         </div>
       );
@@ -230,9 +235,8 @@ function App() {
           />
           {/* // Adds the undo button */}
           <div className="undo-container">
-            <button onClick={handleUndoMove} disabled={boardHistory.length === 0}>Undo Move</button>
-            <PopUpMenu onRestart={handleRestart} onQuit={handleQuit} />
-            {/* Disables the button if there's no previous board states*/}
+            <button onClick={handleUndoMove} disabled={boardHistory.length === 0 || board.gameOver}>Undo Move</button>
+          {/* Disables the button if there's no previous board states*/}
           </div>
 
 
