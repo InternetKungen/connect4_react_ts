@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Board from './classes/Board';
 import Player from './classes/Player';
 import BoardComponent from './components/BoardComponent/BoardComponent';
@@ -13,6 +13,7 @@ import ComputerMenu from './components/ComputerMenu/ComputerMenu';
 import PopUpMenu from './components/PopUpMenu/PopUpMenu';
 import { handleColumnClick, handleReset } from './utils/gameUtils';
 import ScoreBoard from './components/ScoreBoard/ScoreBoard'; // Import the new ScoreBoard component
+import TimerDisplay from './components/Timer/Timer';
 
 function App() {
   // State to manage the current view
@@ -23,16 +24,16 @@ function App() {
   // States to keep track of the respective players' scores throughout the game
   const [playerXScore, setPlayerXScore] = useState<number>(0); // Player X's score
   const [playerOScore, setPlayerOScore] = useState<number>(0); // Player O's score
-
   const [isLocked, setIsLocked] = useState<boolean>(false);
   const [difficulty, setDifficulty] = useState<'easy' | 'hard' | null>(null);
-
   const [aiSetup, setAiSetup] = useState<boolean>(false);
   const [boardHistory, setBoardHistory] = useState<Board[]>([]);
 
   // State to store player names
   const [playerXName, setPlayerXName] = useState<string>('');
   const [playerOName, setPlayerOName] = useState<string>('');
+  // Timer state
+  const [timeLeft, setTimeLeft] = useState<number>(30); // 30 seconds per turn
 
   // Handler to start the game (Player vs Player)
   const handleStartGame = () => {
@@ -50,6 +51,7 @@ function App() {
     handleReset(setBoard);
     setPlayerXScore(0);
     setPlayerOScore(0);
+    resetTimer(); // Reset timer when restarting the game
   };
   // Render the main menu screen and reset the board, scores, and player names
   const handleQuit = () => {
@@ -59,6 +61,7 @@ function App() {
     setPlayerOScore(0);
     setPlayerXName('');
     setPlayerOName('');
+    resetTimer(); // Reset the timer when quitting the game
   };
 
   const handleSelectedDifficulty = (selectedDifficulty: 'easy' | 'hard') => {
@@ -73,13 +76,8 @@ function App() {
     setGameState('rules');
   };
 
-  // Handler for PopUpMenu button click
-
   // Function to handle player name setup and transition to game board
-  const handlePlayerSetupSubmit = (
-    playerXName: string,
-    playerOName?: string
-  ) => {
+  const handlePlayerSetupSubmit = (playerXName: string, playerOName?: string) => {
     if (playerXName) {
       setPlayerX(new Player(playerXName, 'X', false));
       setPlayerXName(playerXName);
@@ -97,8 +95,73 @@ function App() {
         setPlayerOName(playerOName);
       }
       setGameState('game-board');
+      resetTimer(); // Ensure the timer starts when the game board is rendered
     }
   };
+
+  // Timer logic
+  useEffect(() => {
+    // Only run the timer if the game is on the board and it's not over
+    if (gameState === 'game-board' && timeLeft > 0 && !board.gameOver) {
+      const timerId = setTimeout(() => {
+        setTimeLeft((prevTime) => prevTime - 1);
+      }, 1000);
+
+      return () => clearTimeout(timerId); // Clear the timer on unmount or reset
+    }
+
+    // If the timer hits zero, handle the timeout
+    if (timeLeft === 0 && !board.gameOver) {
+      handleTimeout();
+    }
+  }, [timeLeft, gameState, board.gameOver]);
+
+  // This useEffect ensures the timer is reset when game bord renders
+  useEffect(() => {
+    if (gameState === 'game-board') {
+      resetTimer();
+    }
+  }, [gameState]);
+
+  // Stop the timer when game is over
+  /* useEffect(() => {
+    if (board.gameOver) {
+      handleGameOver(); // Stop the timer when game is over
+    }
+  }, [board.gameOver]); */
+
+  // Handle when the timer runs out
+  const handleTimeout = () => {
+    if (board.currentPlayerColor === playerX?.color) {
+      // Switch turn to Player O or AI when Player X's time runs out
+      setBoard((prevBoard) => {
+        const newBoard = new Board();
+        newBoard.matrix = prevBoard.matrix.map((row) => [...row]);
+        newBoard.currentPlayerColor = 'O'; // Switch turn to O
+        return newBoard;
+      });
+    } else {
+      // Switch turn to Player X when Player O's time runs out
+      setBoard((prevBoard) => {
+        const newBoard = new Board();
+        newBoard.matrix = prevBoard.matrix.map((row) => [...row]);
+        newBoard.currentPlayerColor = 'X'; // Switch turn to X
+        return newBoard;
+      });
+    }
+    resetTimer(); // Reset timer after switch
+  };
+
+  // Function to reset timer after each move
+  const resetTimer = () => {
+    setTimeLeft(30); // Reset timer to initial value
+  };
+  // Function to stop the timer and reset the timer display
+  /*  const handleGameOver = () => {
+    if (board.gameOver) {
+      setTimeLeft(0);
+    }
+  }; */
 
   // Score Update Function that checks the winner after each game ends
   const updateScore = () => {
@@ -118,13 +181,13 @@ function App() {
       //Retrieving the last board state from history
       const previousBoard = boardHistory[boardHistory.length - 1];
       //Updating the board history, removing the last state
-      setBoardHistory(prevHistory => prevHistory.slice(0, -1));//Removing the last state from history
+      setBoardHistory((prevHistory) => prevHistory.slice(0, -1)); //Removing the last state from history
       //Setting the board to previous state
       setBoard(previousBoard);
     }
   };
 
-    // Back navigation handler
+  // Back navigation handler
   const handleBackSpace = () => {
     if (gameState === 'player-name-setup') {
       setGameState('main-menu');
@@ -142,13 +205,9 @@ function App() {
   switch (gameState) {
     case 'main-menu':
       return (
-        <div className='app'>
-          <img
-            className='background-menu'
-            src='./img/background-menu.png'
-            alt='background'
-          />
-          <div className='empty-board'></div>
+        <div className="app">
+          <img className="background-menu" src="./img/background-menu.png" alt="background" />
+          <div className="empty-board"></div>
           {/* <img className='logo-main' src='./img/connect-4-logo.png' alt="logo" /> */}
 
           <StartMenu
@@ -160,16 +219,12 @@ function App() {
       );
     case 'rules':
       return <Rules setGameState={setGameState} />;
-      case 'player-name-setup':
+    case 'player-name-setup':
       return (
-        <div className='app'>
-          <img
-            className='background-menu'
-            src='./img/background-menu.png'
-            alt='background'
-          />
-          <div className='empty-board'></div>
-          <img className='logo' src='./img/connect-4-logo.png' alt='logo' />
+        <div className="app">
+          <img className="background-menu" src="./img/background-menu.png" alt="background" />
+          <div className="empty-board"></div>
+          <img className="logo" src="./img/connect-4-logo.png" alt="logo" />
           <h1>{aiSetup ? 'Enter your name' : 'Please enter player names'}</h1>
 
           <SetPlayerName
@@ -181,14 +236,9 @@ function App() {
       );
     case 'difficulty-selection':
       return (
-        <div className='app'>
-          <img
-            className='background-menu'
-            src='./img/background-menu.png'
-            alt='background'
-          />
-          <div className='empty-board'></div>
-          
+        <div className="app">
+          <img className="background-menu" src="./img/background-menu.png" alt="background" />
+          <div className="empty-board"></div>
           <ComputerMenu onSelectDifficulty={handleSelectedDifficulty} />
         </div>
       );
@@ -197,29 +247,20 @@ function App() {
         return <div>Loading player setup...</div>;
       }
       return (
-        <div className='app'>
-          <img
-            className='background-menu'
-            src='./img/background-menu.png'
-            alt='background'
-          />
-          <div className='empty-board'></div>
-
+        <div className="app">
+          <img className="background-menu" src="./img/background-menu.png" alt="background" />
+          <div className="empty-board"></div>
           <ScoreBoard
             playerXName={playerXName || 'Player X'} // Player X's name
             playerOName={playerOName || 'Player O'} // Player O's name (or AI's name)
             playerXScore={playerXScore} // Pass Player X's score
             playerOScore={playerOScore} // Pass Player O's score
           />
-
-          <PlayerTurnDisplay
-            playerTurn={board.currentPlayerColor as 'X' | 'O'}
-          />
-
+          <PlayerTurnDisplay playerTurn={board.currentPlayerColor as 'X' | 'O'} />
           <BoardComponent
             board={board}
             onColumnClick={(column: number) => {
-              setBoardHistory(prevHistory => [...prevHistory, board]);
+              setBoardHistory((prevHistory) => [...prevHistory, board]);
               handleColumnClick(
                 column,
                 board,
@@ -229,18 +270,20 @@ function App() {
                 difficulty,
                 isLocked,
                 setIsLocked
-              )
+              );
+              resetTimer(); // Reset timer after each move
             }}
             isLocked={isLocked}
           />
+          <TimerDisplay timeLeft={timeLeft} />
           {/* // Adds the undo button */}
           <div className="undo-container">
-            <button onClick={handleUndoMove} disabled={boardHistory.length === 0 || board.gameOver}>Undo Move</button>
+            <button onClick={handleUndoMove} disabled={boardHistory.length === 0 || board.gameOver}>
+              Undo Move
+            </button>
             <PopUpMenu onRestart={handleRestart} onQuit={handleQuit} />
-          {/* Disables the button if there's no previous board states*/}
+            {/* Disables the button if there's no previous board states*/}
           </div>
-
-
 
           {board.gameOver && (
             <GameOverComponent
@@ -250,8 +293,13 @@ function App() {
               onReset={() => {
                 updateScore(); // Update the score after the game is over
                 handleReset(setBoard); // Reset the game board for a new game
+                resetTimer(); // Reset timer the game is over
+                /* handleGameOver(); */
               }}
-              onQuit={handleQuit}
+              onQuit={() => {
+                handleQuit(); // Quit the game
+                /* handleGameOver(); */ // Stop the timer when quitting
+              }}
             />
           )}
         </div>
