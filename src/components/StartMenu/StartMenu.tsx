@@ -1,6 +1,9 @@
 // This is StartMenu page which is the landing / first page you encounter when you start up the game 
 import React, { useState } from 'react';
 import './StartMenu.css';
+import useSound from '../../hooks/useSound';
+
+import buttonClickSound from '../../assets/sounds/buttonClick.mp3';
 
 interface StartMenuProps {
   onStart: () => void; // Function that starts Player vs Player 
@@ -11,6 +14,10 @@ interface StartMenuProps {
 const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules }) => {
   // useState hook to track which button is being hovered over
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
+  
+  /*Bind Sounds*/
+  const playButtonClickSound = useSound(buttonClickSound);
+
   return (
     // Main container for the start menu
     <div className="start-menu-container">
@@ -54,7 +61,7 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules }
         <button
           onMouseEnter={() => setHoveredButton('pvp')}
           onMouseLeave={() => setHoveredButton(null)}
-          onClick={onStart}
+          onClick={() => { playButtonClickSound(); onStart(); }}
           className="start-menu-button"
       >
         PLAYER VS PLAYER
@@ -62,13 +69,13 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules }
         <button
           onMouseEnter={() => setHoveredButton('cpu')}
           onMouseLeave={() => setHoveredButton(null)}
-          onClick={onStartAI}
+          onClick={() => { playButtonClickSound(); onStartAI(); }}
           className="start-menu-button"
       >
         PLAYER VS CPU
       </button>
       <button
-        onClick={onShowRules}
+        onClick={() =>{ playButtonClickSound(); onShowRules(); }}
         className="start-menu-button"
       >
         GAME RULES

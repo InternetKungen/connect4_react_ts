@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Board from './classes/Board';
 import Player from './classes/Player';
 import BoardComponent from './components/BoardComponent/BoardComponent';
@@ -13,6 +13,16 @@ import ComputerMenu from './components/ComputerMenu/ComputerMenu';
 import PopUpMenu from './components/PopUpMenu/PopUpMenu';
 import { handleColumnClick, handleReset } from './utils/gameUtils';
 import ScoreBoard from './components/ScoreBoard/ScoreBoard'; // Import the new ScoreBoard component
+import useSound from './hooks/useSound';
+
+/*Sounds*/
+import backgroundSound from './assets/sounds/backgroundSound.mp3';
+import blockChangeSound from './assets/sounds/blockChange.mp3';
+import buttonClickSound from './assets/sounds/buttonClick.mp3';
+import cellSound from './assets/sounds/cellSound.mp3';
+import clickColumnFlare from './assets/sounds/clickColumnFlare.mp3';
+import columnRelease from './assets/sounds/columnRelease.mp3';
+
 
 function App() {
   // State to manage the current view
@@ -33,6 +43,16 @@ function App() {
   // State to store player names
   const [playerXName, setPlayerXName] = useState<string>('');
   const [playerOName, setPlayerOName] = useState<string>('');
+
+  // Play background music
+  const playBackgroundSound = useSound(backgroundSound);
+  const playButtonClickSound = useSound(buttonClickSound);
+
+  useEffect(() => {
+    if (gameState === 'main-menu') {
+      playBackgroundSound();
+    }
+  }, [gameState, playBackgroundSound]);
 
   // Handler to start the game (Player vs Player)
   const handleStartGame = () => {
