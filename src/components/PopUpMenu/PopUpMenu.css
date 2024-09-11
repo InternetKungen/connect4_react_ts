@@ -8,7 +8,7 @@
   border-radius: 5px;
   background: linear-gradient(to top, #4d575db6, #0d0d0daf);
   transition: background 300ms, color 300ms, outline 300ms, box-shadow 300ms;
-  z-index: 10;
+  z-index: 5;
 }
 
 /* Add animation effects on hover for the menu button */
@@ -66,6 +66,7 @@
   animation: fadeIn 0.5s ease-in-out;
   width: 100vw;
   height: 100vh;
+  z-index: 10;
 }
 /* Fade-in effect for the overlay */
 @keyframes fadeIn {
@@ -174,5 +175,13 @@
   50% {
     background: linear-gradient(to top, #4d575db6,
         #0d0d0daf);
+  }
+}
+
+@media (max-width: 415px) {
+  .popup-menu-button {
+    font-size: .7rem !important;
+    padding: 0.4rem .6rem !important;
+    margin-top: 2rem;
   }
 }

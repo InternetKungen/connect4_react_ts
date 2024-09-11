@@ -142,3 +142,33 @@
     color: white;
   }
 }
+
+@media (max-width: 415px) {
+  .back-button {
+    font-size: .7rem !important;
+    padding: 0.4rem .6rem !important;
+    margin-top: 1rem;
+  }
+
+  .submit-button {
+    font-size: .7rem !important;
+    padding: 0.4rem .6rem !important;
+    margin-top: 1rem;
+  }
+
+}
+
+@media (max-height: 713px) {
+  .back-button {
+    font-size: .7rem !important;
+    padding: 0.4rem .6rem !important;
+    margin-top: 1rem;
+  }
+
+  .submit-button {
+    font-size: .7rem !important;
+    padding: 0.4rem .6rem !important;
+    margin-top: 1rem;
+  }
+
+}
