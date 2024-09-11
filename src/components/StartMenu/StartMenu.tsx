@@ -4,6 +4,8 @@ import './StartMenu.css';
 import useSound from '../../hooks/useSound';
 
 import buttonClickSound from '../../assets/sounds/buttonClick.mp3';
+import machineSound from '../../assets/sounds/playerTurn.mp3';
+import machineSoundReverse from '../../assets/sounds/playerTurnReverse.mp3';
 
 interface StartMenuProps {
   onStart: () => void; // Function that starts Player vs Player 
@@ -17,6 +19,8 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules }
   
   /*Bind Sounds*/
   const { playSound: playButtonClickSound } = useSound(buttonClickSound, 0.7); // 70% volym
+  const { playSound: playMachineSound } = useSound(machineSound, 0.01);
+  const { playSound: playMachineSoundReverse } = useSound(machineSoundReverse, 0.01);
 
   return (
     // Main container for the start menu
@@ -59,16 +63,16 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules }
 
       <div className='start-menu-button-container'>
         <button
-          onMouseEnter={() => setHoveredButton('pvp')}
-          onMouseLeave={() => setHoveredButton(null)}
+          onMouseEnter={() => { setHoveredButton('pvp'), playMachineSound(); }}
+          onMouseLeave={() => {setHoveredButton(null), playMachineSoundReverse(); }}
           onClick={() => { playButtonClickSound(); onStart(); }}
           className="start-menu-button"
       >
         PLAYER VS PLAYER
       </button>
         <button
-          onMouseEnter={() => setHoveredButton('cpu')}
-          onMouseLeave={() => setHoveredButton(null)}
+          onMouseEnter={() => {setHoveredButton('cpu'), playMachineSound(); }}
+          onMouseLeave={() => {setHoveredButton(null), playMachineSoundReverse(); }}
           onClick={() => { playButtonClickSound(); onStartAI(); }}
           className="start-menu-button"
       >
