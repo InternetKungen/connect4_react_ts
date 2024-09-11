@@ -4,14 +4,14 @@ import Player from './classes/Player';
 import BoardComponent from './components/BoardComponent/BoardComponent';
 import PlayerTurnDisplay from './components/PlayerTurnDisplay/PlayerTurnDisplay';
 import GameOverComponent from './components/GameOverComponent/GameOverComponent';
-import StartPage from './components/StartPage/StartPage';
+import StartMenu from './components/StartMenu/StartMenu';
 import Rules from './components/GameRules/Rules';
 import { GameState } from './utils/Types';
 import SetPlayerName from './components/SetPlayerName/SetPlayerName';
 import './index.css';
 import ComputerMenu from './components/ComputerMenu/ComputerMenu';
 import PopUpMenu from './components/PopUpMenu/PopUpMenu';
-import { handleColumnClick, handleReset } from './utils/Gamelogic';
+import { handleColumnClick, handleReset } from './utils/gameUtils';
 import ScoreBoard from './components/ScoreBoard/ScoreBoard'; // Import the new ScoreBoard component
 import TimerDisplay from './components/Timer/Timer';
 
@@ -27,6 +27,8 @@ function App() {
   const [isLocked, setIsLocked] = useState<boolean>(false);
   const [difficulty, setDifficulty] = useState<'easy' | 'hard' | null>(null);
   const [aiSetup, setAiSetup] = useState<boolean>(false);
+  const [boardHistory, setBoardHistory] = useState<Board[]>([]);
+
   // State to store player names
   const [playerXName, setPlayerXName] = useState<string>('');
   const [playerOName, setPlayerOName] = useState<string>('');
@@ -75,10 +77,7 @@ function App() {
   };
 
   // Function to handle player name setup and transition to game board
-  const handlePlayerSetupSubmit = (
-    playerXName: string,
-    playerOName?: string
-  ) => {
+  const handlePlayerSetupSubmit = (playerXName: string, playerOName?: string) => {
     if (playerXName) {
       setPlayerX(new Player(playerXName, 'X', false));
       setPlayerXName(playerXName);
@@ -172,6 +171,18 @@ function App() {
       setPlayerOScore((prevScore) => prevScore + 1); // Increment Player O (or AI) score if win
     }
   };
+  // Undo-Move handler
+  const handleUndoMove = () => {
+    //Checking if there's any history to undo
+    if (boardHistory.length > 0) {
+      //Retrieving the last board state from history
+      const previousBoard = boardHistory[boardHistory.length - 1];
+      //Updating the board history, removing the last state
+      setBoardHistory((prevHistory) => prevHistory.slice(0, -1)); //Removing the last state from history
+      //Setting the board to previous state
+      setBoard(previousBoard);
+    }
+  };
 
   // Back navigation handler
   const handleBackSpace = () => {
@@ -191,16 +202,12 @@ function App() {
   switch (gameState) {
     case 'main-menu':
       return (
-        <div className='app'>
-          <img
-            className='background-menu'
-            src='./img/background-menu.png'
-            alt='background'
-          />
-          <div className='empty-board'></div>
+        <div className="app">
+          <img className="background-menu" src="./img/background-menu.png" alt="background" />
+          <div className="empty-board"></div>
           {/* <img className='logo-main' src='./img/connect-4-logo.png' alt="logo" /> */}
 
-          <StartPage
+          <StartMenu
             onStart={handleStartGame}
             onStartAI={handleStartAI}
             onShowRules={handleShowRules}
@@ -211,14 +218,10 @@ function App() {
       return <Rules setGameState={setGameState} />;
     case 'player-name-setup':
       return (
-        <div className='app'>
-          <img
-            className='background-menu'
-            src='./img/background-menu.png'
-            alt='background'
-          />
-          <div className='empty-board'></div>
-          <img className='logo' src='./img/connect-4-logo.png' alt='logo' />
+        <div className="app">
+          <img className="background-menu" src="./img/background-menu.png" alt="background" />
+          <div className="empty-board"></div>
+          <img className="logo" src="./img/connect-4-logo.png" alt="logo" />
           <h1>{aiSetup ? 'Enter your name' : 'Please enter player names'}</h1>
           <SetPlayerName
             onSubmit={handlePlayerSetupSubmit}
@@ -229,13 +232,9 @@ function App() {
       );
     case 'difficulty-selection':
       return (
-        <div className='app'>
-          <img
-            className='background-menu'
-            src='./img/background-menu.png'
-            alt='background'
-          />
-          <div className='empty-board'></div>
+        <div className="app">
+          <img className="background-menu" src="./img/background-menu.png" alt="background" />
+          <div className="empty-board"></div>
           <ComputerMenu onSelectDifficulty={handleSelectedDifficulty} />
         </div>
       );
@@ -244,25 +243,20 @@ function App() {
         return <div>Loading player setup...</div>;
       }
       return (
-        <div className='app'>
-          <img
-            className='background-menu'
-            src='./img/background-menu.png'
-            alt='background'
-          />
-          <div className='empty-board'></div>
+        <div className="app">
+          <img className="background-menu" src="./img/background-menu.png" alt="background" />
+          <div className="empty-board"></div>
           <ScoreBoard
             playerXName={playerXName || 'Player X'} // Player X's name
             playerOName={playerOName || 'Player O'} // Player O's name (or AI's name)
             playerXScore={playerXScore} // Pass Player X's score
             playerOScore={playerOScore} // Pass Player O's score
           />
-          <PlayerTurnDisplay
-            playerTurn={board.currentPlayerColor as 'X' | 'O'}
-          />
+          <PlayerTurnDisplay playerTurn={board.currentPlayerColor as 'X' | 'O'} />
           <BoardComponent
             board={board}
             onColumnClick={(column: number) => {
+              setBoardHistory((prevHistory) => [...prevHistory, board]);
               handleColumnClick(
                 column,
                 board,
@@ -278,7 +272,16 @@ function App() {
             isLocked={isLocked}
           />
           <TimerDisplay timeLeft={timeLeft} />
+          {/* // Adds the undo button */}
+          <div className="undo-container">
+            <button onClick={handleUndoMove} disabled={boardHistory.length === 0}>
+              Undo Move
+            </button>
+            {/* Disables the button if there's no previous board states*/}
+          </div>
+
           <PopUpMenu onRestart={handleRestart} onQuit={handleQuit} />
+
           {board.gameOver && (
             <GameOverComponent
               winner={board.winner}

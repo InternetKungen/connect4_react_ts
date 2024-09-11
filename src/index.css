@@ -22,6 +22,9 @@ body {
   text-shadow: -2px -2px 0 black, 1px -1px 0 black, -1px 1px 0 black, 1px 1px 0 black;
   /* Skapar en svart "stroke" runt texten */
   /* Gradient background for the whole page */
+  overflow: hidden;
+  will-change: opacity;
+  animation: fadeIn 2.5s ease-in-out 1;
 }
 
 /* Main application container */
@@ -29,8 +32,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* margin-top: 20px; */
-  /* height: 100%; */
   height: 70vh;
   width: 70vh;
   /* background: url('./assets/img/background-menu.png') no-repeat center center,
@@ -41,11 +42,12 @@ body {
   color: white;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.507);
   /* background: radial-gradient(circle, #5353537e 0%, #494f5c42 100%); */
-  will-change: opacity;
-  animation: fadeInApp 0.5s ease-in-out;
+  /* will-change: opacity, transform; */
+  animation: fadeInApp 0.5s ease-in-out 1;
 }
 
 .logo {
+  display: none;
   width: 11vh;
   height: 11vh;
   position: absolute;
@@ -53,15 +55,6 @@ body {
   left: calc((50% - 5.5vh) - 1px);
   opacity: 0;
 }
-
-/* .logo-main {
-  width: 24vh;
-  height: 24vh;
-  position: absolute;
-  top: calc(50% - 12vh);
-  left: calc((50% - 12vh) - 1px);
-  animation: fadeIn 2.5s ease-in-out;
-} */
 
 @keyframes fadeIn {
   from {
@@ -86,9 +79,9 @@ body {
 
 .background-menu {
   /* background: url('./assets/img/background-menu.png') no-repeat center center; */
-  background-blend-mode: color-dodge;
+  /* background-blend-mode: color-dodge; */
+  background-size: cover;
   overflow: visible;
-  position: absolute;
   bottom: 0px;
   z-index: -1;
   width: 88vh;
@@ -96,7 +89,7 @@ body {
   position: absolute;
   bottom: calc((50% - 47vh) - 4px);
   right: calc((50% - 44vh) + 4px);
-  /* will-change: transform, opacity; */
+  /* will-change: transform; */
 }
 
 .empty-board {
@@ -122,48 +115,6 @@ body {
     transform: rotate(0deg);
   }
 }
-
-/* Board container styles */
-/* .board {
-  display: flex;
-  flex-direction: row;
-  height: 70vh;
-} */
-
-/* Column container styles */
-/* .column {
-  display: flex;
-  flex-direction: column-reverse;
-  margin: 1px;
-} */
-
-/* Cell styles for the game board */
-/* .cell {
-  width: 100px;
-  height: 100px;
-  border: 1px solid #000000;
-  background-color: rgb(255, 255, 255);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  cursor: pointer;
-} */
-
-/* Styles for the X and O cells */
-/* .cell.X {
-  background-color: red;
-}
-
-.cell.O {
-  background-color: rgb(0, 89, 255);
-} */
-
-/* Styles for game-over message */
-/* .game-over {
-  text-align: center;
-  margin-top: 20px;
-} */
 
 /* Additional styles for the Rules component (if needed) */
 .rules-container {
@@ -205,4 +156,41 @@ body {
 .rules-board ol {
   color: #666;
   /* Change the color of paragraph and list text */
+}
+
+.undo-container {
+  display: flex;
+  justify-content: center;
+  margin-top: auto;
+  padding: 10px;
+  width: 100%;
+  z-index: 10;
+  position: relative;
+}
+
+.undo-container button {
+  padding: 10px 15px;
+  font-size: 16px;
+  background-color: #ffffff;
+  color: rgb(0, 0, 0);
+  padding: 10px 20px;
+  border: 2px solid #eeefea;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.2);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.2rem;
+}
+
+.undo-container button:hover {
+  background: #000000;
+  color: #ffffff;
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
+}
+
+.undo-container button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }

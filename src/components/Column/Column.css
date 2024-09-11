@@ -12,15 +12,10 @@
 .column:hover::after {
   content: '';
   position: absolute;
-  /* bottom: 10px; */
   top: 1vh;
-  /* Positionen från toppen av skärmen */
-  /* transform: translate(-150%, -50%); */
-  /* Centrerar pricken horisontellt */
   left: 4.25vh;
   width: 0.5vh;
   height: 0.5vh;
-  /* transform: translateX(4.11vh); */
   background-color: #fbfcfe;
   border-radius: 50%;
   box-shadow: 0 0 20px 10px #fbfcfe;
@@ -66,4 +61,13 @@
     opacity: 0.9;
     outline: 7px double #fbfcfe;
   }
+}
+
+@media screen and (max-width: 100vh) {
+  .column:hover::after {
+      top: 1vw;
+      left: 4.25vw;
+      width: 0.5vw;
+      height: 0.5vw;
+    }
 }

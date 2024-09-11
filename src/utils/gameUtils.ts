@@ -1,7 +1,13 @@
+// gameUtils manages game logic, handling players moves, computer moves and game resets
+// handleColumnClick manages players move and computer moves
+// getComputerMove decide the computer moves based on the selected difficulty level
+// handleReset resets the game board to its initial state.
+
 import Board from '../classes/Board';
 import Player from '../classes/Player';
-import { getBestMove } from '../classes/AiHardMode'; // Import the hard mode AI logic
+import { getBestMove } from '../classes/AiHardMode';
 
+// Handles a click on a column in the game board
 export const handleColumnClick = (
   column: number,
   board: Board,
@@ -15,7 +21,8 @@ export const handleColumnClick = (
   if (board.gameOver || !playerX || !playerO || isLocked) return;
 
   setIsLocked(true);
-  // Create a copy of the current board
+
+  // Create a copy of the current board state
   const newBoard = new Board();
   newBoard.matrix = board.matrix.map((row) => [...row]);
   newBoard.currentPlayerColor = board.currentPlayerColor;
@@ -39,14 +46,15 @@ export const handleColumnClick = (
       updatedBoard.winner = newBoard.winner;
       updatedBoard.stateUpdater = () => setBoard(updatedBoard);
 
+      // Get the computer's move based on difficulty
       const computerMove = getComputerMove(updatedBoard, difficulty);
       const computerMoveSuccessful = updatedBoard.dropDisc(computerMove);
-
+      // If the computer's move is successful, update the board state
       if (computerMoveSuccessful) {
         setBoard(updatedBoard);
       }
       setIsLocked(false);
-    }, 700);
+    }, 700); //Delay for the computer's move
   } else {
     setIsLocked(false);
   }
@@ -59,7 +67,7 @@ export const getComputerMove = (board: Board, difficulty: 'easy' | 'hard' | null
     const availableColumns = board.getAvailableColumns();
     return availableColumns[Math.floor(Math.random() * availableColumns.length)];
   } else if (difficulty === 'hard') {
-    // Hard mode: Use the minimax algorithm to select the best move
+    // Hard mode: Use advanced AI to choose the best move
     return getBestMove(board);
   }
 
@@ -67,6 +75,7 @@ export const getComputerMove = (board: Board, difficulty: 'easy' | 'hard' | null
   return 0;
 };
 
+// Function to reset the board to its initial state
 export const handleReset = (setBoard: (board: Board) => void) => {
   const newBoard = new Board();
   newBoard.stateUpdater = () => setBoard(newBoard);

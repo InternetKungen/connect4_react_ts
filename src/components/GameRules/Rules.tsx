@@ -1,3 +1,5 @@
+// Display Game Rules 
+
 import React from 'react';
 import { GameState } from '../../utils/Types'; // Adjust the import path accordingly
 import './rules.css';

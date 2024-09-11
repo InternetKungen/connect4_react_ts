@@ -16,7 +16,10 @@
   text-align: center;
 } */
 
-/* Anpassade klasser */
+
+
+
+/* Main container for the start menu, centers everything vertically and horizontally */
 .start-menu-container {
   display: flex;
   flex-direction: column;
@@ -24,12 +27,11 @@
   justify-content: center;
   height: 70vh;
   width: 70vh;
-  /* background: linear-gradient(to top, #4d575dd8, #4d575d, #0d0d0d, #0d0d0dd8); */
   color: white;
-  /* border: 1px solid white; */
   overflow: visible;
 }
 
+/* Title for the start menu */
 .start-menu-title {
   height: 30%;
   font-size: 3rem;
@@ -39,11 +41,13 @@
 }
 
 @media (min-width: 768px) {
+  /* Larger font size for bigger screens */
   .start-menu-title {
     font-size: 4rem;
   }
 }
 
+/* Container for the buttons */
 .start-menu-button-container {
   display: flex;
   flex-direction: column;
@@ -51,11 +55,11 @@
   justify-content: center;
   height: 30%;
   width: 40%;
-  /* background: green; */
   position: relative;
   bottom: -8vh;
 }
 
+/* Styling for the buttons */
 .start-menu-button {
   /* background-color: transparent; */
   color: white;
@@ -70,15 +74,18 @@
   width: 100%;
 }
 
+/* Remove margin-bottom for the last button */
 .start-menu-button:last-child {
   margin-bottom: 0;
 }
 
+/* Animation when the button is hovered */
 .start-menu-button:hover {
   /* outline: 3px solid white; */
   animation: buttonHover 0.8s ease-in-out infinite;
 }
 
+/* Button hover animation */
 @keyframes buttonHover {
   0%, 100% {
     outline: 2px solid white;
@@ -88,6 +95,7 @@
   }
 }
 
+/* Style when the button is clicked */
 .start-menu-button:active {
   color: black;
   background: linear-gradient(to top, #c2c2c2, #fafafa);
@@ -95,6 +103,7 @@
   outline: 1px solid rgb(32, 32, 32) !important;
 }
 
+/* Button active state animation */
 @keyframes buttonActive {
   0%, 100% {
     background: linear-gradient(to top, #c2c2c2, #fafafa);
@@ -105,8 +114,8 @@
   }
 }
 
+/* Container for the animation display */
 .start-menu-animation-display {
-
   position: absolute;
   width: 36vh;
   height: 36vh;
@@ -114,19 +123,9 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  will-change: transform;
-  /* top: calc(49.5vh - 18vh); */
 }
 
-/* @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-} */
-
+/* Main logo */
 .logo-main {
   width: 24vh;
   height: 24vh;
@@ -137,12 +136,12 @@
   will-change: opacity;
   transition: opacity 0.5s ease-in-out;
 }
-
+/* When logo is hidden */
 .logo-hidden {
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
 }
-
+/* Frame for cutting the animation */
 .start-menu-animation-cutting-frame {
   position: relative;
   width: 24.5vh;
@@ -150,11 +149,9 @@
   overflow: hidden;
   transform: rotate(45deg);
   border: 1px solid #f1f1ec62;
-  /* outline: 1px solid #605d58; */
-  /* transition: opacity 0.5s ease-in-out; */
   margin-bottom: 1vh;
 }
-
+/* Box for handling the animation inside the frame */
 .start-menu-animation-box {
   position: relative;
   display: flex;
@@ -163,9 +160,8 @@
   overflow: visible;
   right: 10vh;
   top: 5vh;
-  /* transition: background-color 0.5s ease; */
 }
-
+/* Background of the animation box that darkens when a button is hovered */
 .start-menu-animation-box-background {
   position: absolute;
   width: 100%;
@@ -194,7 +190,7 @@
   transition: transform 0.5s ease-in-out;
   will-change: transform;
 }
-
+/* Moving boxes for the animation */
 .left-moving-box,
 .right-moving-box,
 .right-moving-box-cpu {
@@ -207,23 +203,23 @@
   z-index: 2 !important;
   position: relative;
 }
-
+/* Left-moving box (Player vs Player) */
 .left-moving-box {
   transform: translateX(-150%);
   background: url('./img/pvp-left.png') no-repeat center center / cover;
 }
 
-
+/* Right-moving box (Player vs Player) */
 .right-moving-box {
   transform: translateX(150%);
   background: url('./img/pvp-right.png') no-repeat center center / cover;
 }
-
+/* Right-moving box (Player vs CPU) */
 .right-moving-box-cpu {
   transform: translateX(150%);
   background: url('./img/cpu-right.png') no-repeat center center / cover;
 }
-
+/* Animation for moving boxes */
 .animate-left {
   transform: translateX(-20%);
   transition: transform 0.25s ease-in, opacity 0.5s ease-in-out;
@@ -237,23 +233,13 @@
   opacity: 1;
 }
 
-/* .animate-left.hidden {
-  display: visible;
-  opacity: 0;
-  transform: translateX(150%);
-} */
-
-/* back glow left-moving-box */
-
+/* Box glow effect */
 .left-moving-box-glow,
 .right-moving-box-glow {
   content: '';
   position: absolute;
   width: 1vh;
   height: 1vh;
-  /* background: url('./img/pvp-left.png') no-repeat center center / cover; */
-  /* background-size: cover;
-  background-position: center; */
   filter: blur(15px);
   z-index: -2 !important;
   will-change: opacity;
@@ -273,17 +259,12 @@
   right: 10vh;
   top: 10vh;
 }
-
+/* Show glow effect on hover */
 .right-moving-box-glow.show-glow,
 .left-moving-box-glow.show-glow{
   transition: opacity 2.5s ease-in-out;
   opacity: 0.6;
 }
-
-/* {
-  transition: opacity 2.5s ease-in-out;
-  opacity: 0.2;
-} */
 
 
 
@@ -293,22 +274,14 @@
   opacity: 1;
 }
 
-/* .animate-left.hidden {
-  display: visible;
-  opacity: 0;
-  transform: translateX(-150%);
-} */
 
-
-
+/* Middle static box showing the "VS" text */
 .middle-static-box {
   /* background: url('./img/vs-screen.png') no-repeat center center / cover; */
   text-align: center;
   font-size: 2vh;
   width: 8.5vh;
   height: 8.5vh;
-  /* background-size: contain; */
-  /* background-position: center; */
   will-change: opacity;
   opacity: 0;
   z-index: -1;
@@ -316,7 +289,7 @@
   top: 10vh;
   left: 10vh;
 }
-
+/* Show the "VS" screen when hovered */
 .show-vs-screen {
   transition: opacity 0.5s ease-in-out;
   opacity: 1; 
@@ -325,4 +298,84 @@
 .show-vs-screen.hidden {
   display: visible;
   opacity: 0;
+}
+
+@media screen and (max-width: 100vh) {
+  .start-menu-container {
+    height: 70vw;
+    width: 70vw;
+  }
+
+  .start-menu-button-container {
+    bottom: -8vw;
+  }
+
+  .start-menu-animation-display {
+    width: 36vw;
+    height: 36vw;
+  }
+
+  .logo-main {
+    width: 24vw;
+    height: 24vw;
+    top: calc(18vw - 12vw);
+    left: calc(18vw - 12.5vw);
+  }
+
+  .start-menu-animation-cutting-frame {
+    width: 24.5vw;
+    height: 24.5vw;
+    margin-bottom: 1vw;
+  }
+
+  .start-menu-animation-box {
+    right: 10vw;
+    top: 5vw;
+  }
+
+  .left-moving-box,
+  .right-moving-box,
+  .right-moving-box-cpu {
+    width: 23vw;
+    height: 23vw;
+  }
+
+  .left-moving-box-glow,
+  .right-moving-box-glow {
+    width: 1vw;
+    height: 1vw;
+  }
+
+  .left-moving-box-glow {
+    box-shadow: 0 0 10vw 4vw blue;
+    top: 10vw;
+    left: 10vw;
+  }
+
+  .right-moving-box-glow {
+    box-shadow: 0 0 10vw 4vw red;
+    top: 10vw;
+    right: 10vw;
+  }
+
+  .middle-static-box {
+    font-size: 2vw;
+    width: 8.5vw;
+    height: 8.5vw;
+    top: 10vw;
+    left: 10vw;
+  }
+}
+
+@media screen and (max-width: 680px) {
+  .start-menu-button-container {
+    /* background: green; */
+    bottom: -35vw;
+    position: relative;
+    width: 55vw;
+  }
+
+  .start-menu-button {
+    margin-bottom: 0.5rem;
+  }
 }
