@@ -1,3 +1,4 @@
+// This component display score in game-board between player x and player o (Or ai)
 import React from 'react';
 import './ScoreBoard.css';
 

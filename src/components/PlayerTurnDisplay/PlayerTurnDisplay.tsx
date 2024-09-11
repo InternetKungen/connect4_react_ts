@@ -1,3 +1,4 @@
+// This component toggle between left-active and right-active which indicate which players turn it is 
 import React, { useEffect, useState } from 'react';
 import './PlayerTurnDisplay.css';
 
