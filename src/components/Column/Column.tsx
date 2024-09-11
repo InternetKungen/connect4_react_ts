@@ -26,14 +26,15 @@ const Column: React.FC<ColumnProps> = ({ columnIndex, onClick, column, currentPl
   const [highlightedCell, setHighlightedCell] = useState<number | null>(null);
 
   /*Bind Sounds*/
-  const playClickColumnFlare = useSound(clickColumnFlare);
-  // const playColumnReleaseSound = useSound(columnRelease);
-  const playBlockChangeSound = useSound(blockChangeSound);
-  const playCellSound = useSound(cellSound);
+  const {playSound:playClickColumnFlare} = useSound(clickColumnFlare, 0.6);
+  const {playSound:playColumnReleaseSound }= useSound(columnRelease, 1);
+  const {playSound:playBlockChangeSound} = useSound(blockChangeSound, 0.6);
+  const {playSound:playCellSound} = useSound(cellSound, 0.1);
 
   const handleClick = () => {
     if (!falling && !gameOver) {
-      playClickColumnFlare(); // Play the sound when the column is clicked
+      playClickColumnFlare();
+      playColumnReleaseSound(); // Play the sound when the column is clicked
       const firstEmptyCell = column.findIndex((cell) => cell === ' ');
 
       if (firstEmptyCell !== -1) {
@@ -49,8 +50,8 @@ const Column: React.FC<ColumnProps> = ({ columnIndex, onClick, column, currentPl
     // Run the animation if animateIndex is set and the animation is in progress
     if (animateIndex !== null && falling) {
       const timeoutId = setTimeout(() => {
-        playCellSound();  // Play the cell sound
         if (animateIndex > 0 && column[animateIndex - 1] === ' ') {
+          playCellSound();  // Play the cell sound
           // Move the animation upward if the next cell is empty
           setAnimateIndex(animateIndex - 1);
         } else {
@@ -59,7 +60,7 @@ const Column: React.FC<ColumnProps> = ({ columnIndex, onClick, column, currentPl
           playBlockChangeSound();  // Play the block change sound
           onClick(columnIndex);  // Place the piece in the correct spot on the game board
         }
-      }, 30);
+      }, 40);
 
       return () => clearTimeout(timeoutId);
     }

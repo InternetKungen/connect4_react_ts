@@ -44,9 +44,13 @@ function App() {
   const [playerXName, setPlayerXName] = useState<string>('');
   const [playerOName, setPlayerOName] = useState<string>('');
 
-  // Play background music
-  const playBackgroundSound = useSound(backgroundSound);
-  const playButtonClickSound = useSound(buttonClickSound);
+  // Set fixed volume for each sound
+  const { playSound: playBackgroundSound } = useSound(backgroundSound, 0.3, 15);  // 30% volym
+  const playBlockChangeSound = useSound(blockChangeSound, 0.5); // 50% volym
+  const playButtonClickSound = useSound(buttonClickSound, 0.7); // 70% volym
+  const playCellSound = useSound(cellSound, 0.6); // 60% volym
+  const playClickColumnFlare = useSound(clickColumnFlare, 0.5); // 50% volym
+  const playColumnRelease = useSound(columnRelease, 0.4); // 40% volym
 
   useEffect(() => {
     if (gameState === 'main-menu') {

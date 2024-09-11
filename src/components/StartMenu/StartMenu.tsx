@@ -16,7 +16,7 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules }
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
   
   /*Bind Sounds*/
-  const playButtonClickSound = useSound(buttonClickSound);
+  const { playSound: playButtonClickSound } = useSound(buttonClickSound, 0.7); // 70% volym
 
   return (
     // Main container for the start menu
