@@ -29,6 +29,12 @@
   /* Slightly transparent placeholder text */
 }
 
+.button-container{
+  display: flex;
+  flex-direction: column;
+  max-width: 150px;
+}
+
 /* Style the "Start Game" submit button */
 .submit-button {
   padding: 15px;
@@ -57,18 +63,15 @@
 
 /* Style the "Back" button in the top corner */
 .back-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  padding: 0.4rem 1rem;
-  background: linear-gradient(to top, #4d575db6, #0d0d0daf);
-  color: white;
-  border: 1px solid white;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background 300ms, outline 300ms, box-shadow 300ms;
-  z-index: 10;
+    padding: 15px;
+    background: linear-gradient(to top, #4d575db6, #0d0d0daf);
+    color: white;
+    border-radius: 0;
+    border: 1px solid white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 300ms, outline 300ms, box-shadow 300ms;
+    margin-top: 10px;
 }
 
 /* Hover effect for the "Back" button */

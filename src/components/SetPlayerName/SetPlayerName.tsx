@@ -1,9 +1,9 @@
 // This component handle Set player name section for both Player vs Player and Player vs Ai
 // When players submit their names onSubmit function is called and send the names back to the parent component
 // isAiSetUp function hide PlayerO field if player vs CPU = true
-// handle backSpace with keybind and onClick  
+// handle backSpace with keybind and onClick
 import React, { useEffect } from 'react';
-import './SetPlayerName.css'; 
+import './SetPlayerName.css';
 
 interface SetPlayerNameProps {
   onSubmit: (playerXName: string, playerOName?: string) => void; // This function runs when players submit their names
@@ -27,11 +27,11 @@ const SetPlayerName: React.FC<SetPlayerNameProps> = ({ onSubmit, isAiSetup, back
     const handleKeyPress = (e: KeyboardEvent) => {
       if (e.key === 'Enter') {
         const submitButton = document.querySelector('.submit-button') as HTMLButtonElement;
-        submitButton?.click(); 
+        submitButton?.click();
       }
       if (e.key === 'Backspace') {
-        e.preventDefault(); 
-        backSpace(); 
+        e.preventDefault();
+        backSpace();
       }
     };
 
@@ -47,8 +47,7 @@ const SetPlayerName: React.FC<SetPlayerNameProps> = ({ onSubmit, isAiSetup, back
  return (
     <div className="set-player-name-container">
      <form onSubmit={handleFormSubmit} className="set-player-name-form">
-         <button className="back-button" onClick={backSpace}>Back</button>
-     
+
         <label>
           Player X Name:
           <input name="playerX" placeholder="Enter player name" className="input-field" required />
@@ -60,12 +59,13 @@ const SetPlayerName: React.FC<SetPlayerNameProps> = ({ onSubmit, isAiSetup, back
           </label>
         )}
         <div className="button-container">
-          <button type="submit" className="submit-button">Start Game</button>
+         <button type="submit" className="submit-button">Start Game</button>
+         <button className="back-button" onClick={backSpace}>Back</button>
         </div>
      </form>
    </div>
-   
-   
+
+
   );
 };
 

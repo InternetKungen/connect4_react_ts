@@ -2,10 +2,10 @@
 // comes with three functions
 // "Continue" Allows player to close the menu and return to the game
 // "Restart" trigger reset function and restart the board
-// "Quit" Exists the current game and trigger quit function back to menu 
+// "Quit" Exists the current game and trigger quit function back to menu
 
 import React, { useState, useEffect } from 'react';
-import './PopUpMenu.css'; 
+import './PopUpMenu.css';
 
 interface PopUpMenuProps {
   onRestart: () => void; // Function to restart the game
