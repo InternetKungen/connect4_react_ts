@@ -102,7 +102,7 @@ function App() {
 
   // Timer logic
   useEffect(() => {
-    // Only run the timer if the game is on the board
+    // Only run the timer if the game is on the board and it's not over
     if (gameState === 'game-board' && timeLeft > 0 && !board.gameOver) {
       const timerId = setTimeout(() => {
         setTimeLeft((prevTime) => prevTime - 1);
@@ -158,11 +158,11 @@ function App() {
     setTimeLeft(30); // Reset timer to initial value
   };
   // Function to stop the timer and reset the timer display
-  const handleGameOver = () => {
+  /*  const handleGameOver = () => {
     if (board.gameOver) {
       setTimeLeft(0);
     }
-  };
+  }; */
 
   // Score Update Function that checks the winner after each game ends
   const updateScore = () => {
@@ -288,9 +288,12 @@ function App() {
                 updateScore(); // Update the score after the game is over
                 handleReset(setBoard); // Reset the game board for a new game
                 resetTimer(); // Reset timer the game is over
-                handleGameOver();
+                /* handleGameOver(); */
               }}
-              onQuit={handleQuit}
+              onQuit={() => {
+                handleQuit(); // Quit the game
+                /* handleGameOver(); */ // Stop the timer when quitting
+              }}
             />
           )}
         </div>
