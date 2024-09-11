@@ -49,7 +49,7 @@ function App() {
   const playBlockChangeSound = useSound(blockChangeSound, 0.5); // 50% volym
   const playButtonClickSound = useSound(buttonClickSound, 0.7); // 70% volym
   const playCellSound = useSound(cellSound, 0.6); // 60% volym
-  const playClickColumnFlare = useSound(clickColumnFlare, 0.5); // 50% volym
+  const {playSound:playClickColumnFlare} = useSound(clickColumnFlare, 0.5); // 50% volym
   const playColumnRelease = useSound(columnRelease, 0.4); // 40% volym
 
   useEffect(() => {
