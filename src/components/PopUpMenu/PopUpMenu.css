@@ -178,3 +178,23 @@
         #0d0d0daf);
   }
 }
+
+
+/* Style for the toggle switch in settings */
+.menu-modal-content label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+  font-size: 16px;
+  /* Adjust font size if needed */
+}
+
+.menu-modal-content .MuiSwitch-root {
+  margin-right: 10px;
+  /* Space between the switch and label text */
+}
+
+
+
+
+

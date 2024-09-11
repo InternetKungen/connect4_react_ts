@@ -12,8 +12,9 @@ import './index.css';
 import ComputerMenu from './components/ComputerMenu/ComputerMenu';
 import PopUpMenu from './components/PopUpMenu/PopUpMenu';
 import { handleColumnClick, handleReset } from './utils/gameUtils';
-import ScoreBoard from './components/ScoreBoard/ScoreBoard'; // Import the new ScoreBoard component
+import ScoreBoard from './components/ScoreBoard/ScoreBoard';
 import Background from './components/Background/Background';
+import SettingsMenu from './components/SettingsMenu/SettingsMenu';
 
 function App() {
   // State to manage the current view
@@ -45,6 +46,14 @@ function App() {
     setGameState('player-name-setup'); // Go to player name setup
   };
 
+    const handleToggleBackgroundEffect = (hide: boolean) => {
+    setHideBackgroundEffect(hide);
+  };
+
+    const handleToggleUndoButton = (hide: boolean) => {
+    setHideUndoButton(hide);
+  };
+
   // Handler to start the game against AI
   const handleStartAI = () => {
     setAiSetup(true); // Activate AI setup
@@ -56,6 +65,7 @@ function App() {
     setPlayerXScore(0);
     setPlayerOScore(0);
   };
+
   // Render the main menu screen and reset the board, scores, and player names
   const handleQuit = () => {
     setGameState('main-menu');
@@ -64,6 +74,7 @@ function App() {
     setPlayerOScore(0);
     setPlayerXName('');
     setPlayerOName('');
+   
   };
 
   const handleSelectedDifficulty = (selectedDifficulty: 'easy' | 'hard') => {
@@ -78,7 +89,9 @@ function App() {
     setGameState('rules');
   };
 
-  // Handler for PopUpMenu button click
+  const handleOpenSettings = () => {
+    setGameState('settings'); // Set game state to 'settings'
+  };
 
   // Function to handle player name setup and transition to game board
   const handlePlayerSetupSubmit = (
@@ -108,25 +121,26 @@ function App() {
   // Score Update Function that checks the winner after each game ends
   const updateScore = () => {
     if (board.winner === 'X') {
-      setPlayerXScore((prevScore) => prevScore + 1); // Increment Player X score if  win
+      setPlayerXScore((prevScore) => prevScore + 1); // Increment Player X score if win
     } else if (board.winner === 'O') {
       setPlayerOScore((prevScore) => prevScore + 1); // Increment Player O (or AI) score if win
     }
   };
+
   // Undo-Move handler
   const handleUndoMove = () => {
-    //Checking if there's any history to undo
+    // Checking if there's any history to undo
     if (boardHistory.length > 0) {
-      //Retrieving the last board state from history
+      // Retrieving the last board state from history
       const previousBoard = boardHistory[boardHistory.length - 1];
-      //Updating the board history, removing the last state
-      setBoardHistory(prevHistory => prevHistory.slice(0, -1));//Removing the last state from history
-      //Setting the board to previous state
+      // Updating the board history, removing the last state
+      setBoardHistory(prevHistory => prevHistory.slice(0, -1)); // Removing the last state from history
+      // Setting the board to previous state
       setBoard(previousBoard);
     }
   };
 
-    // Back navigation handler
+  // Back navigation handler
   const handleBackSpace = () => {
     if (gameState === 'player-name-setup') {
       setGameState('main-menu');
@@ -137,16 +151,10 @@ function App() {
       setPlayerOName('');
       setPlayerX(null);
       setPlayerO(null);
+      
     }
   };
-     
-    const handleToggleBackground = (hide: boolean) => {
-    setHideBackgroundEffect(hide);
-  };
 
-    const handleToggleUndoButton = (hide: boolean) => {
-    setHideUndoButton(hide);
-  };
 
   // Conditional rendering based on the current game state
   switch (gameState) {
@@ -164,11 +172,34 @@ function App() {
             onStart={handleStartGame}
             onStartAI={handleStartAI}
             onShowRules={handleShowRules}
+            onOpenSettings={handleOpenSettings}
+            hideBackgroundEffect={hideBackgroundEffect} 
           />
         </div>
       );
     case 'rules':
       return <Rules setGameState={setGameState} />;
+    
+    case 'settings': // New case for settings
+      return (
+        <div className='app'>
+          <Background hideBackgroundEffect={hideBackgroundEffect} /> {/* Background visibility controlled here */}
+          <img
+            className='background-menu'
+            alt='background'
+            style={{ display: 'none' }} // Ensure the background image is always visible
+          />
+          <div className='empty-board'></div>
+          <SettingsMenu
+            hideBackgroundEffect={hideBackgroundEffect}
+            hideUndoButton={hideUndoButton}
+            onToggleBackgroundEffect={handleToggleBackgroundEffect}
+            onToggleUndoButton={handleToggleUndoButton}
+            onClose={() => setGameState('main-menu')} // Navigate back to the main menu
+          />
+        </div>
+      );
+    
     case 'player-name-setup':
       return (
         <div className='app'>
@@ -255,7 +286,7 @@ function App() {
           <PopUpMenu
             onRestart={handleRestart}
             onQuit={handleQuit}
-            onToggleBackground={handleToggleBackground}
+            onToggleBackground={handleToggleBackgroundEffect}
             onToggleUndoButton={handleToggleUndoButton}
           />
 

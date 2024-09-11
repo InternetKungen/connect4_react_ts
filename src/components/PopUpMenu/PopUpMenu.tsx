@@ -6,6 +6,7 @@
 
 import React, { useState, useEffect } from 'react';
 import './PopUpMenu.css'; 
+import SettingsMenu from '../SettingsMenu/SettingsMenu';
 
 interface PopUpMenuProps {
   onRestart: () => void; // Function to restart the game
@@ -19,7 +20,7 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit, onToggleBackgr
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false); // Settings menu state
   const [hideBackgroundEffect, setHideBackgroundEffect] = useState<boolean>(false); // State for background effect
   const [hideUndoButton, setHideUndoButton] = useState<boolean>(false); // State for undo button
-
+  
   // useEffect to bind the ESC key to opening/closing the menu
   useEffect(() => {
     const handleKeydown = (event: KeyboardEvent) => {
@@ -54,20 +55,6 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit, onToggleBackgr
     setIsSettingsOpen(false); // Close the settings menu
   };
 
-  // Handle background effect toggle
-  const handleBackgroundToggle = () => {
-    const newValue = !hideBackgroundEffect;
-    setHideBackgroundEffect(newValue);
-    onToggleBackground(newValue); // Send value to parent component (or handle it here)
-  };
-
-  // Handle undo button toggle
-  const handleUndoToggle = () => {
-    const newValue = !hideUndoButton;
-    setHideUndoButton(newValue);
-    onToggleUndoButton(newValue); // Send value to parent component (or handle it here)
-  };
-
   return (
     <>
       <button className='popup-menu-button' onClick={handleOpenMenu}>
@@ -100,33 +87,23 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit, onToggleBackgr
         </div>
       )}
 
-      {isSettingsOpen && (
-        <div className='menu-modal-overlay'>
-          <div className='menu-modal-content'>
-            <h2>Settings</h2>
-            <label>
-              <input
-                type='checkbox'
-                checked={hideBackgroundEffect}
-                onChange={handleBackgroundToggle}
-              />
-              Hide Background Effect
-            </label>
-            <label>
-              <input
-                type='checkbox'
-                checked={hideUndoButton}
-                onChange={handleUndoToggle}
-              />
-              Hide Undo Button
-            </label>
-            <button onClick={handleCloseSettings}>Back</button>
-          </div>
-        </div>
+       {isSettingsOpen && (
+        <SettingsMenu
+          hideBackgroundEffect={hideBackgroundEffect} // Pass the background effect state
+          hideUndoButton={hideUndoButton}
+          onToggleBackgroundEffect={(hide) => {
+            setHideBackgroundEffect(hide);
+            onToggleBackground(hide);
+          }}
+          onToggleUndoButton={(hide) => {
+            setHideUndoButton(hide);
+            onToggleUndoButton(hide);
+          }}
+          onClose={handleCloseSettings} // Close settings when Back is clicked
+        />
       )}
     </>
   );
 };
 
 export default PopUpMenu;
-
