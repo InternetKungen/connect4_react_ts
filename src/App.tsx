@@ -13,6 +13,7 @@ import ComputerMenu from './components/ComputerMenu/ComputerMenu';
 import PopUpMenu from './components/PopUpMenu/PopUpMenu';
 import { handleColumnClick, handleReset } from './utils/gameUtils';
 import ScoreBoard from './components/ScoreBoard/ScoreBoard'; // Import the new ScoreBoard component
+import Background from './components/Background/Background';
 
 function App() {
   // State to manage the current view
@@ -33,6 +34,10 @@ function App() {
   // State to store player names
   const [playerXName, setPlayerXName] = useState<string>('');
   const [playerOName, setPlayerOName] = useState<string>('');
+
+  // State for settings
+  const [hideBackgroundEffect, setHideBackgroundEffect] = useState<boolean>(false);
+  const [hideUndoButton, setHideUndoButton] = useState<boolean>(false);
 
   // Handler to start the game (Player vs Player)
   const handleStartGame = () => {
@@ -134,6 +139,14 @@ function App() {
       setPlayerO(null);
     }
   };
+     
+    const handleToggleBackground = (hide: boolean) => {
+    setHideBackgroundEffect(hide);
+  };
+
+    const handleToggleUndoButton = (hide: boolean) => {
+    setHideUndoButton(hide);
+  };
 
   // Conditional rendering based on the current game state
   switch (gameState) {
@@ -144,10 +157,9 @@ function App() {
             className='background-menu'
             src='./img/background-menu.png'
             alt='background'
+            style={{ display: hideBackgroundEffect ? 'none' : 'block' }}
           />
           <div className='empty-board'></div>
-          {/* <img className='logo-main' src='./img/connect-4-logo.png' alt="logo" /> */}
-
           <StartMenu
             onStart={handleStartGame}
             onStartAI={handleStartAI}
@@ -157,13 +169,14 @@ function App() {
       );
     case 'rules':
       return <Rules setGameState={setGameState} />;
-      case 'player-name-setup':
+    case 'player-name-setup':
       return (
         <div className='app'>
           <img
             className='background-menu'
             src='./img/background-menu.png'
             alt='background'
+            style={{ display: hideBackgroundEffect ? 'none' : 'block' }}
           />
           <div className='empty-board'></div>
           <img className='logo' src='./img/connect-4-logo.png' alt='logo' />
@@ -171,7 +184,7 @@ function App() {
           <SetPlayerName
             onSubmit={handlePlayerSetupSubmit}
             isAiSetup={aiSetup}
-            backSpace={handleBackSpace} // Pass the backSpace function
+            backSpace={handleBackSpace}
           />
         </div>
       );
@@ -182,6 +195,7 @@ function App() {
             className='background-menu'
             src='./img/background-menu.png'
             alt='background'
+            style={{ display: hideBackgroundEffect ? 'none' : 'block' }}
           />
           <div className='empty-board'></div>
           <ComputerMenu onSelectDifficulty={handleSelectedDifficulty} />
@@ -193,6 +207,7 @@ function App() {
       }
       return (
         <div className='app'>
+          <Background hideBackgroundEffect={hideBackgroundEffect} /> {/* Add this line here */}
           <img
             className='background-menu'
             src='./img/background-menu.png'
@@ -201,10 +216,10 @@ function App() {
           <div className='empty-board'></div>
 
           <ScoreBoard
-            playerXName={playerXName || 'Player X'} // Player X's name
-            playerOName={playerOName || 'Player O'} // Player O's name (or AI's name)
-            playerXScore={playerXScore} // Pass Player X's score
-            playerOScore={playerOScore} // Pass Player O's score
+            playerXName={playerXName || 'Player X'}
+            playerOName={playerOName || 'Player O'}
+            playerXScore={playerXScore}
+            playerOScore={playerOScore}
           />
 
           <PlayerTurnDisplay
@@ -224,17 +239,25 @@ function App() {
                 difficulty,
                 isLocked,
                 setIsLocked
-              )
+              );
             }}
             isLocked={isLocked}
           />
-          {/* Adds the undo button */}
-          <div className="undo-container">
-          <button onClick={handleUndoMove} disabled={boardHistory.length === 0}>Undo Move</button>
-          {/* Disables the button if there's no previous board states*/}
-          </div>
 
-          <PopUpMenu onRestart={handleRestart} onQuit={handleQuit} />
+          {!hideUndoButton && (
+            <div className="undo-container">
+              <button onClick={handleUndoMove} disabled={boardHistory.length === 0}>
+                Undo Move
+              </button>
+            </div>
+          )}
+
+          <PopUpMenu
+            onRestart={handleRestart}
+            onQuit={handleQuit}
+            onToggleBackground={handleToggleBackground}
+            onToggleUndoButton={handleToggleUndoButton}
+          />
 
           {board.gameOver && (
             <GameOverComponent
@@ -242,8 +265,8 @@ function App() {
               playerXName={playerXName}
               playerOName={playerOName}
               onReset={() => {
-                updateScore(); // Update the score after the game is over
-                handleReset(setBoard); // Reset the game board for a new game
+                updateScore();
+                handleReset(setBoard);
               }}
               onQuit={handleQuit}
             />

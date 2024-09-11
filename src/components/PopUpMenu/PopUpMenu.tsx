@@ -9,11 +9,16 @@ import './PopUpMenu.css';
 
 interface PopUpMenuProps {
   onRestart: () => void; // Function to restart the game
-  onQuit: () => void;// Function to quit the game
+  onQuit: () => void;    // Function to quit the game
+  onToggleBackground: (hide: boolean) => void; // Function to toggle background effect
+  onToggleUndoButton: (hide: boolean) => void; // Function to toggle undo button visibility
 }
 
-const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false); // state to track if the menu is open or closed
+const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit, onToggleBackground, onToggleUndoButton }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false); // Main menu state
+  const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false); // Settings menu state
+  const [hideBackgroundEffect, setHideBackgroundEffect] = useState<boolean>(false); // State for background effect
+  const [hideUndoButton, setHideUndoButton] = useState<boolean>(false); // State for undo button
 
   // useEffect to bind the ESC key to opening/closing the menu
   useEffect(() => {
@@ -30,22 +35,37 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
   }, []);
 
   const handleOpenMenu = () => {
-    setIsMenuOpen(true); // Open the menu
+    setIsMenuOpen(true); // Open the main menu
   };
 
   const handleCloseMenu = () => {
-    setIsMenuOpen(false); // Close the menu
+    setIsMenuOpen(false); // Close the main menu
   };
 
   const handleContinue = () => {
-    setIsMenuOpen(false); // Close the menu without restarting or quitting
+    setIsMenuOpen(false); // Close the main menu without restarting or quitting
   };
 
-  // Function to handle closing the menu if clicking outside the menu content
-  const handleClickOutside = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).classList.contains('menu-modal-overlay')) {
-      handleCloseMenu(); // Close the menu if click is on the overlay
-    }
+  const handleOpenSettings = () => {
+    setIsSettingsOpen(true); // Open the settings menu
+  };
+
+  const handleCloseSettings = () => {
+    setIsSettingsOpen(false); // Close the settings menu
+  };
+
+  // Handle background effect toggle
+  const handleBackgroundToggle = () => {
+    const newValue = !hideBackgroundEffect;
+    setHideBackgroundEffect(newValue);
+    onToggleBackground(newValue); // Send value to parent component (or handle it here)
+  };
+
+  // Handle undo button toggle
+  const handleUndoToggle = () => {
+    const newValue = !hideUndoButton;
+    setHideUndoButton(newValue);
+    onToggleUndoButton(newValue); // Send value to parent component (or handle it here)
   };
 
   return (
@@ -55,7 +75,7 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
       </button>
 
       {isMenuOpen && (
-        <div className='menu-modal-overlay' onClick={handleClickOutside}>
+        <div className='menu-modal-overlay'>
           <div className='menu-modal-content'>
             <h2>Game Menu</h2>
             <button onClick={handleContinue}>Continue</button>
@@ -75,6 +95,32 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
             >
               Quit
             </button>
+            <button onClick={handleOpenSettings}>Settings</button> {/* Settings button */}
+          </div>
+        </div>
+      )}
+
+      {isSettingsOpen && (
+        <div className='menu-modal-overlay'>
+          <div className='menu-modal-content'>
+            <h2>Settings</h2>
+            <label>
+              <input
+                type='checkbox'
+                checked={hideBackgroundEffect}
+                onChange={handleBackgroundToggle}
+              />
+              Hide Background Effect
+            </label>
+            <label>
+              <input
+                type='checkbox'
+                checked={hideUndoButton}
+                onChange={handleUndoToggle}
+              />
+              Hide Undo Button
+            </label>
+            <button onClick={handleCloseSettings}>Back</button>
           </div>
         </div>
       )}
@@ -83,3 +129,4 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
 };
 
 export default PopUpMenu;
+
