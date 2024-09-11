@@ -236,6 +236,7 @@ function App() {
           {/* // Adds the undo button */}
           <div className="undo-container">
             <button onClick={handleUndoMove} disabled={boardHistory.length === 0 || board.gameOver}>Undo Move</button>
+            <PopUpMenu onRestart={handleRestart} onQuit={handleQuit} />
           {/* Disables the button if there's no previous board states*/}
           </div>
 
