@@ -1,8 +1,5 @@
-/* components/PopUpMenu/PopUpMenu.css */
+/* Style for the menu button */
 .popup-menu-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
   padding: 0.4rem 1rem;
   font-size: 16px;
   cursor: pointer;
@@ -11,13 +8,16 @@
   border-radius: 5px;
   background: linear-gradient(to top, #4d575db6, #0d0d0daf);
   transition: background 300ms, color 300ms, outline 300ms, box-shadow 300ms;
+  z-index: 5;
 }
 
+/* Add animation effects on hover for the menu button */
 .popup-menu-button:hover {
   animation: buttonHover 0.8s ease-in-out infinite;
   /* Applying the same hover animation as the modal buttons */
 }
 
+/* Change button appearance when pressed */
 .popup-menu-button:active {
   background: linear-gradient(to top, #c2c2c2, #fafafa);
   color: black;
@@ -51,7 +51,7 @@
 }
 
 
-
+/* Style for the overlay background when the menu is open */
 .menu-modal-overlay {
   position: fixed;
   top: 0;
@@ -64,8 +64,11 @@
   align-items: center;
   overflow: visible;
   animation: fadeIn 0.5s ease-in-out;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10;
 }
-
+/* Fade-in effect for the overlay */
 @keyframes fadeIn {
   0% {
     opacity: 0;
@@ -74,7 +77,7 @@
     opacity: 1;
   }
 }
-
+/* Background image animation effect for the menu content */
 @keyframes scaleInBackground {
   0% {
     transform: scale(0);
@@ -83,7 +86,7 @@
     transform: scale(1);
   }
 }
-
+/* Background image for the menu content */
 .menu-modal-content::before {
   content: '';
   position: absolute;
@@ -94,19 +97,15 @@
   height: 60%;
   background: url('./img/popup-menu-background.png') center center no-repeat;
   background-size: contain;
-    /* Anpassa storleken på bilden */
   z-index: -1;
-  /* transform: scale(0.7); */
   overflow: visible;
   animation: scaleInBackground 0.5s ease-out;
 }
-
+/* Style for the menu content area */
 .menu-modal-content {
-  /* background-color: rgb(255, 255, 255); */
   padding: 20px;
   border-radius: 10px;
-  /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); */
-  /* overflow: visible; */
+
 }
 
 .menu-modal-content h2 {
@@ -123,22 +122,6 @@
     transform: scale(1), translateY(0);
   }
 }
-
-/* .menu-modal-content button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  background-color: #ffffff;
-  border: none;
-  border-radius: 5px;
-  width: 100%;
-  animation: scaleInButton 0.5s ease-in-out;
-}
-
-.menu-modal-content button:hover {
-  background-color: #ffffff;
-} */
 
 .menu-modal-content button {
   /* background-color: transparent; */
@@ -192,5 +175,13 @@
   50% {
     background: linear-gradient(to top, #4d575db6,
         #0d0d0daf);
+  }
+}
+
+@media (max-width: 415px) {
+  .popup-menu-button {
+    font-size: .7rem !important;
+    padding: 0.4rem .6rem !important;
+    margin-top: 2rem;
   }
 }
