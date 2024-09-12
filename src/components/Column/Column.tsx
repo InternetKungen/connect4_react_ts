@@ -26,25 +26,11 @@ const Column: React.FC<ColumnProps> = ({ columnIndex, onClick, column, currentPl
   const [highlightedCell, setHighlightedCell] = useState<number | null>(null);
 
   /*Bind Sounds*/
-  const {playSound:playClickColumnFlare} = useSound(clickColumnFlare, 0.6);
+  const {playSound:playClickColumnFlare} = useSound(clickColumnFlare, 0.5);
   const {playSound:playColumnReleaseSound }= useSound(columnRelease, 1);
-  const {playSound:playBlockChangeSound} = useSound(blockChangeSound, 0.6);
+  const {playSound:playBlockChangeSound} = useSound(blockChangeSound, 0.5);
   const {playSound:playCellSound} = useSound(cellSound, 0.1);
 
-  // const handleClick = () => {
-  //   if (!falling && !gameOver) {
-  //     playClickColumnFlare();
-  //     playColumnReleaseSound(); // Play the sound when the column is clicked
-  //     const firstEmptyCell = column.findIndex((cell) => cell === ' ');
-
-  //     if (firstEmptyCell !== -1) {
-  //       // Set the falling piece to the current player
-  //       setFallingPlayer(currentPlayer);
-  //       setAnimateIndex(column.length - 1);  // Start from the bottom (index column.length - 1)
-  //       setFalling(true);  // Start the animation
-  //     }
-  //   }
-  // };
   const handleMouseDown = () => {
     if (!falling && !gameOver) {
       playClickColumnFlare(); // Play sound when mouse is pressed down

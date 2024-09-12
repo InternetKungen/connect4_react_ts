@@ -25,7 +25,7 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
   const { playSound: playHoverButtonSound } = useSound(hoverButtonSound, 0.3);
   const { playSound: playClickMouseDownSound } = useSound(clickMouseDownSound, 0.7);
   const { playSound: playClickMouseUpSound } = useSound(clickMouseUpSound, 0.7);
-  const { playSound: playClickGameOverSound } = useSound(clickGameOverSound, 0.7);
+  const { playSound: playClickGameOverSound } = useSound(clickGameOverSound, 0.3);
 
   // useEffect to bind the ESC key to opening/closing the menu
   useEffect(() => {
