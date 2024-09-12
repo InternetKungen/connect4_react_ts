@@ -6,6 +6,12 @@
 
 import React, { useState, useEffect } from 'react';
 import './PopUpMenu.css'; 
+import useSound from '../../hooks/useSound';
+
+import hoverButtonSound from '../../assets/sounds/hoverButton.mp3';
+import clickMouseDownSound from '../../assets/sounds/clickMouseDownButton.mp3';
+import clickMouseUpSound from '../../assets/sounds/clickMouseUpButton.mp3';
+import clickGameOverSound from '../../assets/sounds/buttonClick.mp3';
 
 interface PopUpMenuProps {
   onRestart: () => void; // Function to restart the game
@@ -14,6 +20,12 @@ interface PopUpMenuProps {
 
 const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false); // state to track if the menu is open or closed
+
+  /*Bind Sounds*/
+  const { playSound: playHoverButtonSound } = useSound(hoverButtonSound, 0.3);
+  const { playSound: playClickMouseDownSound } = useSound(clickMouseDownSound, 0.7);
+  const { playSound: playClickMouseUpSound } = useSound(clickMouseUpSound, 0.7);
+  const { playSound: playClickGameOverSound } = useSound(clickGameOverSound, 0.7);
 
   // useEffect to bind the ESC key to opening/closing the menu
   useEffect(() => {
@@ -50,7 +62,7 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
 
   return (
     <>
-      <button className='popup-menu-button' onClick={handleOpenMenu}>
+      <button className='popup-menu-button' onMouseDown={() => playClickMouseDownSound()} onMouseUp={() => playClickMouseUpSound()} onClick={handleOpenMenu}>
         Menu
       </button>
 
@@ -58,8 +70,17 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
         <div className='menu-modal-overlay' onClick={handleClickOutside}>
           <div className='menu-modal-content'>
             <h2>Game Menu</h2>
-            <button onClick={handleContinue}>Continue</button>
+
             <button
+              onMouseEnter={() => playHoverButtonSound()}
+              onMouseDown={() => playClickMouseDownSound()}
+              onMouseUp={() => playClickMouseUpSound()}
+              onClick={handleContinue}>Continue</button>
+
+            <button
+              onMouseEnter={() => playHoverButtonSound()}
+              onMouseDown={() => playClickMouseDownSound()}
+              onMouseUp={() => playClickMouseUpSound()}
               onClick={() => {
                 handleCloseMenu();
                 onRestart();
@@ -68,6 +89,9 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
               Restart
             </button>
             <button
+              onMouseEnter={() => playHoverButtonSound()}
+              onMouseDown={() => playClickMouseDownSound()}
+              onMouseUp={() => playClickGameOverSound()}
               onClick={() => {
                 handleCloseMenu();
                 onQuit();
