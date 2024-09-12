@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import Board from './classes/Board';
 import Player from './classes/Player';
 import BoardComponent from './components/BoardComponent/BoardComponent';
@@ -14,6 +14,11 @@ import PopUpMenu from './components/PopUpMenu/PopUpMenu';
 import { handleColumnClick, handleReset } from './utils/gameUtils';
 import ScoreBoard from './components/ScoreBoard/ScoreBoard'; // Import the new ScoreBoard component
 import TimerDisplay from './components/Timer/Timer';
+import useSound from './hooks/useSound';
+
+/*Sounds*/
+import backgroundSound from './assets/sounds/backgroundSound.mp3';
+
 
 function App() {
   // State to manage the current view
@@ -34,6 +39,15 @@ function App() {
   const [playerOName, setPlayerOName] = useState<string>('');
   // Timer state
   const [timeLeft, setTimeLeft] = useState<number>(30); // 30 seconds per turn
+
+  // Set fixed volume for each sound
+  const { playSound: playBackgroundSound } = useSound(backgroundSound, 0.3, 15);  // 30% volym
+
+  useEffect(() => {
+    if (gameState === 'main-menu') {
+      playBackgroundSound();
+    }
+  }, [gameState, playBackgroundSound]);
 
   // Handler to start the game (Player vs Player)
   const handleStartGame = () => {

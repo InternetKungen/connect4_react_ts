@@ -140,7 +140,7 @@
   width: 100%;
   height: 100%;
   animation: backgroundFadeIn 1.2s ease-out forwards;
-  will-change: opacity;
+  /* will-change: opacity; */
 }
 
 .cell.highlightedX {
@@ -194,7 +194,7 @@
 
 .cell.X,
 .cell.O {
-will-change: background, transform, box-shadow;
+/* will-change: background, transform, box-shadow; */
 }
 
 .cell.X {

@@ -3,6 +3,13 @@
 import React, { useState, useEffect } from 'react';
 import Cell from '../Cell/Cell';
 import './Column.css';
+import useSound from '../../hooks/useSound';
+
+/*import Sounds*/
+import clickColumnFlare from '../../assets/sounds/clickColumnFlare.mp3';
+import columnRelease from '../../assets/sounds/columnRelease.mp3';
+import blockChangeSound from '../../assets/sounds/blockChange.mp3';
+import cellSound from '../../assets/sounds/cellSound.mp3';
 
 interface ColumnProps {
   columnIndex: number;
@@ -18,23 +25,51 @@ const Column: React.FC<ColumnProps> = ({ columnIndex, onClick, column, currentPl
   const [fallingPlayer, setFallingPlayer] = useState<string | null>(null);  // Tracks the player's falling piece
   const [highlightedCell, setHighlightedCell] = useState<number | null>(null);
 
+  /*Bind Sounds*/
+  const {playSound:playClickColumnFlare} = useSound(clickColumnFlare, 0.5);
+  const {playSound:playColumnReleaseSound }= useSound(columnRelease, 0.8);
+  const {playSound:playBlockChangeSound} = useSound(blockChangeSound, 0.5);
+  const {playSound:playCellSound} = useSound(cellSound, 0.1);
+
+  const handleMouseDown = () => {
+    if (!falling && !gameOver) {
+      playClickColumnFlare(); // Play sound when mouse is pressed down
+    }
+  };
+
+  const handleMouseUp = () => {
+    if (!falling && !gameOver) {
+      playColumnReleaseSound(); // Play sound when mouse is released
+      const firstEmptyCell = column.findIndex((cell) => cell === ' ');
+
+      if (firstEmptyCell !== -1) {
+        // Set the falling piece to the current player
+        setFallingPlayer(currentPlayer);
+        setAnimateIndex(column.length - 1);  // Start from the bottom (index column.length - 1)
+        setFalling(true);  // Start the animation
+      }
+    }
+  };
+
   useEffect(() => {
     // Run the animation if animateIndex is set and the animation is in progress
     if (animateIndex !== null && falling) {
       const timeoutId = setTimeout(() => {
         if (animateIndex > 0 && column[animateIndex - 1] === ' ') {
+          playCellSound();  // Play the cell sound
           // Move the animation upward if the next cell is empty
           setAnimateIndex(animateIndex - 1);
         } else {
           // Stop the animation when the first available spot is reached
           setFalling(false);
+          playBlockChangeSound();  // Play the block change sound
           onClick(columnIndex);  // Place the piece in the correct spot on the game board
         }
-      }, 30);
+      }, 40);
 
       return () => clearTimeout(timeoutId);
     }
-  }, [animateIndex, falling, onClick, columnIndex, column]);
+  }, [animateIndex, falling, onClick, columnIndex, column, playCellSound, playBlockChangeSound]);
 
    // When the mouse enters the column
   const handleMouseEnter = () => {
@@ -48,23 +83,13 @@ const Column: React.FC<ColumnProps> = ({ columnIndex, onClick, column, currentPl
   const handleMouseLeave = () => {
     setHighlightedCell(null); // Remove the highlight
   };
-  const handleClick = () => {
-    if (!falling && !gameOver) {
-      const firstEmptyCell = column.findIndex((cell) => cell === ' ');
-
-      if (firstEmptyCell !== -1) {
-        // Set the falling piece to the current player
-        setFallingPlayer(currentPlayer);
-        setAnimateIndex(column.length - 1);  // Start from the bottom (index column.length - 1)
-        setFalling(true);  // Start the animation
-      }
-    }
-  };
 
   return (
     <div
       className="column"
-      onClick={falling || gameOver ? undefined : handleClick}
+      // onClick={falling || gameOver ? undefined : handleClick}
+      onMouseDown={falling || gameOver ? undefined : handleMouseDown}
+      onMouseUp={falling || gameOver ? undefined : handleMouseUp}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

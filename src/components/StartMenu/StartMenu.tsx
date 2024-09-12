@@ -1,6 +1,13 @@
 // This is StartMenu page which is the landing / first page you encounter when you start up the game 
 import React, { useState } from 'react';
 import './StartMenu.css';
+import useSound from '../../hooks/useSound';
+
+import machineSound from '../../assets/sounds/playerTurn.mp3';
+import machineSoundReverse from '../../assets/sounds/playerTurnReverse.mp3';
+import hoverButtonSound from '../../assets/sounds/hoverButton.mp3';
+import clickMouseDownSound from '../../assets/sounds/clickMouseDownButton.mp3';
+import clickMouseUpSound from '../../assets/sounds/clickMouseUpButton.mp3';
 
 interface StartMenuProps {
   onStart: () => void; // Function that starts Player vs Player 
@@ -11,6 +18,14 @@ interface StartMenuProps {
 const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules }) => {
   // useState hook to track which button is being hovered over
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
+  
+  /*Bind Sounds*/
+  const { playSound: playMachineSound } = useSound(machineSound, 0.01);
+  const { playSound: playMachineSoundReverse } = useSound(machineSoundReverse, 0.01);
+  const { playSound: playHoverButtonSound } = useSound(hoverButtonSound, 0.3);
+  const { playSound: playClickMouseDownSound } = useSound(clickMouseDownSound, 0.7);
+  const { playSound: playClickMouseUpSound } = useSound(clickMouseUpSound, 0.7);
+
   return (
     // Main container for the start menu
     <div className="start-menu-container">
@@ -52,23 +67,29 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules }
 
       <div className='start-menu-button-container'>
         <button
-          onMouseEnter={() => setHoveredButton('pvp')}
-          onMouseLeave={() => setHoveredButton(null)}
-          onClick={onStart}
+          onMouseEnter={() => { setHoveredButton('pvp'), playMachineSound(), playHoverButtonSound(); }}
+          onMouseLeave={() => {setHoveredButton(null), playMachineSoundReverse(); }}
+          onMouseDown={() => { playClickMouseDownSound(); }}
+          onMouseUp={() => { playClickMouseUpSound(); onStart(); }}
           className="start-menu-button"
       >
         PLAYER VS PLAYER
       </button>
         <button
-          onMouseEnter={() => setHoveredButton('cpu')}
-          onMouseLeave={() => setHoveredButton(null)}
-          onClick={onStartAI}
+          onMouseEnter={() => {setHoveredButton('cpu'), playMachineSound(), playHoverButtonSound(); }}
+          onMouseLeave={() => {setHoveredButton(null), playMachineSoundReverse(); }}
+          onMouseDown={() => { playClickMouseDownSound(); }}
+          onMouseUp={() => { playClickMouseUpSound(); }}
+          onClick={() => { onStartAI(); }}
           className="start-menu-button"
       >
         PLAYER VS CPU
       </button>
-      <button
-        onClick={onShowRules}
+        <button
+        onMouseEnter={() => { playHoverButtonSound(); }}
+        onMouseDown={() => { playClickMouseDownSound(); }}
+        onMouseUp={() => { playClickMouseUpSound(); }}
+        onClick={() =>{ onShowRules(); }}
         className="start-menu-button"
       >
         GAME RULES
