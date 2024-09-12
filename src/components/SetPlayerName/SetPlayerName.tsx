@@ -1,9 +1,9 @@
 // This component handle Set player name section for both Player vs Player and Player vs Ai
 // When players submit their names onSubmit function is called and send the names back to the parent component
 // isAiSetUp function hide PlayerO field if player vs CPU = true
-// handle backSpace with keybind and onClick
+// handle backSpace with keybind and onClick  
 import React, { useEffect } from 'react';
-import './SetPlayerName.css';
+import './SetPlayerName.css'; 
 
 interface SetPlayerNameProps {
   onSubmit: (playerXName: string, playerOName?: string) => void; // This function runs when players submit their names
@@ -22,14 +22,29 @@ const SetPlayerName: React.FC<SetPlayerNameProps> = ({ onSubmit, isAiSetup, back
     onSubmit(playerXName, playerOName);
   };
 
-  // Use effect to listen for Enter key and Backspace keys
-  useEffect(() => {
+// Effect to listen for Enter and Backspace key events
+useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
+      const activeElement = document.activeElement as HTMLElement;
+
+      // When Enter key is pressed, submit the form
       if (e.key === 'Enter') {
         const submitButton = document.querySelector('.submit-button') as HTMLButtonElement;
-        submitButton?.click();
+        submitButton?.click(); 
       }
+
+      // When Backspace is pressed, check if the focused input is empty
       if (e.key === 'Backspace') {
+        // Check if an input field is focused and if it's empty
+        if (
+          activeElement.tagName === 'INPUT' &&
+          (activeElement as HTMLInputElement).value !== ''
+        ) {
+          // Allow the user to backspace normally to delete characters in the input
+          return;
+        }
+        
+        // If no input field is focused or the input is empty, trigger backSpace
         e.preventDefault();
         backSpace();
       }
@@ -47,7 +62,6 @@ const SetPlayerName: React.FC<SetPlayerNameProps> = ({ onSubmit, isAiSetup, back
  return (
     <div className="set-player-name-container">
      <form onSubmit={handleFormSubmit} className="set-player-name-form">
-
         <label>
           Player X Name:
           <input name="playerX" placeholder="Enter player name" className="input-field" required />
@@ -60,12 +74,12 @@ const SetPlayerName: React.FC<SetPlayerNameProps> = ({ onSubmit, isAiSetup, back
         )}
         <div className="button-container">
          <button type="submit" className="submit-button">Start Game</button>
-         <button className="back-button" onClick={backSpace}>Back</button>
+          <button className="back-button" onClick={backSpace}>Back</button>
         </div>
      </form>
    </div>
-
-
+   
+   
   );
 };
 
