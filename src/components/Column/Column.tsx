@@ -27,9 +27,9 @@ const Column: React.FC<ColumnProps> = ({ columnIndex, onClick, column, currentPl
 
   /*Bind Sounds*/
   const {playSound:playClickColumnFlare} = useSound(clickColumnFlare, 0.5);
-  const {playSound:playColumnReleaseSound }= useSound(columnRelease, 0.8);
+  const {playSound:playColumnReleaseSound }= useSound(columnRelease, 0.6);
   const {playSound:playBlockChangeSound} = useSound(blockChangeSound, 0.5);
-  const {playSound:playCellSound} = useSound(cellSound, 0.1);
+  const {playSound:playCellSound} = useSound(cellSound, 0.07);
 
   const handleMouseDown = () => {
     if (!falling && !gameOver) {

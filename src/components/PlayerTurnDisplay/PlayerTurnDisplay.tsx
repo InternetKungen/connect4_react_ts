@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import './PlayerTurnDisplay.css';
-// import useSound from '../../hooks/useSound';
+
 /* Import Sound */
-// import playerTurnSound from '../../assets/sounds/playerTurn.mp3';
+import useSound from '../../hooks/useSound';
+import playerTurnSound from '../../assets/sounds/playerTurn.mp3';
 
 interface PlayerTurnDisplayProps {
   playerTurn: 'X' | 'O';  // Prop to determine whose turn it is
@@ -12,10 +13,10 @@ const PlayerTurnDisplay: React.FC<PlayerTurnDisplayProps> = ({ playerTurn }) => 
   const [isPlayerXTurn, setIsPlayerXTurn] = useState<boolean>(playerTurn === 'X');
 
   // Initialize sound
-  // const { playSound: playPlayerTurnSound } = useSound(playerTurnSound, 0.45);
+  const { playSound: playPlayerTurnSound } = useSound(playerTurnSound, 0.15);
 
   useEffect(() => {
-    //  playPlayerTurnSound(); // Play the sound when the player turn changes
+     playPlayerTurnSound(); // Play the sound when the player turn changes
     setIsPlayerXTurn(playerTurn === 'X');
    
   }, [playerTurn]);
