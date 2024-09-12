@@ -4,6 +4,12 @@
 // handle backSpace with keybind and onClick  
 import React, { useEffect } from 'react';
 import './SetPlayerName.css'; 
+import useSound from '../../hooks/useSound';
+
+import clickMouseDownButtonBackSound from '../../assets/sounds/clickMouseDownButtonBack.mp3';
+import clickMouseUpButtonBackSound from '../../assets/sounds/clickMouseUpButtonBack.mp3';
+import clickMouseDownButton from '../../assets/sounds/clickMouseDownButton.mp3';
+import clickMouseUpButtonStartGame from '../../assets/sounds/clickMouseUpStartGame.mp3';
 
 interface SetPlayerNameProps {
   onSubmit: (playerXName: string, playerOName?: string) => void; // This function runs when players submit their names
@@ -13,6 +19,11 @@ interface SetPlayerNameProps {
 
 const SetPlayerName: React.FC<SetPlayerNameProps> = ({ onSubmit, isAiSetup, backSpace }) => {
 
+  // UseSound hooks
+  const {playSound: playClickMouseDownButtonBackSound} = useSound(clickMouseDownButtonBackSound, 0.8);
+  const { playSound: playClickMouseUpButtonBackSound } = useSound(clickMouseUpButtonBackSound, 0.8);
+  const { playSound: playClickMouseDownButton } = useSound(clickMouseDownButton, 0.8);
+  const { playSound: playClickMouseUpButtonStartGame } = useSound(clickMouseUpButtonStartGame, 0.8);
   // Function to handle submission form
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -47,7 +58,7 @@ const SetPlayerName: React.FC<SetPlayerNameProps> = ({ onSubmit, isAiSetup, back
  return (
     <div className="set-player-name-container">
      <form onSubmit={handleFormSubmit} className="set-player-name-form">
-         <button className="back-button" onClick={backSpace}>Back</button>
+         <button className="back-button" onMouseDown={playClickMouseDownButtonBackSound} onMouseUp={playClickMouseUpButtonBackSound} onClick={backSpace}>Back</button>
      
         <label>
           Player X Name:
@@ -60,7 +71,7 @@ const SetPlayerName: React.FC<SetPlayerNameProps> = ({ onSubmit, isAiSetup, back
           </label>
         )}
         <div className="button-container">
-          <button type="submit" className="submit-button">Start Game</button>
+          <button type="submit" className="submit-button" onMouseDown={playClickMouseDownButton} onMouseUp={playClickMouseUpButtonStartGame}>Start Game</button>
         </div>
      </form>
    </div>
