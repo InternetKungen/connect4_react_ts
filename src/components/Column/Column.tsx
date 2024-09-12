@@ -26,7 +26,7 @@ const Column: React.FC<ColumnProps> = ({ columnIndex, onClick, column, currentPl
   const [highlightedCell, setHighlightedCell] = useState<number | null>(null);
 
   /*Bind Sounds*/
-  const {playSound:playClickColumnFlare} = useSound(clickColumnFlare, 0.5);
+  const {playSound:playClickColumnFlare, stopSound: stopClickColumnFlare} = useSound(clickColumnFlare, 0.5);
   const {playSound:playColumnReleaseSound }= useSound(columnRelease, 0.6);
   const {playSound:playBlockChangeSound} = useSound(blockChangeSound, 0.5);
   const {playSound:playCellSound} = useSound(cellSound, 0.07);
@@ -39,6 +39,7 @@ const Column: React.FC<ColumnProps> = ({ columnIndex, onClick, column, currentPl
 
   const handleMouseUp = () => {
     if (!falling && !gameOver) {
+      stopClickColumnFlare(); // Stop sound when mouse is released
       playColumnReleaseSound(); // Play sound when mouse is released
       const firstEmptyCell = column.findIndex((cell) => cell === ' ');
 

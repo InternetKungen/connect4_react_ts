@@ -8,7 +8,7 @@ const useSound = (sound: string, volume: number = 1, loopStart?: number) => {
     audioRef.current.volume = volume;
 
     if (loopStart !== undefined) {
-      audioRef.current.loop = true; // Loopa ljudet
+      audioRef.current.loop = true; // Loop ljudet
       audioRef.current.addEventListener('timeupdate', () => {
         if (audioRef.current && audioRef.current.currentTime >= audioRef.current.duration) {
           audioRef.current.currentTime = loopStart; // Återgå till loopStart vid slutet
@@ -20,18 +20,9 @@ const useSound = (sound: string, volume: number = 1, loopStart?: number) => {
   }, [sound, volume, loopStart]);
 
   const playSound = () => {
-    // Skapa en ny instans av ljudet för att kunna spela det snabbt flera gånger
-    const newAudio = new Audio(sound);
-    newAudio.volume = volume;
-    newAudio.play();
-
-    if (loopStart !== undefined) {
-      newAudio.loop = true;
-      newAudio.addEventListener('timeupdate', () => {
-        if (newAudio.currentTime >= newAudio.duration) {
-          newAudio.currentTime = loopStart;
-        }
-      });
+    if (audioRef.current) {
+      audioRef.current.currentTime = 0; // Spela från början
+      audioRef.current.play();
     }
   };
 
