@@ -5,10 +5,11 @@ import './StartMenu.css';
 interface StartMenuProps {
   onStart: () => void; // Function that starts Player vs Player 
   onStartAI: () => void; // Function that starts Player vs Ai Mode / Computer 
+  onStartAIVsAI: () => void; // Function that starts AI vs AI Mode
   onShowRules: () => void; // Function that shows Game Rules
 }
 
-const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules }) => {
+const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, onStartAIVsAI }) => {
   // useState hook to track which button is being hovered over
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
   return (
@@ -72,6 +73,15 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules }
         className="start-menu-button"
       >
         GAME RULES
+        </button>
+
+       <button
+          onMouseEnter={() => setHoveredButton('ai-vs-ai')}
+          onMouseLeave={() => setHoveredButton(null)}
+          onClick={onStartAIVsAI}  // Trigger AI vs AI game
+          className="start-menu-button"
+        >
+          AI VS AI
         </button>
       </div>
     </div>

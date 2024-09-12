@@ -10,6 +10,7 @@ interface ColumnProps {
   column: Array<string>;
   currentPlayer: string;
   gameOver: boolean;
+   isAiVsAi: boolean;
 }
 
 const Column: React.FC<ColumnProps> = ({ columnIndex, onClick, column, currentPlayer, gameOver }) => {
