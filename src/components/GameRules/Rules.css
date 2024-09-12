@@ -15,8 +15,6 @@
     border: 2px solid #eeefea;
     color: white;
     animation: fadeInApp 0.5s ease-in-out;
-
-    /* Height settings to handle content overflow */
     min-height: 60vh;
     height: auto;
     max-height: 80vh;
@@ -24,14 +22,15 @@
 }
 
 /* Center-align text within rules content */
-.rules-content {
+.rules-content, .rule-block, h2, h3, p, ol li {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem; /* Reduced margins for better fit */
 }
 
 /* Margin settings for individual rule blocks */
-.rule-block {
-    margin-top: 3rem;
+.rules-content, .rule-block, h2, h3, p, ol li {
+    text-align: center;
+    margin-bottom: 1rem; /* Reduced margins for better fit */
 }
 
 /* Styles for headings (h2) */
