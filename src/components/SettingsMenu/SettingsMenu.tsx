@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Switch from '@mui/material/Switch';
 import './SettingsMenu.css';
 /*Sounds*/
@@ -22,9 +22,21 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({
   onToggleUndoButton,
   onClose
 }) => {
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [backgroundSoundEnabled, setBackgroundSoundEnabled] = useState(true);
+
   const { playSound: playHoverButtonSound } = useSound(hoverButtonSound, 0.3);
   const { playSound: playClickMouseDownButtonBackSound } = useSound(clickMouseDownButtonBackSound, 0.7);
   const { playSound: playClickMouseUpButtonBackSound } = useSound(clickMouseUpButtonBackSound, 0.7);
+
+  const handleSoundToggle = () => {
+    setSoundEnabled(!soundEnabled);
+  };
+
+  const handleBackgroundSoundToggle = () => {
+    setBackgroundSoundEnabled(!backgroundSoundEnabled);
+  };
+
   return (
     <div className='menu-modal-overlay'>
       <div className='menu-modal-content'>
@@ -43,8 +55,22 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({
           />
           Hide Undo Button
         </label>
+        <label>
+          <Switch
+            checked={soundEnabled}
+            onChange={handleSoundToggle}
+          />
+          Enable Sound
+        </label>
+        <label>
+          <Switch
+            checked={backgroundSoundEnabled}
+            onChange={handleBackgroundSoundToggle}
+          />
+          Enable Background Sound
+        </label>
         <button
-          onMouseEnter={ playHoverButtonSound}
+          onMouseEnter={ soundEnabled ? playHoverButtonSound : undefined}
           onMouseDown={() => { playClickMouseDownButtonBackSound(); }}
           onMouseUp={() => { playClickMouseUpButtonBackSound(); }}
           onClick={onClose}>Back</button>
