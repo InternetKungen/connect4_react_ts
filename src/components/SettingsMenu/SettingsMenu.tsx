@@ -3,8 +3,8 @@ import Switch from '@mui/material/Switch';
 /*Sounds*/
 import useSound from '../../hooks/useSound';
 import hoverButtonSound from '../../assets/sounds/hoverButton.mp3';
-import clickMouseDownSound from '../../assets/sounds/clickMouseDownButton.mp3';
-import clickMouseUpSound from '../../assets/sounds/clickMouseUpButton.mp3';
+import clickMouseDownButtonBackSound from '../../assets/sounds/clickMouseDownButtonBack.mp3';
+import clickMouseUpButtonBackSound from '../../assets/sounds/clickMouseUpButtonBack.mp3';
 
 interface SettingsMenuProps {
   hideBackgroundEffect: boolean; // Renamed prop
@@ -22,8 +22,8 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({
   onClose
 }) => {
   const { playSound: playHoverButtonSound } = useSound(hoverButtonSound, 0.3);
-  const { playSound: playClickMouseDownSound } = useSound(clickMouseDownSound, 0.7);
-  const { playSound: playClickMouseUpSound } = useSound(clickMouseUpSound, 0.7);
+  const { playSound: playClickMouseDownButtonBackSound } = useSound(clickMouseDownButtonBackSound, 0.7);
+  const { playSound: playClickMouseUpButtonBackSound } = useSound(clickMouseUpButtonBackSound, 0.7);
   return (
     <div className='menu-modal-overlay'>
       <div className='menu-modal-content'>
@@ -44,8 +44,8 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({
         </label>
         <button
           onMouseEnter={ playHoverButtonSound}
-          onMouseDown={() => { playClickMouseDownSound(); }}
-          onMouseUp={() => { playClickMouseUpSound(); }}
+          onMouseDown={() => { playClickMouseDownButtonBackSound(); }}
+          onMouseUp={() => { playClickMouseUpButtonBackSound(); }}
           onClick={onClose}>Back</button>
       </div>
     </div>

@@ -16,6 +16,7 @@ import ScoreBoard from './components/ScoreBoard/ScoreBoard';
 // import Background from './components/Background/Background';
 import SettingsMenu from './components/SettingsMenu/SettingsMenu';
 import TimerDisplay from './components/Timer/Timer';
+import { getBestMove } from './classes/AiHardMode';
 import useSound from './hooks/useSound';
 
 /*Sounds*/
@@ -39,6 +40,7 @@ function App({
   const [isLocked, setIsLocked] = useState<boolean>(false);
   const [difficulty, setDifficulty] = useState<'easy' | 'hard' | null>(null);
   const [aiSetup, setAiSetup] = useState<boolean>(false);
+  const [isAiVsAi, setIsAiVsAi] = useState<boolean>(false); 
   const [boardHistory, setBoardHistory] = useState<Board[]>([]);
 
   // State to store player names
@@ -63,6 +65,7 @@ function App({
   // Handler to start the game (Player vs Player)
   const handleStartGame = () => {
     setAiSetup(false); // Ensure AI setup is not active
+    setIsAiVsAi(false); // Disable AI vs AI
     setGameState('player-name-setup'); // Go to player name setup
   };
 
@@ -77,6 +80,7 @@ function App({
   // Handler to start the game against AI
   const handleStartAI = () => {
     setAiSetup(true); // Activate AI setup
+    setIsAiVsAi(false); // Disable AI vs AI
     setGameState('player-name-setup'); // Go to player name setup
   };
 
@@ -93,9 +97,8 @@ function App({
     handleReset(setBoard);
     setPlayerXScore(0);
     setPlayerOScore(0);
-    setPlayerXName('');
-    setPlayerOName('');
     resetTimer(); // Reset the timer when quitting the game
+    setIsAiVsAi(false); // Reset AI vs AI mode
   };
 
   const handleSelectedDifficulty = (selectedDifficulty: 'easy' | 'hard') => {
@@ -105,6 +108,12 @@ function App({
     setGameState('game-board');
   };
 
+  const handleStartAIVsAI = () => {
+  setPlayerX(new Player('AI 1', 'X', true));
+  setPlayerO(new Player('AI 2', 'O', true));
+  setIsAiVsAi(true); // Make sure this is set to true
+  setGameState('game-board');
+};
   // Handler to show the game rules
   const handleShowRules = () => {
     setGameState('rules');
@@ -136,6 +145,39 @@ function App({
       resetTimer(); // Ensure the timer starts when the game board is rendered
     }
   };
+
+
+  // AI vs AI game logic
+   useEffect(() => {
+  console.log('AI vs AI Check:', isAiVsAi);
+  if (isAiVsAi && gameState === 'game-board' && !board.gameOver && !isLocked) {
+    const currentAIPlayer = board.currentPlayerColor === 'X' ? playerX : playerO;
+    console.log('Current AI Player:', currentAIPlayer);
+
+    if (currentAIPlayer?.isComputer) {
+      setIsLocked(true);
+
+      const column = getBestMove(board);
+      console.log('AI Move Column:', column);
+
+      setTimeout(() => {
+        handleColumnClick(
+          column,
+          board,
+          playerX,
+          playerO,
+          setBoard,
+          difficulty,
+          isLocked,
+          setIsLocked,
+          isAiVsAi
+        );
+      }, 1000);
+    }
+  }
+}, [board, isAiVsAi, gameState, playerX, playerO, isLocked, difficulty]);
+
+
 
   // Timer logic
   useEffect(() => {
@@ -256,6 +298,7 @@ function App({
             onStart={handleStartGame}
             onStartAI={handleStartAI}
             onShowRules={handleShowRules}
+             onStartAIVsAI={handleStartAIVsAI}  
             onOpenSettings={handleOpenSettings}
           />
         </div>
@@ -331,11 +374,13 @@ function App({
                 setBoard,
                 difficulty,
                 isLocked,
-                setIsLocked
+                setIsLocked,
+                isAiVsAi
               );
               resetTimer(); // Reset timer after each move
             }}
             isLocked={isLocked}
+            isAiVsAi={isAiVsAi}
           />
           <TimerDisplay timeLeft={timeLeft} />
           {/* // Adds the undo button */}

@@ -16,7 +16,8 @@ export const handleColumnClick = (
   setBoard: (board: Board) => void,
   difficulty: 'easy' | 'hard' | null,
   isLocked: boolean,
-  setIsLocked: (locked: boolean) => void
+  setIsLocked: (locked: boolean) => void,
+  isAiVsAi: boolean // Added parameter to determine if it's AI vs AI
 ) => {
   if (board.gameOver || !playerX || !playerO || isLocked) return;
 
@@ -35,28 +36,54 @@ export const handleColumnClick = (
   newBoard.dropDisc(column);
   setBoard(newBoard);
 
-  //Computer makes a move
-  if (!newBoard.gameOver && newBoard.currentPlayerColor === playerO.color && playerO.isComputer) {
-    setTimeout(() => {
-      const updatedBoard = new Board();
-      updatedBoard.matrix = newBoard.matrix.map((row) => [...row]);
-      updatedBoard.currentPlayerColor = newBoard.currentPlayerColor;
-      updatedBoard.gameOver = newBoard.gameOver;
-      updatedBoard.isADraw = newBoard.isADraw;
-      updatedBoard.winner = newBoard.winner;
-      updatedBoard.stateUpdater = () => setBoard(updatedBoard);
+  if (isAiVsAi) {
+    // Handle AI vs AI scenario
+    if (!newBoard.gameOver && newBoard.currentPlayerColor === playerO.color && playerO.isComputer) {
+      setTimeout(() => {
+        const updatedBoard = new Board();
+        updatedBoard.matrix = newBoard.matrix.map((row) => [...row]);
+        updatedBoard.currentPlayerColor = newBoard.currentPlayerColor;
+        updatedBoard.gameOver = newBoard.gameOver;
+        updatedBoard.isADraw = newBoard.isADraw;
+        updatedBoard.winner = newBoard.winner;
+        updatedBoard.stateUpdater = () => setBoard(updatedBoard);
 
-      // Get the computer's move based on difficulty
-      const computerMove = getComputerMove(updatedBoard, difficulty);
-      const computerMoveSuccessful = updatedBoard.dropDisc(computerMove);
-      // If the computer's move is successful, update the board state
-      if (computerMoveSuccessful) {
-        setBoard(updatedBoard);
-      }
+        // Get the computer's move based on difficulty
+        const computerMove = getComputerMove(updatedBoard, difficulty);
+        const computerMoveSuccessful = updatedBoard.dropDisc(computerMove);
+        // If the computer's move is successful, update the board state
+        if (computerMoveSuccessful) {
+          setBoard(updatedBoard);
+        }
+        setIsLocked(false);
+      }, 700); // Delay for the computer's move
+    } else {
       setIsLocked(false);
-    }, 700); //Delay for the computer's move
+    }
   } else {
-    setIsLocked(false);
+    // Handle normal Player vs Computer scenario
+    if (!newBoard.gameOver && newBoard.currentPlayerColor === playerO.color && playerO.isComputer) {
+      setTimeout(() => {
+        const updatedBoard = new Board();
+        updatedBoard.matrix = newBoard.matrix.map((row) => [...row]);
+        updatedBoard.currentPlayerColor = newBoard.currentPlayerColor;
+        updatedBoard.gameOver = newBoard.gameOver;
+        updatedBoard.isADraw = newBoard.isADraw;
+        updatedBoard.winner = newBoard.winner;
+        updatedBoard.stateUpdater = () => setBoard(updatedBoard);
+
+        // Get the computer's move based on difficulty
+        const computerMove = getComputerMove(updatedBoard, difficulty);
+        const computerMoveSuccessful = updatedBoard.dropDisc(computerMove);
+        // If the computer's move is successful, update the board state
+        if (computerMoveSuccessful) {
+          setBoard(updatedBoard);
+        }
+        setIsLocked(false);
+      }, 700); // Delay for the computer's move
+    } else {
+      setIsLocked(false);
+    }
   }
 };
 

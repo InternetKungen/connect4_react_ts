@@ -84,8 +84,10 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit, hideBackground
               onMouseEnter={() => playHoverButtonSound()}
               onMouseDown={() => playClickMouseDownSound()}
               onMouseUp={() => playClickMouseUpSound()}
-              onClick={handleContinue}>Continue</button>
-
+              onClick={handleContinue}
+            >Continue
+            </button>
+            
             <button
               onMouseEnter={() => playHoverButtonSound()}
               onMouseDown={() => playClickMouseDownSound()}
@@ -97,7 +99,15 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit, hideBackground
             >
               Restart
             </button>
-            <button onClick={handleOpenSettings}>Settings</button>
+            
+            <button
+              onMouseEnter={() => playHoverButtonSound()}
+              onMouseDown={() => playClickMouseDownSound()}
+              onMouseUp={() => playClickMouseUpSound()}
+              onClick={handleOpenSettings}>
+              Settings
+            </button>
+            
             <button
               onMouseEnter={() => playHoverButtonSound()}
               onMouseDown={() => playClickMouseDownSound()}

@@ -12,11 +12,12 @@ import clickMouseUpSound from '../../assets/sounds/clickMouseUpButton.mp3';
 interface StartMenuProps {
   onStart: () => void; // Function that starts Player vs Player 
   onStartAI: () => void; // Function that starts Player vs Ai Mode / Computer 
+  onStartAIVsAI: () => void; // Function that starts AI vs AI Mode
   onShowRules: () => void; // Function that shows Game Rules
   onOpenSettings: () => void; // Function to open settings
 }
 
-const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, onOpenSettings }) => {
+const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, onStartAIVsAI, onOpenSettings }) => {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
   
   /*Bind Sounds*/
@@ -79,16 +80,26 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, 
           onMouseUp={() => { playClickMouseUpSound(); }}
           onClick={() => { onStartAI(); }}
           className="start-menu-button"
-      >
+        >
         PLAYER VS CPU
-      </button>
+        </button>
         <button
-        onMouseEnter={() => { playHoverButtonSound(); }}
-        onMouseDown={() => { playClickMouseDownSound(); }}
-        onMouseUp={() => { playClickMouseUpSound(); }}
-        onClick={() =>{ onShowRules(); }}
-        className="start-menu-button"
-      >
+          onMouseDown={() => { playClickMouseDownSound(); }}
+          onMouseUp={() => { playClickMouseUpSound(); }}
+          onMouseEnter={() => { setHoveredButton('ai-vs-ai'), playHoverButtonSound(); }}
+          onMouseLeave={() => setHoveredButton(null)}
+          onClick={onStartAIVsAI}  // Trigger AI vs AI game
+          className="start-menu-button"
+        >
+          AI VS AI
+        </button>
+        <button
+          onMouseEnter={() => { playHoverButtonSound(); }}
+          onMouseDown={() => { playClickMouseDownSound(); }}
+          onMouseUp={() => { playClickMouseUpSound(); }}
+          onClick={() =>{ onShowRules(); }}
+          className="start-menu-button"
+        >
         GAME RULES
         </button>
         <button
