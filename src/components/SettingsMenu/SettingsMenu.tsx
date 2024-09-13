@@ -1,5 +1,10 @@
 import React from 'react';
 import Switch from '@mui/material/Switch';
+/*Sounds*/
+import useSound from '../../hooks/useSound';
+import hoverButtonSound from '../../assets/sounds/hoverButton.mp3';
+import clickMouseDownSound from '../../assets/sounds/clickMouseDownButton.mp3';
+import clickMouseUpSound from '../../assets/sounds/clickMouseUpButton.mp3';
 
 interface SettingsMenuProps {
   hideBackgroundEffect: boolean; // Renamed prop
@@ -16,7 +21,9 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({
   onToggleUndoButton,
   onClose
 }) => {
-
+  const { playSound: playHoverButtonSound } = useSound(hoverButtonSound, 0.3);
+  const { playSound: playClickMouseDownSound } = useSound(clickMouseDownSound, 0.7);
+  const { playSound: playClickMouseUpSound } = useSound(clickMouseUpSound, 0.7);
   return (
     <div className='menu-modal-overlay'>
       <div className='menu-modal-content'>
@@ -35,7 +42,11 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({
           />
           Hide Undo Button
         </label>
-        <button onClick={onClose}>Back</button>
+        <button
+          onMouseEnter={ playHoverButtonSound}
+          onMouseDown={() => { playClickMouseDownSound(); }}
+          onMouseUp={() => { playClickMouseUpSound(); }}
+          onClick={onClose}>Back</button>
       </div>
     </div>
   );

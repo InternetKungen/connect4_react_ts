@@ -92,7 +92,10 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, 
         GAME RULES
         </button>
         <button
-          onClick={onOpenSettings}
+          onMouseEnter={() => { playHoverButtonSound(); }}
+          onMouseDown={() => { playClickMouseDownSound(); }}
+          onMouseUp={() => { playClickMouseUpSound(); }}
+          onClick={ onOpenSettings }
           className="start-menu-button"
         >
           SETTINGS
