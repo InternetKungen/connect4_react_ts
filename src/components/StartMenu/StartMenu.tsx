@@ -13,10 +13,10 @@ interface StartMenuProps {
   onStart: () => void; // Function that starts Player vs Player 
   onStartAI: () => void; // Function that starts Player vs Ai Mode / Computer 
   onShowRules: () => void; // Function that shows Game Rules
+  onOpenSettings: () => void; // Function to open settings
 }
 
-const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules }) => {
-  // useState hook to track which button is being hovered over
+const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, onOpenSettings }) => {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
   
   /*Bind Sounds*/
@@ -27,13 +27,10 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules }
   const { playSound: playClickMouseUpSound } = useSound(clickMouseUpSound, 0.7);
 
   return (
-    // Main container for the start menu
-    <div className="start-menu-container">
+    <div className={`start-menu-container`}>
       <h1 className="start-menu-title"></h1>
       
-      <div 
-        className="start-menu-animation-display"
-      >
+      <div className="start-menu-animation-display">
         <img 
           className={`logo-main ${hoveredButton ? 'logo-hidden' : ''}`} 
           src='./img/connect-4-logo.png' 
@@ -45,20 +42,20 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules }
           <div className="start-menu-animation-box">
             <div className={`animation ${hoveredButton === 'pvp' ? '' : 'hidden'}`}>
 
-              <div className={`left-moving-box-glow  ${hoveredButton === 'pvp' ? 'show-glow' : ''}`}></div>
+              <div className={`left-moving-box-glow ${hoveredButton === 'pvp' ? 'show-glow' : ''}`}></div>
               <div className={`left-moving-box ${hoveredButton === 'pvp' ? 'animate-left' : ''}`}></div>
                 
               <div className={`middle-static-box ${hoveredButton === 'pvp' ? 'show-vs-screen' : ''}`}>VS</div>
               
-              <div className={`right-moving-box-glow  ${hoveredButton === 'pvp' ? 'show-glow' : ''}`}></div>
+              <div className={`right-moving-box-glow ${hoveredButton === 'pvp' ? 'show-glow' : ''}`}></div>
               <div className={`right-moving-box ${hoveredButton === 'pvp' ? 'animate-right' : ''}`}></div>
             </div>
 
             <div className={`animation ${hoveredButton === 'cpu' ? '' : 'hidden'}`}>
-              <div className={`left-moving-box-glow  ${hoveredButton === 'cpu' ? 'show-glow' : ''}`}></div>
+              <div className={`left-moving-box-glow ${hoveredButton === 'cpu' ? 'show-glow' : ''}`}></div>
               <div className={`left-moving-box ${hoveredButton === 'cpu' ? 'animate-left' : ''}`}></div>
               <div className={`middle-static-box ${hoveredButton === 'cpu' ? 'show-vs-screen' : ''}`}>VS</div>
-              <div className={`right-moving-box-glow  ${hoveredButton === 'cpu' ? 'show-glow' : ''}`}></div>
+              <div className={`right-moving-box-glow ${hoveredButton === 'cpu' ? 'show-glow' : ''}`}></div>
               <div className={`right-moving-box-cpu ${hoveredButton === 'cpu' ? 'animate-right' : ''}`}></div>
             </div>
           </div>
@@ -72,9 +69,9 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules }
           onMouseDown={() => { playClickMouseDownSound(); }}
           onMouseUp={() => { playClickMouseUpSound(); onStart(); }}
           className="start-menu-button"
-      >
-        PLAYER VS PLAYER
-      </button>
+        >
+          PLAYER VS PLAYER
+        </button>
         <button
           onMouseEnter={() => {setHoveredButton('cpu'), playMachineSound(), playHoverButtonSound(); }}
           onMouseLeave={() => {setHoveredButton(null), playMachineSoundReverse(); }}
@@ -94,10 +91,15 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules }
       >
         GAME RULES
         </button>
+        <button
+          onClick={onOpenSettings}
+          className="start-menu-button"
+        >
+          SETTINGS
+        </button>
       </div>
     </div>
   );
 };
 
 export default StartMenu;
-

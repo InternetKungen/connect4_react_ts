@@ -12,7 +12,9 @@ import './index.css';
 import ComputerMenu from './components/ComputerMenu/ComputerMenu';
 import PopUpMenu from './components/PopUpMenu/PopUpMenu';
 import { handleColumnClick, handleReset } from './utils/gameUtils';
-import ScoreBoard from './components/ScoreBoard/ScoreBoard'; // Import the new ScoreBoard component
+import ScoreBoard from './components/ScoreBoard/ScoreBoard';
+// import Background from './components/Background/Background';
+import SettingsMenu from './components/SettingsMenu/SettingsMenu';
 import TimerDisplay from './components/Timer/Timer';
 import useSound from './hooks/useSound';
 
@@ -20,7 +22,12 @@ import useSound from './hooks/useSound';
 import backgroundSound from './assets/sounds/backgroundSound.mp3';
 
 
-function App() {
+function App({
+  setHideBackgroundEffect,
+  hideBackgroundEffect}: { 
+    setHideBackgroundEffect: (hide: boolean) => void
+    hideBackgroundEffect: boolean
+}) {
   // State to manage the current view
   const [gameState, setGameState] = useState<GameState>('main-menu');
   const [board, setBoard] = useState(new Board());
@@ -37,6 +44,10 @@ function App() {
   // State to store player names
   const [playerXName, setPlayerXName] = useState<string>('');
   const [playerOName, setPlayerOName] = useState<string>('');
+
+  // State for settings
+  // const [hideBackgroundEffect, setHideBackgroundEffect] = useState<boolean>(false);
+  const [hideUndoButton, setHideUndoButton] = useState<boolean>(false);
   // Timer state
   const [timeLeft, setTimeLeft] = useState<number>(30); // 30 seconds per turn
 
@@ -55,6 +66,14 @@ function App() {
     setGameState('player-name-setup'); // Go to player name setup
   };
 
+    const handleToggleBackgroundEffect = (hide: boolean) => {
+    setHideBackgroundEffect(hide);
+  };
+
+    const handleToggleUndoButton = (hide: boolean) => {
+    setHideUndoButton(hide);
+  };
+
   // Handler to start the game against AI
   const handleStartAI = () => {
     setAiSetup(true); // Activate AI setup
@@ -67,6 +86,7 @@ function App() {
     setPlayerOScore(0);
     resetTimer(); // Reset timer when restarting the game
   };
+
   // Render the main menu screen and reset the board, scores, and player names
   const handleQuit = () => {
     setGameState('main-menu');
@@ -88,6 +108,10 @@ function App() {
   // Handler to show the game rules
   const handleShowRules = () => {
     setGameState('rules');
+  };
+
+  const handleOpenSettings = () => {
+    setGameState('settings'); // Set game state to 'settings'
   };
 
   // Function to handle player name setup and transition to game board
@@ -180,7 +204,7 @@ function App() {
   // Score Update Function that checks the winner after each game ends
   const updateScore = () => {
     if (board.winner === 'X') {
-      setPlayerXScore((prevScore) => prevScore + 1); // Increment Player X score if  win
+      setPlayerXScore((prevScore) => prevScore + 1); // Increment Player X score if win
     } else if (board.winner === 'O') {
       setPlayerOScore((prevScore) => prevScore + 1); // Increment Player O (or AI) score if win
     }
@@ -212,27 +236,51 @@ function App() {
       setPlayerOName('');
       setPlayerX(null);
       setPlayerO(null);
+      
     }
   };
+
 
   // Conditional rendering based on the current game state
   switch (gameState) {
     case 'main-menu':
       return (
-        <div className="app">
-          <img className="background-menu" src="./img/background-menu.png" alt="background" />
-          <div className="empty-board"></div>
-          {/* <img className='logo-main' src='./img/connect-4-logo.png' alt="logo" /> */}
-
+        <div className='app'>
+          <img
+            className='background-menu'
+            src='./img/background-menu.png'
+            alt='background'
+          />
+          <div className='empty-board'></div>
           <StartMenu
             onStart={handleStartGame}
             onStartAI={handleStartAI}
             onShowRules={handleShowRules}
+            onOpenSettings={handleOpenSettings}
           />
         </div>
       );
     case 'rules':
       return <Rules setGameState={setGameState} />;
+    case 'settings': // New case for settings
+      return (
+        <div className='app'>
+          <img
+            className='background-menu'
+            src='./img/background-menu.png'
+            alt='background'
+          />
+          <div className='empty-board'></div>
+          <SettingsMenu
+            hideBackgroundEffect={hideBackgroundEffect}
+            hideUndoButton={hideUndoButton}
+            onToggleBackgroundEffect={handleToggleBackgroundEffect}
+            onToggleUndoButton={handleToggleUndoButton}
+            onClose={() => setGameState('main-menu')} // Navigate back to the main menu
+          />
+        </div>
+      );
+    
     case 'player-name-setup':
       return (
         <div className="app">
@@ -244,7 +292,7 @@ function App() {
           <SetPlayerName
             onSubmit={handlePlayerSetupSubmit}
             isAiSetup={aiSetup}
-            backSpace={handleBackSpace} // Pass the backSpace function
+            backSpace={handleBackSpace}
           />
         </div>
       );
@@ -265,10 +313,10 @@ function App() {
           <img className="background-menu" src="./img/background-menu.png" alt="background" />
           <div className="empty-board"></div>
           <ScoreBoard
-            playerXName={playerXName || 'Player X'} // Player X's name
-            playerOName={playerOName || 'Player O'} // Player O's name (or AI's name)
-            playerXScore={playerXScore} // Pass Player X's score
-            playerOScore={playerOScore} // Pass Player O's score
+            playerXName={playerXName || 'Player X'}
+            playerOName={playerOName || 'Player O'}
+            playerXScore={playerXScore}
+            playerOScore={playerOScore}
           />
           <PlayerTurnDisplay playerTurn={board.currentPlayerColor as 'X' | 'O'} />
           <BoardComponent
@@ -291,13 +339,22 @@ function App() {
           />
           <TimerDisplay timeLeft={timeLeft} />
           {/* // Adds the undo button */}
-          <div className="undo-container">
-            <button onClick={handleUndoMove} disabled={boardHistory.length === 0 || board.gameOver}>
-              Undo Move
-            </button>
-            <PopUpMenu onRestart={handleRestart} onQuit={handleQuit} />
-            {/* Disables the button if there's no previous board states*/}
-          </div>
+          {!hideUndoButton && (
+            <div className="undo-container">
+              <button onClick={handleUndoMove} disabled={boardHistory.length === 0}>
+                Undo Move
+              </button>
+            </div>
+          )}
+
+          <PopUpMenu
+            onRestart={handleRestart}
+            onQuit={handleQuit}
+            hideBackgroundEffect={hideBackgroundEffect}
+            hideUndoButton={hideUndoButton}
+            onToggleBackground={handleToggleBackgroundEffect}
+            onToggleUndoButton={handleToggleUndoButton}
+          />
 
           {board.gameOver && (
             <GameOverComponent

@@ -7,5 +7,6 @@ export type GameState =
   | 'difficulty-selection'
   | 'game-board'
   | 'game-over'
+  | 'settings';
 
 
