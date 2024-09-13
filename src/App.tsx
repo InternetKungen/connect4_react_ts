@@ -47,19 +47,34 @@ function App({
   const [playerOName, setPlayerOName] = useState<string>('');
 
   // State for settings
-  // const [hideBackgroundEffect, setHideBackgroundEffect] = useState<boolean>(false);
   const [hideUndoButton, setHideUndoButton] = useState<boolean>(false);
+
   // Timer state
   const [timeLeft, setTimeLeft] = useState<number>(30); // 30 seconds per turn
 
   // Set fixed volume for each sound
-  const { playSound: playBackgroundSound } = useSound(backgroundSound, 0.3, 15);  // 30% volym
+  // const { playSound: playBackgroundSound } = useSound(backgroundSound, 0.3, 15);  // 30% volym
+  const { enableSound } = useSound(backgroundSound, 0.3, 15);
+  // useEffect(() => {
+  //   if (gameState === 'main-menu') {
+  //     playBackgroundSound();
+  //   }
+  // }, [gameState, playBackgroundSound]);
 
+  //Activate sound when interacting with the app
   useEffect(() => {
-    if (gameState === 'main-menu') {
-      playBackgroundSound();
-    }
-  }, [gameState, playBackgroundSound]);
+  // Enable sound when user interacts with the app (for example, on Start Game button click)
+  const handleUserInteraction = () => {
+    enableSound();
+    window.removeEventListener('click', handleUserInteraction);
+  };
+
+  window.addEventListener('click', handleUserInteraction);
+
+  return () => {
+    window.removeEventListener('click', handleUserInteraction);
+  };
+}, [enableSound]);
 
   // Handler to start the game (Player vs Player)
   const handleStartGame = () => {
