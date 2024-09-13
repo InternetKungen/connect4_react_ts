@@ -7,14 +7,13 @@ interface StartMenuProps {
   onStartAI: () => void; // Function that starts Player vs Ai Mode / Computer 
   onShowRules: () => void; // Function that shows Game Rules
   onOpenSettings: () => void; // Function to open settings
-  hideBackgroundEffect: boolean; //
 }
 
-const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, onOpenSettings, hideBackgroundEffect }) => {
+const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, onOpenSettings }) => {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   return (
-    <div className={`start-menu-container ${hideBackgroundEffect ? 'hidden-background' : ''}`}>
+    <div className={`start-menu-container`}>
       <h1 className="start-menu-title"></h1>
       
       <div className="start-menu-animation-display">

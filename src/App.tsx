@@ -13,10 +13,15 @@ import ComputerMenu from './components/ComputerMenu/ComputerMenu';
 import PopUpMenu from './components/PopUpMenu/PopUpMenu';
 import { handleColumnClick, handleReset } from './utils/gameUtils';
 import ScoreBoard from './components/ScoreBoard/ScoreBoard';
-import Background from './components/Background/Background';
+// import Background from './components/Background/Background';
 import SettingsMenu from './components/SettingsMenu/SettingsMenu';
 
-function App() {
+function App({
+  setHideBackgroundEffect,
+  hideBackgroundEffect}: { 
+    setHideBackgroundEffect: (hide: boolean) => void
+    hideBackgroundEffect: boolean
+}) {
   // State to manage the current view
   const [gameState, setGameState] = useState<GameState>('main-menu');
   const [board, setBoard] = useState(new Board());
@@ -37,7 +42,7 @@ function App() {
   const [playerOName, setPlayerOName] = useState<string>('');
 
   // State for settings
-  const [hideBackgroundEffect, setHideBackgroundEffect] = useState<boolean>(false);
+  // const [hideBackgroundEffect, setHideBackgroundEffect] = useState<boolean>(false);
   const [hideUndoButton, setHideUndoButton] = useState<boolean>(false);
 
   // Handler to start the game (Player vs Player)
@@ -74,7 +79,6 @@ function App() {
     setPlayerOScore(0);
     setPlayerXName('');
     setPlayerOName('');
-   
   };
 
   const handleSelectedDifficulty = (selectedDifficulty: 'easy' | 'hard') => {
@@ -165,7 +169,6 @@ function App() {
             className='background-menu'
             src='./img/background-menu.png'
             alt='background'
-            style={{ display: hideBackgroundEffect ? 'none' : 'block' }}
           />
           <div className='empty-board'></div>
           <StartMenu
@@ -173,7 +176,6 @@ function App() {
             onStartAI={handleStartAI}
             onShowRules={handleShowRules}
             onOpenSettings={handleOpenSettings}
-            hideBackgroundEffect={hideBackgroundEffect} 
           />
         </div>
       );
@@ -183,11 +185,10 @@ function App() {
     case 'settings': // New case for settings
       return (
         <div className='app'>
-          <Background hideBackgroundEffect={hideBackgroundEffect} /> {/* Background visibility controlled here */}
           <img
             className='background-menu'
+            src='./img/background-menu.png'
             alt='background'
-            style={{ display: 'none' }} // Ensure the background image is always visible
           />
           <div className='empty-board'></div>
           <SettingsMenu
@@ -207,7 +208,6 @@ function App() {
             className='background-menu'
             src='./img/background-menu.png'
             alt='background'
-            style={{ display: hideBackgroundEffect ? 'none' : 'block' }}
           />
           <div className='empty-board'></div>
           <img className='logo' src='./img/connect-4-logo.png' alt='logo' />
@@ -226,7 +226,6 @@ function App() {
             className='background-menu'
             src='./img/background-menu.png'
             alt='background'
-            style={{ display: hideBackgroundEffect ? 'none' : 'block' }}
           />
           <div className='empty-board'></div>
           <ComputerMenu onSelectDifficulty={handleSelectedDifficulty} />
@@ -238,7 +237,6 @@ function App() {
       }
       return (
         <div className='app'>
-          <Background hideBackgroundEffect={hideBackgroundEffect} /> {/* Add this line here */}
           <img
             className='background-menu'
             src='./img/background-menu.png'
@@ -286,6 +284,8 @@ function App() {
           <PopUpMenu
             onRestart={handleRestart}
             onQuit={handleQuit}
+            hideBackgroundEffect={hideBackgroundEffect}
+            hideUndoButton={hideUndoButton}
             onToggleBackground={handleToggleBackgroundEffect}
             onToggleUndoButton={handleToggleUndoButton}
           />

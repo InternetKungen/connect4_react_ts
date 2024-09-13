@@ -11,15 +11,17 @@ import SettingsMenu from '../SettingsMenu/SettingsMenu';
 interface PopUpMenuProps {
   onRestart: () => void; // Function to restart the game
   onQuit: () => void;    // Function to quit the game
+  hideBackgroundEffect: boolean;
+  hideUndoButton: boolean;
   onToggleBackground: (hide: boolean) => void; // Function to toggle background effect
   onToggleUndoButton: (hide: boolean) => void; // Function to toggle undo button visibility
 }
 
-const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit, onToggleBackground, onToggleUndoButton }) => {
+const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit, hideBackgroundEffect, hideUndoButton, onToggleBackground, onToggleUndoButton }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false); // Main menu state
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false); // Settings menu state
-  const [hideBackgroundEffect, setHideBackgroundEffect] = useState<boolean>(false); // State for background effect
-  const [hideUndoButton, setHideUndoButton] = useState<boolean>(false); // State for undo button
+  // const [hideBackgroundEffect, setHideBackgroundEffect] = useState<boolean>(false); // State for background effect
+  // const [hideUndoButton, setHideUndoButton] = useState<boolean>(false); // State for undo button
   
   // useEffect to bind the ESC key to opening/closing the menu
   useEffect(() => {
@@ -74,6 +76,7 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit, onToggleBackgr
             >
               Restart
             </button>
+            <button onClick={handleOpenSettings}>Settings</button>
             <button
               onClick={() => {
                 handleCloseMenu();
@@ -82,24 +85,17 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit, onToggleBackgr
             >
               Quit
             </button>
-            <button onClick={handleOpenSettings}>Settings</button> {/* Settings button */}
           </div>
         </div>
       )}
 
-       {isSettingsOpen && (
+      {isSettingsOpen && (
         <SettingsMenu
           hideBackgroundEffect={hideBackgroundEffect} // Pass the background effect state
           hideUndoButton={hideUndoButton}
-          onToggleBackgroundEffect={(hide) => {
-            setHideBackgroundEffect(hide);
-            onToggleBackground(hide);
-          }}
-          onToggleUndoButton={(hide) => {
-            setHideUndoButton(hide);
-            onToggleUndoButton(hide);
-          }}
-          onClose={handleCloseSettings} // Close settings when Back is clicked
+          onToggleBackgroundEffect={onToggleBackground}
+          onToggleUndoButton={onToggleUndoButton}
+          onClose={handleCloseSettings} 
         />
       )}
     </>
