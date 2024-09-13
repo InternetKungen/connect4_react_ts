@@ -10,12 +10,12 @@
     width: 70vw;
   }
 
-  .logo {
+  /* .logo {
     width: 11vw;
     height: 11vw;
-    /* top: 4vh; */
+    top: 4vh;
     left: calc((50% - 5.5vw) - 1px);
-  }
+  } */
 
   .background-menu {
     /* will-change: opacity, transform; */

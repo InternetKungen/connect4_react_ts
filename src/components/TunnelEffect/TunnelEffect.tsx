@@ -2,11 +2,15 @@ import React, { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import { gsap, Power2 } from 'gsap';
 
-const TunnelEffect: React.FC = () => {
+interface TunnelEffectProps {
+  isActive: boolean;  // Kontroll för att starta eller stoppa animeringen
+}
+const TunnelEffect: React.FC<TunnelEffectProps> = ({ isActive }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const animationFrameId = useRef<number | null>(null);
 
   useEffect(() => {
-    if (!canvasRef.current) return;
+    if (!canvasRef.current || !isActive) return;
 
     const ww = window.innerWidth;
     const wh = window.innerHeight;
@@ -222,7 +226,17 @@ const TunnelEffect: React.FC = () => {
         new Tunnel(texture);
       }
     );
-  }, []);
+
+    return () => {
+      if (animationFrameId.current) {
+        cancelAnimationFrame(animationFrameId.current); // Avbryt animeringsloopen
+      }
+      if (canvasRef.current) {
+        const renderer = new THREE.WebGLRenderer({ canvas: canvasRef.current });
+        renderer.dispose(); // Frigör resurser
+      }
+    };
+  }, [isActive]);
 
   return <canvas ref={canvasRef} />;
 };

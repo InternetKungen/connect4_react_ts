@@ -6,14 +6,34 @@
 
 import React, { useState, useEffect } from 'react';
 import './PopUpMenu.css';
+import SettingsMenu from '../SettingsMenu/SettingsMenu';
+import useSound from '../../hooks/useSound';
+
+import hoverButtonSound from '../../assets/sounds/hoverButton.mp3';
+import clickMouseDownSound from '../../assets/sounds/clickMouseDownButton.mp3';
+import clickMouseUpSound from '../../assets/sounds/clickMouseUpButton.mp3';
+import clickGameOverSound from '../../assets/sounds/buttonClick.mp3';
 
 interface PopUpMenuProps {
   onRestart: () => void; // Function to restart the game
-  onQuit: () => void;// Function to quit the game
+  onQuit: () => void;    // Function to quit the game
+  hideBackgroundEffect: boolean;
+  hideUndoButton: boolean;
+  onToggleBackground: (hide: boolean) => void; // Function to toggle background effect
+  onToggleUndoButton: (hide: boolean) => void; // Function to toggle undo button visibility
 }
 
-const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
-  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false); // state to track if the menu is open or closed
+const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit, hideBackgroundEffect, hideUndoButton, onToggleBackground, onToggleUndoButton }) => {
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false); // Main menu state
+  const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false); // Settings menu state
+  // const [hideBackgroundEffect, setHideBackgroundEffect] = useState<boolean>(false); // State for background effect
+  // const [hideUndoButton, setHideUndoButton] = useState<boolean>(false); // State for undo button
+  
+  /*Bind Sounds*/
+  const { playSound: playHoverButtonSound } = useSound(hoverButtonSound, 0.3);
+  const { playSound: playClickMouseDownSound } = useSound(clickMouseDownSound, 0.7);
+  const { playSound: playClickMouseUpSound } = useSound(clickMouseUpSound, 0.7);
+  const { playSound: playClickGameOverSound } = useSound(clickGameOverSound, 0.3);
 
   // useEffect to bind the ESC key to opening/closing the menu
   useEffect(() => {
@@ -30,36 +50,48 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
   }, []);
 
   const handleOpenMenu = () => {
-    setIsMenuOpen(true); // Open the menu
+    setIsMenuOpen(true); // Open the main menu
   };
 
   const handleCloseMenu = () => {
-    setIsMenuOpen(false); // Close the menu
+    setIsMenuOpen(false); // Close the main menu
   };
 
   const handleContinue = () => {
-    setIsMenuOpen(false); // Close the menu without restarting or quitting
+    setIsMenuOpen(false); // Close the main menu without restarting or quitting
   };
 
-  // Function to handle closing the menu if clicking outside the menu content
-  const handleClickOutside = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).classList.contains('menu-modal-overlay')) {
-      handleCloseMenu(); // Close the menu if click is on the overlay
-    }
+  const handleOpenSettings = () => {
+    setIsSettingsOpen(true); // Open the settings menu
+  };
+
+  const handleCloseSettings = () => {
+    setIsSettingsOpen(false); // Close the settings menu
   };
 
   return (
     <>
-      <button className='popup-menu-button' onClick={handleOpenMenu}>
+      <button className='popup-menu-button' onMouseDown={() => playClickMouseDownSound()} onMouseUp={() => playClickMouseUpSound()} onClick={handleOpenMenu}>
         Menu
       </button>
 
       {isMenuOpen && (
-        <div className='menu-modal-overlay' onClick={handleClickOutside}>
+        <div className='menu-modal-overlay'>
           <div className='menu-modal-content'>
             <h2>Game Menu</h2>
-            <button onClick={handleContinue}>Continue</button>
+
             <button
+              onMouseEnter={() => playHoverButtonSound()}
+              onMouseDown={() => playClickMouseDownSound()}
+              onMouseUp={() => playClickMouseUpSound()}
+              onClick={handleContinue}
+            >Continue
+            </button>
+            
+            <button
+              onMouseEnter={() => playHoverButtonSound()}
+              onMouseDown={() => playClickMouseDownSound()}
+              onMouseUp={() => playClickMouseUpSound()}
               onClick={() => {
                 handleCloseMenu();
                 onRestart();
@@ -67,7 +99,19 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
             >
               Restart
             </button>
+            
             <button
+              onMouseEnter={() => playHoverButtonSound()}
+              onMouseDown={() => playClickMouseDownSound()}
+              onMouseUp={() => playClickMouseUpSound()}
+              onClick={handleOpenSettings}>
+              Settings
+            </button>
+            
+            <button
+              onMouseEnter={() => playHoverButtonSound()}
+              onMouseDown={() => playClickMouseDownSound()}
+              onMouseUp={() => playClickGameOverSound()}
               onClick={() => {
                 handleCloseMenu();
                 onQuit();
@@ -77,6 +121,16 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit }) => {
             </button>
           </div>
         </div>
+      )}
+
+      {isSettingsOpen && (
+        <SettingsMenu
+          hideBackgroundEffect={hideBackgroundEffect} // Pass the background effect state
+          hideUndoButton={hideUndoButton}
+          onToggleBackgroundEffect={onToggleBackground}
+          onToggleUndoButton={onToggleUndoButton}
+          onClose={handleCloseSettings} 
+        />
       )}
     </>
   );

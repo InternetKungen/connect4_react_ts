@@ -46,7 +46,7 @@ body {
   animation: fadeInApp 0.5s ease-in-out 1;
 }
 
-.logo {
+/* .logo {
   display: none;
   width: 11vh;
   height: 11vh;
@@ -54,7 +54,7 @@ body {
   top: 4vh;
   left: calc((50% - 5.5vh) - 1px);
   opacity: 0;
-}
+} */
 
 @keyframes fadeIn {
   from {
@@ -158,14 +158,35 @@ body {
   /* Change the color of paragraph and list text */
 }
 
+.board-button-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 70vh;
+  margin-top: 1rem;
+  position: relative;
+  top: 46vh;
+  left: 0;
+  padding: 0 10px 0 10px;
+}
+
+.board-button-container .menu-button-container {
+  display: flex;
+  align-self: flex-start;
+}
+
+.board-button-container .undo-container {
+  display: flex;
+  align-self: flex-end;
+}
+
 .undo-container {
   display: flex;
-  justify-content: space-evenly;
-  margin-top: auto;
-  padding: 10px;
-  width: 100%;
-  z-index: 10;
+  /* margin-top: auto; */
+  /* padding: 10px; */
+  z-index: 2;
   position: relative;
+  align-self: flex-end;
 }
 
 .undo-container button {
@@ -199,6 +220,15 @@ body {
   .undo-container button {
     font-size: 0.7rem !important;
     padding: 0.4rem 0.6rem !important;
-    margin-top: 2rem;
+    /* margin-top: 2rem; */
+  }
+}
+
+@media (max-width: 100vh) {
+.board-button-container {
+    width: 70vw;
+    position: absolute;
+    top: calc((46vh + 46vw) - 13vw);
+    left: 15vw;
   }
 }

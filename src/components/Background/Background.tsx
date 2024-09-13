@@ -2,10 +2,16 @@ import React from 'react';
 import './Background.css';
 import TunnelEffect from '../TunnelEffect/TunnelEffect';
 
-const Background: React.FC = () => {
-  return <div className="background">
-    <TunnelEffect />
-  </div>;
+interface BackgroundProps {
+  hideBackgroundEffect: boolean;
+}
+
+const Background: React.FC<BackgroundProps> = ({ hideBackgroundEffect }) => {
+  return (
+    <div className={`background ${hideBackgroundEffect ? 'hidden' : ''}`}>
+      {!hideBackgroundEffect && <TunnelEffect isActive={!hideBackgroundEffect} />}
+    </div>
+  );
 };
 
 export default Background;
