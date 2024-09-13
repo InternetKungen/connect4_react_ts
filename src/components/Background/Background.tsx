@@ -9,7 +9,7 @@ interface BackgroundProps {
 const Background: React.FC<BackgroundProps> = ({ hideBackgroundEffect }) => {
   return (
     <div className={`background ${hideBackgroundEffect ? 'hidden' : ''}`}>
-      {!hideBackgroundEffect && <TunnelEffect />}
+      {!hideBackgroundEffect && <TunnelEffect isActive={!hideBackgroundEffect} />}
     </div>
   );
 };
