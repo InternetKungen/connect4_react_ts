@@ -148,7 +148,7 @@ function App({
 
 
   // AI vs AI game logic
-   useEffect(() => {
+  useEffect(() => {
   console.log('AI vs AI Check:', isAiVsAi);
   if (isAiVsAi && gameState === 'game-board' && !board.gameOver && !isLocked) {
     const currentAIPlayer = board.currentPlayerColor === 'X' ? playerX : playerO;
@@ -298,7 +298,7 @@ function App({
             onStart={handleStartGame}
             onStartAI={handleStartAI}
             onShowRules={handleShowRules}
-             onStartAIVsAI={handleStartAIVsAI}  
+            onStartAIVsAI={handleStartAIVsAI}  
             onOpenSettings={handleOpenSettings}
           />
         </div>
@@ -329,7 +329,6 @@ function App({
         <div className="app">
           <img className="background-menu" src="./img/background-menu.png" alt="background" />
           <div className="empty-board"></div>
-          <img className="logo" src="./img/connect-4-logo.png" alt="logo" />
           <h1>{aiSetup ? 'Enter your name' : 'Please enter player names'}</h1>
 
           <SetPlayerName
@@ -383,24 +382,25 @@ function App({
             isAiVsAi={isAiVsAi}
           />
           <TimerDisplay timeLeft={timeLeft} />
-          {/* // Adds the undo button */}
-          {!hideUndoButton && (
-            <div className="undo-container">
-              <button onClick={handleUndoMove} disabled={boardHistory.length === 0}>
-                Undo Move
-              </button>
-            </div>
-          )}
-
-          <PopUpMenu
-            onRestart={handleRestart}
-            onQuit={handleQuit}
-            hideBackgroundEffect={hideBackgroundEffect}
-            hideUndoButton={hideUndoButton}
-            onToggleBackground={handleToggleBackgroundEffect}
-            onToggleUndoButton={handleToggleUndoButton}
-          />
-
+          <div className="board-button-container">
+              <div className="menu-button-container">
+                <PopUpMenu
+                  onRestart={handleRestart}
+                  onQuit={handleQuit}
+                  hideBackgroundEffect={hideBackgroundEffect}
+                  hideUndoButton={hideUndoButton}
+                  onToggleBackground={handleToggleBackgroundEffect}
+                  onToggleUndoButton={handleToggleUndoButton}
+                    />
+              </div>
+            {!hideUndoButton && (
+              <div className="undo-container">
+                <button onClick={handleUndoMove} disabled={boardHistory.length === 0}>
+                  Undo Move
+                </button>
+              </div>
+            )}
+          </div>
           {board.gameOver && (
             <GameOverComponent
               winner={board.winner}

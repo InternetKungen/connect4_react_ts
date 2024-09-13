@@ -70,9 +70,9 @@ useEffect(() => {
   }, [backSpace]);
 
   // Render the form
- return (
+  return (
     <div className="set-player-name-container">
-     <form onSubmit={handleFormSubmit} className="set-player-name-form">     
+      <form onSubmit={handleFormSubmit} className="set-player-name-form">     
         <label>
           Player X Name:
           <input name="playerX" placeholder="Enter player name" className="input-field" required />
@@ -84,14 +84,11 @@ useEffect(() => {
           </label>
         )}
         <div className="button-container">
-         <button type="submit" className="submit-button" onMouseDown={playClickMouseDownButton} onMouseUp={playClickMouseUpButtonStartGame}>Start Game</button>
+          <button type="submit" className="submit-button" onMouseDown={playClickMouseDownButton} onMouseUp={playClickMouseUpButtonStartGame}>Start Game</button>
           <button className="back-button" onMouseDown={playClickMouseDownButtonBackSound} onMouseUp={playClickMouseUpButtonBackSound} onClick={backSpace}>Back</button>
-     
         </div>
-     </form>
-   </div>
-   
-   
+      </form>
+    </div>
   );
 };
 
