@@ -99,6 +99,7 @@
   background-size: contain;
   z-index: -1;
   overflow: visible;
+  will-change: opacity, transform;
   animation: scaleInBackground 0.5s ease-out;
 }
 /* Style for the menu content area */

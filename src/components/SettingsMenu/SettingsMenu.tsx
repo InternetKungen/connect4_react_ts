@@ -1,5 +1,6 @@
 import React from 'react';
 import Switch from '@mui/material/Switch';
+import './SettingsMenu.css';
 /*Sounds*/
 import useSound from '../../hooks/useSound';
 import hoverButtonSound from '../../assets/sounds/hoverButton.mp3';
