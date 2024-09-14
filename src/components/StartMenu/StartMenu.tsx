@@ -24,6 +24,9 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, 
   const { playSound: playMachineSound,  hasInteracted: hasInteractedMachine } = useSound(machineSound, 0.01);
   const { playSound: playMachineSoundReverse, hasInteracted: hasInteractedMachineReverse } = useSound(machineSoundReverse, 0.01);
   const { playSound: playHoverButtonSound, hasInteracted: hasInteractedHoverButton } = useSound(hoverButtonSound, 0.3);
+  const { playSound: playMachineSound,  hasInteracted: hasInteractedMachine } = useSound(machineSound, 0.01);
+  const { playSound: playMachineSoundReverse, hasInteracted: hasInteractedMachineReverse } = useSound(machineSoundReverse, 0.01);
+  const { playSound: playHoverButtonSound, hasInteracted: hasInteractedHoverButton } = useSound(hoverButtonSound, 0.3);
   const { playSound: playClickMouseDownSound } = useSound(clickMouseDownSound, 0.7);
   const { playSound: playClickMouseUpSound } = useSound(clickMouseUpSound, 0.7);
 
@@ -82,6 +85,23 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, 
               playMachineSoundReverse();
             }
           }}
+          onMouseEnter={() => {
+            setHoveredButton('pvp');
+            if (hasInteractedMachine) {
+              playMachineSound() 
+              
+            }
+            if (hasInteractedHoverButton) {
+              playHoverButtonSound(); 
+              
+            }
+          }}
+          onMouseLeave={() => {
+            setHoveredButton(null);
+            if (hasInteractedMachineReverse) {
+              playMachineSoundReverse();
+            }
+          }}
           onMouseDown={() => { playClickMouseDownSound(); }}
           onMouseUp={() => { playClickMouseUpSound(); onStart(); }}
           className="start-menu-button"
@@ -89,6 +109,20 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, 
           PLAYER VS PLAYER
         </button>
         <button
+          onMouseEnter={() => {
+            setHoveredButton('cpu');
+            if (hasInteractedMachine) {
+              playMachineSound();
+            }
+            if (hasInteractedHoverButton) {playHoverButtonSound();
+            }
+          }}
+          onMouseLeave={() => {
+            setHoveredButton(null);
+            if (hasInteractedMachineReverse) {
+              playMachineSoundReverse();
+            }
+          }}
           onMouseEnter={() => {
             setHoveredButton('cpu');
             if (hasInteractedMachine) {
@@ -114,7 +148,7 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, 
           onMouseDown={() => { playClickMouseDownSound(); }}
           onMouseUp={() => { playClickMouseUpSound(); }}
           onMouseEnter={() => {
-            setHoveredButton('ai-vs-ai');
+            // setHoveredButton('ai-vs-ai');
             if (hasInteractedHoverButton) {
               playHoverButtonSound();
             }
@@ -126,6 +160,11 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, 
           AI VS AI
         </button>
         <button
+          onMouseEnter={() => {
+            if (hasInteractedHoverButton) {
+              playHoverButtonSound();
+            }
+          }}
           onMouseEnter={() => {
             if (hasInteractedHoverButton) {
               playHoverButtonSound();

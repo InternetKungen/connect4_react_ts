@@ -21,7 +21,6 @@ import useSound , { getGlobalSoundEnabled } from './hooks/useSound';
 /*Sounds*/
 import backgroundSound from './assets/sounds/backgroundSound.mp3';
 
-
 function App({
   setHideBackgroundEffect,
   hideBackgroundEffect}: { 
@@ -53,28 +52,35 @@ function App({
   const [timeLeft, setTimeLeft] = useState<number>(30); // 30 seconds per turn
   
   // Set fixed volume for each sound
-  const { playSound: playBackgroundSound } = useSound(backgroundSound, 0.3, 15);
-  // const { enableSound } = useSound(backgroundSound, 0.3, 15);
-  const isSoundEnabled = getGlobalSoundEnabled();
+  const { playSound: playBackgroundSound, hasInteracted: hasInteractedBackgroundSound} = useSound(backgroundSound, 0.3, 15);
 
-  // Play background sound when user interacts with the app
+  // Listen for first interaction - to start play the background sound
+  const [hasInteracted, setHasInteracted] = useState(false);
+
   useEffect(() => {
-    // Enable sound when user interacts with the app (for example, on Start Game button click)
-    if (isSoundEnabled) {
-      const handleUserInteraction = () => {
-      
-        // enableSound();
+    const handleInteraction = () => {
+      if (!hasInteracted) {
+        setHasInteracted(true);
         playBackgroundSound();
-        window.removeEventListener('click', handleUserInteraction);
-      
-      };
-      window.addEventListener('click', handleUserInteraction);
-      return () => {
-        window.removeEventListener('click', handleUserInteraction);
-      };
-    }
-}, []);
+      }
+    };
 
+    // Lägg till eventlistener för olika interaktioner
+    document.addEventListener('click', handleInteraction);
+    document.addEventListener('touchstart', handleInteraction);
+
+    // Rensa eventlisteners när komponenten avmonteras
+    return () => {
+      document.removeEventListener('click', handleInteraction);
+      document.removeEventListener('touchstart', handleInteraction);
+    };
+  }, [hasInteracted]);
+
+  useEffect(() => {
+    if (gameState === 'main-menu' && hasInteracted) {
+      playBackgroundSound();
+    }
+  }, [gameState, hasInteracted]);
 
   // Handler to start the game (Player vs Player)
   const handleStartGame = () => {
@@ -123,10 +129,12 @@ function App({
   };
 
   const handleStartAIVsAI = () => {
-  setPlayerX(new Player('AI 1', 'X', true));
-  setPlayerO(new Player('AI 2', 'O', true));
-  setIsAiVsAi(true); // Make sure this is set to true
-  setGameState('game-board');
+  setPlayerX(new Player('AI X', 'X', true)); // Set player X to AI X
+  setPlayerO(new Player('AI O', 'O', true)); // Set player O to AI O
+  setPlayerXName('AI X'); // Set the display name for Player X
+  setPlayerOName('AI O'); // Set the display name for Player O
+  setIsAiVsAi(true); // Enable AI vs AI mode
+  setGameState('game-board'); // Transition to the game board
 };
   // Handler to show the game rules
   const handleShowRules = () => {
