@@ -18,12 +18,6 @@ const useSound = (sound: string, volume: number = 1, loopStart?: number) => {
     } else {
       audioRef.current.loop = false; // No loop if not set
     }
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
-      }
-    };
   }, [sound, volume, loopStart]);
 
   const playSound = () => {
