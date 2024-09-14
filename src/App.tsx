@@ -57,30 +57,6 @@ function App({
   // Listen for first interaction - to start play the background sound
   const [hasInteracted, setHasInteracted] = useState(false);
 
-  // useEffect(() => {
-  //   const handleInteraction = () => {
-  //     if (!hasInteracted) {
-  //       setHasInteracted(true);
-  //       playBackgroundSound();
-  //     }
-  //   };
-
-  //   // Lägg till eventlistener för olika interaktioner
-  //   document.addEventListener('click', handleInteraction);
-  //   document.addEventListener('touchstart', handleInteraction);
-
-  //   // Rensa eventlisteners när komponenten avmonteras
-  //   return () => {
-  //     document.removeEventListener('click', handleInteraction);
-  //     document.removeEventListener('touchstart', handleInteraction);
-  //   };
-  // }, [hasInteracted]);
-
-  // useEffect(() => {
-  //   if (gameState === 'main-menu' && hasInteracted) {
-  //     playBackgroundSound();
-  //   }
-  // }, [gameState, hasInteracted]);
   useEffect(() => {
     const handleInteraction = () => {
       if (!hasInteracted) {
@@ -110,7 +86,7 @@ function App({
     }
   }, [gameState, hasInteracted, playBackgroundSound, stopBackgroundSound]);
 
-  // Lägg till denna useEffect för att lyssna på ändringar i globala ljudinställningar
+  // Listen for global sound change
   useEffect(() => {
     const handleGlobalSoundChange = () => {
       if (getGlobalSoundEnabled()) {
@@ -119,14 +95,14 @@ function App({
         stopBackgroundSound();
       }
     };
-
-    // Lyssna på en anpassad event för ljudändringar
+    
     window.addEventListener('globalSoundChange', handleGlobalSoundChange);
 
     return () => {
       window.removeEventListener('globalSoundChange', handleGlobalSoundChange);
     };
   }, [playBackgroundSound, stopBackgroundSound]);
+
   // Handler to start the game (Player vs Player)
   const handleStartGame = () => {
     setAiSetup(false); // Ensure AI setup is not active
@@ -174,12 +150,12 @@ function App({
   };
 
   const handleStartAIVsAI = () => {
-  setPlayerX(new Player('AI X', 'X', true)); // Set player X to AI X
-  setPlayerO(new Player('AI O', 'O', true)); // Set player O to AI O
-  setPlayerXName('AI X'); // Set the display name for Player X
-  setPlayerOName('AI O'); // Set the display name for Player O
-  setIsAiVsAi(true); // Enable AI vs AI mode
-  setGameState('game-board'); // Transition to the game board
+    setPlayerX(new Player('AI X', 'X', true)); // Set player X to AI X
+    setPlayerO(new Player('AI O', 'O', true)); // Set player O to AI O
+    setPlayerXName('AI X'); // Set the display name for Player X
+    setPlayerOName('AI O'); // Set the display name for Player O
+    setIsAiVsAi(true); // Enable AI vs AI mode
+    setGameState('game-board'); // Transition to the game board
 };
   // Handler to show the game rules
   const handleShowRules = () => {

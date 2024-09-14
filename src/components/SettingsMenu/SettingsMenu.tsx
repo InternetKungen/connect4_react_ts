@@ -1,18 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Switch from '@mui/material/Switch';
 import './SettingsMenu.css';
 /*Sounds*/
-import useSound, { setGlobalSoundEnabled } from '../../hooks/useSound';
+import useSound, { setGlobalSoundEnabled, getGlobalSoundEnabled } from '../../hooks/useSound';
 import hoverButtonSound from '../../assets/sounds/hoverButton.mp3';
 import clickMouseDownButtonBackSound from '../../assets/sounds/clickMouseDownButtonBack.mp3';
 import clickMouseUpButtonBackSound from '../../assets/sounds/clickMouseUpButtonBack.mp3';
 
 interface SettingsMenuProps {
-  hideBackgroundEffect: boolean; // Renamed prop
+  hideBackgroundEffect: boolean; 
   hideUndoButton: boolean;
-  onToggleBackgroundEffect: (hide: boolean) => void; // Renamed prop
+  onToggleBackgroundEffect: (hide: boolean) => void; 
   onToggleUndoButton: (hide: boolean) => void;
-  onClose: () => void; // Function to close the settings menu
+  onClose: () => void;
 }
 
 const SettingsMenu: React.FC<SettingsMenuProps> = ({
@@ -22,21 +22,23 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({
   onToggleUndoButton,
   onClose
 }) => {
-  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [soundEnabled, setSoundEnabled] = useState(getGlobalSoundEnabled);
 
-
-  setGlobalSoundEnabled(soundEnabled);
+  useEffect(() => {
+    setGlobalSoundEnabled(soundEnabled);
+  }, [soundEnabled]);
 
   const { playSound: playHoverButtonSound } = useSound(hoverButtonSound, 0.3);
   const { playSound: playClickMouseDownButtonBackSound } = useSound(clickMouseDownButtonBackSound, 0.7);
   const { playSound: playClickMouseUpButtonBackSound } = useSound(clickMouseUpButtonBackSound, 0.7);
 
   const handleSoundToggle = () => {
-    const newSoundEnabled = !soundEnabled;
-    setSoundEnabled(newSoundEnabled);
-    setGlobalSoundEnabled(newSoundEnabled);
-    
-    window.dispatchEvent(new Event('globalSoundChange'));
+    setSoundEnabled(prevState => {
+      const newState = !prevState;
+      setGlobalSoundEnabled(newState);
+      window.dispatchEvent(new Event('globalSoundChange'));
+      return newState;
+    });
   };
 
   return (

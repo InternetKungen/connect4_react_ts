@@ -114,13 +114,13 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, 
           onMouseDown={() => { playClickMouseDownSound(); }}
           onMouseUp={() => { playClickMouseUpSound(); }}
           onMouseEnter={() => {
-            // setHoveredButton('ai-vs-ai');
+            // setHoveredButton('ai-vs-ai'); //no animation yet
             if (hasInteractedHoverButton) {
               playHoverButtonSound();
             }
           }}
           onMouseLeave={() => setHoveredButton(null)}
-          onClick={onStartAIVsAI}  // Trigger AI vs AI game
+          onClick={onStartAIVsAI} 
           className="start-menu-button"
         >
           AI VS AI
