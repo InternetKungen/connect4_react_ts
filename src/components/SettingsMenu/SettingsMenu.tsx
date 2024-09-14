@@ -16,14 +16,14 @@ interface SettingsMenuProps {
 }
 
 const SettingsMenu: React.FC<SettingsMenuProps> = ({
-  hideBackgroundEffect, // Renamed prop
+  hideBackgroundEffect,
   hideUndoButton,
-  onToggleBackgroundEffect, // Renamed prop
+  onToggleBackgroundEffect,
   onToggleUndoButton,
   onClose
 }) => {
   const [soundEnabled, setSoundEnabled] = useState(true);
-  // const [backgroundSoundEnabled, setBackgroundSoundEnabled] = useState(true);
+
 
   setGlobalSoundEnabled(soundEnabled);
 
@@ -32,13 +32,12 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({
   const { playSound: playClickMouseUpButtonBackSound } = useSound(clickMouseUpButtonBackSound, 0.7);
 
   const handleSoundToggle = () => {
-      setSoundEnabled(!soundEnabled);
-      setGlobalSoundEnabled(!soundEnabled);
+    const newSoundEnabled = !soundEnabled;
+    setSoundEnabled(newSoundEnabled);
+    setGlobalSoundEnabled(newSoundEnabled);
+    
+    window.dispatchEvent(new Event('globalSoundChange'));
   };
-
-  // const handleBackgroundSoundToggle = () => {
-  //   setBackgroundSoundEnabled(!backgroundSoundEnabled);
-  // };
 
   return (
     <div className='menu-modal-overlay'>
@@ -46,8 +45,8 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({
         <h2>Settings</h2>
         <label>
           <Switch
-            checked={hideBackgroundEffect} // Use hideBackgroundEffect
-            onChange={() => onToggleBackgroundEffect(!hideBackgroundEffect)} // Toggle background effect
+            checked={hideBackgroundEffect} 
+            onChange={() => onToggleBackgroundEffect(!hideBackgroundEffect)}
           />
           Hide Background Effect
         </label>
@@ -65,13 +64,6 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({
           />
           Enable Sound
         </label>
-        {/* <label>
-          <Switch
-            checked={backgroundSoundEnabled}
-            onChange={handleBackgroundSoundToggle}
-          />
-          Enable Background Sound
-        </label> */}
         <button
           onMouseEnter={() => { playHoverButtonSound(); }}
           onMouseDown={() => { playClickMouseDownButtonBackSound(); }}

@@ -52,36 +52,81 @@ function App({
   const [timeLeft, setTimeLeft] = useState<number>(30); // 30 seconds per turn
   
   // Set fixed volume for each sound
-  const { playSound: playBackgroundSound, hasInteracted: hasInteractedBackgroundSound} = useSound(backgroundSound, 0.3, 15);
+  const { playSound: playBackgroundSound, stopSound: stopBackgroundSound } = useSound(backgroundSound, 0.3, 15);
 
   // Listen for first interaction - to start play the background sound
   const [hasInteracted, setHasInteracted] = useState(false);
 
+  // useEffect(() => {
+  //   const handleInteraction = () => {
+  //     if (!hasInteracted) {
+  //       setHasInteracted(true);
+  //       playBackgroundSound();
+  //     }
+  //   };
+
+  //   // Lägg till eventlistener för olika interaktioner
+  //   document.addEventListener('click', handleInteraction);
+  //   document.addEventListener('touchstart', handleInteraction);
+
+  //   // Rensa eventlisteners när komponenten avmonteras
+  //   return () => {
+  //     document.removeEventListener('click', handleInteraction);
+  //     document.removeEventListener('touchstart', handleInteraction);
+  //   };
+  // }, [hasInteracted]);
+
+  // useEffect(() => {
+  //   if (gameState === 'main-menu' && hasInteracted) {
+  //     playBackgroundSound();
+  //   }
+  // }, [gameState, hasInteracted]);
   useEffect(() => {
     const handleInteraction = () => {
       if (!hasInteracted) {
         setHasInteracted(true);
-        playBackgroundSound();
+        if (getGlobalSoundEnabled()) {
+          playBackgroundSound();
+        }
       }
     };
 
-    // Lägg till eventlistener för olika interaktioner
     document.addEventListener('click', handleInteraction);
     document.addEventListener('touchstart', handleInteraction);
 
-    // Rensa eventlisteners när komponenten avmonteras
     return () => {
       document.removeEventListener('click', handleInteraction);
       document.removeEventListener('touchstart', handleInteraction);
     };
-  }, [hasInteracted]);
+  }, [hasInteracted, playBackgroundSound]);
 
   useEffect(() => {
     if (gameState === 'main-menu' && hasInteracted) {
-      playBackgroundSound();
+      if (getGlobalSoundEnabled()) {
+        playBackgroundSound();
+      } else {
+        stopBackgroundSound();
+      }
     }
-  }, [gameState, hasInteracted]);
+  }, [gameState, hasInteracted, playBackgroundSound, stopBackgroundSound]);
 
+  // Lägg till denna useEffect för att lyssna på ändringar i globala ljudinställningar
+  useEffect(() => {
+    const handleGlobalSoundChange = () => {
+      if (getGlobalSoundEnabled()) {
+        playBackgroundSound();
+      } else {
+        stopBackgroundSound();
+      }
+    };
+
+    // Lyssna på en anpassad event för ljudändringar
+    window.addEventListener('globalSoundChange', handleGlobalSoundChange);
+
+    return () => {
+      window.removeEventListener('globalSoundChange', handleGlobalSoundChange);
+    };
+  }, [playBackgroundSound, stopBackgroundSound]);
   // Handler to start the game (Player vs Player)
   const handleStartGame = () => {
     setAiSetup(false); // Ensure AI setup is not active

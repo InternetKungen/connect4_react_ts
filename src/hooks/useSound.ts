@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // Globala inställningar för ljud som kan ändras från en komponent
 let globalSoundEnabled = true;
@@ -9,6 +9,7 @@ export const getGlobalSoundEnabled = () => globalSoundEnabled;
 const useSound = (sound: string, volume: number = 1, loopStart?: number) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const hasInteracted = useRef<boolean>(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
   useEffect(() => {
     audioRef.current = new Audio(sound);
@@ -35,9 +36,23 @@ const useSound = (sound: string, volume: number = 1, loopStart?: number) => {
     };
   }, [sound, volume, loopStart]);
 
+  useEffect(() => {
+    if (audioRef.current) {
+      if (globalSoundEnabled && isPlaying) {
+        audioRef.current.play().catch(error => {
+          if (error.name !== 'AbortError') {
+            console.error('Sound error:', error);
+          }
+        });
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [globalSoundEnabled, isPlaying]);
   const playSound = () => {
     if (globalSoundEnabled  && audioRef.current) {
       audioRef.current.currentTime = 0; // Play from start
+      setIsPlaying(true);
       audioRef.current.play().catch((error) => {
         if (error.name !== 'AbortError') {
           console.error('Sound error:', error);
@@ -48,10 +63,10 @@ const useSound = (sound: string, volume: number = 1, loopStart?: number) => {
   const enableSound = () => {
     if (!hasInteracted.current && audioRef.current) {
       audioRef.current.currentTime = 0;
-      audioRef.current.play();
+      // audioRef.current.play();
       hasInteracted.current = true;
     }
-    return { enableSound };
+    // return { enableSound };
   }
 
   const stopSound = () => {
@@ -61,7 +76,8 @@ const useSound = (sound: string, volume: number = 1, loopStart?: number) => {
     } catch (error) {
       console.error('Sound error:', error);
     }
-    audioRef.current.currentTime = 0;
+      audioRef.current.currentTime = 0;
+      setIsPlaying(false);
     }
   };
 
