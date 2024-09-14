@@ -21,7 +21,6 @@ import useSound from './hooks/useSound';
 /*Sounds*/
 import backgroundSound from './assets/sounds/backgroundSound.mp3';
 
-
 function App({
   setHideBackgroundEffect,
   hideBackgroundEffect}: { 
@@ -53,28 +52,35 @@ function App({
   const [timeLeft, setTimeLeft] = useState<number>(30); // 30 seconds per turn
 
   // Set fixed volume for each sound
-  // const { playSound: playBackgroundSound } = useSound(backgroundSound, 0.3, 15);  // 30% volym
-  const { enableSound } = useSound(backgroundSound, 0.3, 15);
-  // useEffect(() => {
-  //   if (gameState === 'main-menu') {
-  //     playBackgroundSound();
-  //   }
-  // }, [gameState, playBackgroundSound]);
+  const { playSound: playBackgroundSound, hasInteracted: hasInteractedBackgroundSound} = useSound(backgroundSound, 0.3, 15);
 
-  //Activate sound when interacting with the app
+  // Listen for first interaction - to start play the background sound
+  const [hasInteracted, setHasInteracted] = useState(false);
+
   useEffect(() => {
-  // Enable sound when user interacts with the app (for example, on Start Game button click)
-  const handleUserInteraction = () => {
-    enableSound();
-    window.removeEventListener('click', handleUserInteraction);
-  };
+    const handleInteraction = () => {
+      if (!hasInteracted) {
+        setHasInteracted(true);
+        playBackgroundSound();
+      }
+    };
 
-  window.addEventListener('click', handleUserInteraction);
+    // Lägg till eventlistener för olika interaktioner
+    document.addEventListener('click', handleInteraction);
+    document.addEventListener('touchstart', handleInteraction);
 
-  return () => {
-    window.removeEventListener('click', handleUserInteraction);
-  };
-}, [enableSound]);
+    // Rensa eventlisteners när komponenten avmonteras
+    return () => {
+      document.removeEventListener('click', handleInteraction);
+      document.removeEventListener('touchstart', handleInteraction);
+    };
+  }, [hasInteracted]);
+
+  useEffect(() => {
+    if (gameState === 'main-menu' && hasInteracted) {
+      playBackgroundSound();
+    }
+  }, [gameState, hasInteracted]);
 
   // Handler to start the game (Player vs Player)
   const handleStartGame = () => {
