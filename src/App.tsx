@@ -16,7 +16,7 @@ import ScoreBoard from './components/ScoreBoard/ScoreBoard';
 import SettingsMenu from './components/SettingsMenu/SettingsMenu';
 import TimerDisplay from './components/Timer/Timer';
 import { getBestMove } from './classes/AiHardMode';
-import useSound from './hooks/useSound';
+import useSound , { getGlobalSoundEnabled } from './hooks/useSound';
 
 /*Sounds*/
 import backgroundSound from './assets/sounds/backgroundSound.mp3';
@@ -50,9 +50,9 @@ function App({
 
   // Timer state
   const [timeLeft, setTimeLeft] = useState<number>(30); // 30 seconds per turn
-
+  
   // Set fixed volume for each sound
-  const { playSound: playBackgroundSound, hasInteracted: hasInteractedBackgroundSound} = useSound(backgroundSound, 0.3, 15);
+  const { playSound: playBackgroundSound, stopSound: stopBackgroundSound } = useSound(backgroundSound, 0.3, 15);
 
   // Listen for first interaction - to start play the background sound
   const [hasInteracted, setHasInteracted] = useState(false);
@@ -61,26 +61,47 @@ function App({
     const handleInteraction = () => {
       if (!hasInteracted) {
         setHasInteracted(true);
-        playBackgroundSound();
+        if (getGlobalSoundEnabled()) {
+          playBackgroundSound();
+        }
       }
     };
 
-    // Lägg till eventlistener för olika interaktioner
     document.addEventListener('click', handleInteraction);
     document.addEventListener('touchstart', handleInteraction);
 
-    // Rensa eventlisteners när komponenten avmonteras
     return () => {
       document.removeEventListener('click', handleInteraction);
       document.removeEventListener('touchstart', handleInteraction);
     };
-  }, [hasInteracted]);
+  }, [hasInteracted, playBackgroundSound]);
 
   useEffect(() => {
     if (gameState === 'main-menu' && hasInteracted) {
-      playBackgroundSound();
+      if (getGlobalSoundEnabled()) {
+        playBackgroundSound();
+      } else {
+        stopBackgroundSound();
+      }
     }
-  }, [gameState, hasInteracted]);
+  }, [gameState, hasInteracted, playBackgroundSound, stopBackgroundSound]);
+
+  // Listen for global sound change
+  useEffect(() => {
+    const handleGlobalSoundChange = () => {
+      if (getGlobalSoundEnabled()) {
+        playBackgroundSound();
+      } else {
+        stopBackgroundSound();
+      }
+    };
+    
+    window.addEventListener('globalSoundChange', handleGlobalSoundChange);
+
+    return () => {
+      window.removeEventListener('globalSoundChange', handleGlobalSoundChange);
+    };
+  }, [playBackgroundSound, stopBackgroundSound]);
 
   // Handler to start the game (Player vs Player)
   const handleStartGame = () => {
@@ -129,12 +150,12 @@ function App({
   };
 
   const handleStartAIVsAI = () => {
-  setPlayerX(new Player('AI X', 'X', true)); // Set player X to AI X
-  setPlayerO(new Player('AI O', 'O', true)); // Set player O to AI O
-  setPlayerXName('AI X'); // Set the display name for Player X
-  setPlayerOName('AI O'); // Set the display name for Player O
-  setIsAiVsAi(true); // Enable AI vs AI mode
-  setGameState('game-board'); // Transition to the game board
+    setPlayerX(new Player('AI X', 'X', true)); // Set player X to AI X
+    setPlayerO(new Player('AI O', 'O', true)); // Set player O to AI O
+    setPlayerXName('AI X'); // Set the display name for Player X
+    setPlayerOName('AI O'); // Set the display name for Player O
+    setIsAiVsAi(true); // Enable AI vs AI mode
+    setGameState('game-board'); // Transition to the game board
 };
   // Handler to show the game rules
   const handleShowRules = () => {
