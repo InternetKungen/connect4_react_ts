@@ -47,6 +47,7 @@ function App({
 
   // State for settings
   const [hideUndoButton, setHideUndoButton] = useState<boolean>(false);
+  const [hideAIvsAIButton, setHideAIvsAIButton] = useState(true);
 
   // Timer state
   const [timeLeft, setTimeLeft] = useState<number>(30); // 30 seconds per turn
@@ -343,6 +344,7 @@ function App({
             onShowRules={handleShowRules}
             onStartAIVsAI={handleStartAIVsAI}  
             onOpenSettings={handleOpenSettings}
+            hideAIvsAIButton={hideAIvsAIButton}
           />
         </div>
       );
@@ -360,8 +362,10 @@ function App({
           <SettingsMenu
             hideBackgroundEffect={hideBackgroundEffect}
             hideUndoButton={hideUndoButton}
+            hideAIvsAIButton={hideAIvsAIButton}
             onToggleBackgroundEffect={handleToggleBackgroundEffect}
             onToggleUndoButton={handleToggleUndoButton}
+            onToggleAIvsAIButton={setHideAIvsAIButton}
             onClose={() => setGameState('main-menu')} // Navigate back to the main menu
           />
         </div>

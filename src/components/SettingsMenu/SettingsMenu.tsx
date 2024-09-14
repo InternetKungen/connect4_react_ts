@@ -10,16 +10,20 @@ import clickMouseUpButtonBackSound from '../../assets/sounds/clickMouseUpButtonB
 interface SettingsMenuProps {
   hideBackgroundEffect: boolean; 
   hideUndoButton: boolean;
+  hideAIvsAIButton: boolean;
   onToggleBackgroundEffect: (hide: boolean) => void; 
   onToggleUndoButton: (hide: boolean) => void;
+  onToggleAIvsAIButton: (hide: boolean) => void;
   onClose: () => void;
 }
 
 const SettingsMenu: React.FC<SettingsMenuProps> = ({
   hideBackgroundEffect,
   hideUndoButton,
+  hideAIvsAIButton,
   onToggleBackgroundEffect,
   onToggleUndoButton,
+  onToggleAIvsAIButton,
   onClose
 }) => {
   const [soundEnabled, setSoundEnabled] = useState(getGlobalSoundEnabled);
@@ -58,6 +62,13 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({
             onChange={() => onToggleUndoButton(!hideUndoButton)}
           />
           Hide Undo Button
+        </label>
+        <label>
+          <Switch
+            checked={hideAIvsAIButton}
+            onChange={() => onToggleAIvsAIButton(!hideAIvsAIButton)}
+          />
+          Hide AI vs AI Button
         </label>
         <label>
           <Switch
