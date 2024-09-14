@@ -123,10 +123,12 @@ function App({
   };
 
   const handleStartAIVsAI = () => {
-  setPlayerX(new Player('AI 1', 'X', true));
-  setPlayerO(new Player('AI 2', 'O', true));
-  setIsAiVsAi(true); // Make sure this is set to true
-  setGameState('game-board');
+  setPlayerX(new Player('AI X', 'X', true)); // Set player X to AI X
+  setPlayerO(new Player('AI O', 'O', true)); // Set player O to AI O
+  setPlayerXName('AI X'); // Set the display name for Player X
+  setPlayerOName('AI O'); // Set the display name for Player O
+  setIsAiVsAi(true); // Enable AI vs AI mode
+  setGameState('game-board'); // Transition to the game board
 };
   // Handler to show the game rules
   const handleShowRules = () => {
