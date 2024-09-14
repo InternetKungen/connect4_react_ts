@@ -15,9 +15,16 @@ interface StartMenuProps {
   onStartAIVsAI: () => void; // Function that starts AI vs AI Mode
   onShowRules: () => void; // Function that shows Game Rules
   onOpenSettings: () => void; // Function to open settings
+  hideAIvsAIButton: boolean;
 }
 
-const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, onStartAIVsAI, onOpenSettings }) => {
+const StartMenu: React.FC<StartMenuProps> = ({
+  onStart,
+  onStartAI,
+  onShowRules,
+  onStartAIVsAI,
+  onOpenSettings,
+  hideAIvsAIButton }) => {
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
   
   /*Bind Sounds*/
@@ -110,6 +117,7 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, 
         >
         PLAYER VS CPU
         </button>
+        {!hideAIvsAIButton && (
         <button
           onMouseDown={() => { playClickMouseDownSound(); }}
           onMouseUp={() => { playClickMouseUpSound(); }}
@@ -125,6 +133,7 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, 
         >
           AI VS AI
         </button>
+          )}
         <button
           onMouseEnter={() => {
             if (hasInteractedHoverButton) {
