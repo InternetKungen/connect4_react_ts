@@ -9,20 +9,20 @@ const useSound = (sound: string, volume: number = 1, loopStart?: number) => {
     audioRef.current.volume = volume;
 
     if (loopStart !== undefined) {
-      audioRef.current.loop = true; // Loop ljudet
+      audioRef.current.loop = true; 
       audioRef.current.addEventListener('timeupdate', () => {
         if (audioRef.current && audioRef.current.currentTime >= audioRef.current.duration) {
-          audioRef.current.currentTime = loopStart; // Återgå till loopStart vid slutet
+          audioRef.current.currentTime = loopStart; 
         }
       });
     } else {
-      audioRef.current.loop = false; // Ingen loop om loopStart inte är satt
+      audioRef.current.loop = false; // No loop if not set
     }
   }, [sound, volume, loopStart]);
 
   const playSound = () => {
     if (audioRef.current) {
-      audioRef.current.currentTime = 0; // Spela från början
+      audioRef.current.currentTime = 0; // Play from start
       audioRef.current.play().catch((error) => {
         if (error.name !== 'AbortError') {
           console.error('Sound error:', error);
