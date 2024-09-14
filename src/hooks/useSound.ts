@@ -18,6 +18,16 @@ const useSound = (sound: string, volume: number = 1, loopStart?: number) => {
     } else {
       audioRef.current.loop = false; // Ingen loop om loopStart inte är satt
     }
+    // Listen for first interaction - hover fix
+    const handleInteraction = () => {
+      hasInteracted.current = true;
+    };
+    window.addEventListener('click', handleInteraction);
+
+    return () => {
+      window.removeEventListener('click', handleInteraction);
+    };
+	
   }, [sound, volume, loopStart]);
 
   const playSound = () => {
@@ -50,7 +60,7 @@ const useSound = (sound: string, volume: number = 1, loopStart?: number) => {
     }
   };
 
-  return { playSound, stopSound, enableSound };
+  return { playSound, stopSound, enableSound, hasInteracted: hasInteracted.current };
 };
 
 export default useSound;
