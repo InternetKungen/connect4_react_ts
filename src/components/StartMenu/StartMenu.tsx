@@ -21,9 +21,9 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, 
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
   
   /*Bind Sounds*/
-  const { playSound: playMachineSound } = useSound(machineSound, 0.01);
-  const { playSound: playMachineSoundReverse } = useSound(machineSoundReverse, 0.01);
-  const { playSound: playHoverButtonSound } = useSound(hoverButtonSound, 0.3);
+  const { playSound: playMachineSound,  hasInteracted: hasInteractedMachine } = useSound(machineSound, 0.01);
+  const { playSound: playMachineSoundReverse, hasInteracted: hasInteractedMachineReverse } = useSound(machineSoundReverse, 0.01);
+  const { playSound: playHoverButtonSound, hasInteracted: hasInteractedHoverButton } = useSound(hoverButtonSound, 0.3);
   const { playSound: playClickMouseDownSound } = useSound(clickMouseDownSound, 0.7);
   const { playSound: playClickMouseUpSound } = useSound(clickMouseUpSound, 0.7);
 
@@ -65,8 +65,23 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, 
 
       <div className='start-menu-button-container'>
         <button
-          onMouseEnter={() => { setHoveredButton('pvp'), playMachineSound(), playHoverButtonSound(); }}
-          onMouseLeave={() => {setHoveredButton(null), playMachineSoundReverse(); }}
+          onMouseEnter={() => {
+            setHoveredButton('pvp');
+            if (hasInteractedMachine) {
+              playMachineSound() 
+              
+            }
+            if (hasInteractedHoverButton) {
+              playHoverButtonSound(); 
+              
+            }
+          }}
+          onMouseLeave={() => {
+            setHoveredButton(null);
+            if (hasInteractedMachineReverse) {
+              playMachineSoundReverse();
+            }
+          }}
           onMouseDown={() => { playClickMouseDownSound(); }}
           onMouseUp={() => { playClickMouseUpSound(); onStart(); }}
           className="start-menu-button"
@@ -74,8 +89,20 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, 
           PLAYER VS PLAYER
         </button>
         <button
-          onMouseEnter={() => {setHoveredButton('cpu'), playMachineSound(), playHoverButtonSound(); }}
-          onMouseLeave={() => {setHoveredButton(null), playMachineSoundReverse(); }}
+          onMouseEnter={() => {
+            setHoveredButton('cpu');
+            if (hasInteractedMachine) {
+              playMachineSound();
+            }
+            if (hasInteractedHoverButton) {playHoverButtonSound();
+            }
+          }}
+          onMouseLeave={() => {
+            setHoveredButton(null);
+            if (hasInteractedMachineReverse) {
+              playMachineSoundReverse();
+            }
+          }}
           onMouseDown={() => { playClickMouseDownSound(); }}
           onMouseUp={() => { playClickMouseUpSound(); }}
           onClick={() => { onStartAI(); }}
@@ -86,7 +113,12 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, 
         <button
           onMouseDown={() => { playClickMouseDownSound(); }}
           onMouseUp={() => { playClickMouseUpSound(); }}
-          onMouseEnter={() => { setHoveredButton('ai-vs-ai'), playHoverButtonSound(); }}
+          onMouseEnter={() => {
+            setHoveredButton('ai-vs-ai');
+            if (hasInteractedHoverButton) {
+              playHoverButtonSound();
+            }
+          }}
           onMouseLeave={() => setHoveredButton(null)}
           onClick={onStartAIVsAI}  // Trigger AI vs AI game
           className="start-menu-button"
@@ -94,7 +126,11 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, 
           AI VS AI
         </button>
         <button
-          onMouseEnter={() => { playHoverButtonSound(); }}
+          onMouseEnter={() => {
+            if (hasInteractedHoverButton) {
+              playHoverButtonSound();
+            }
+          }}
           onMouseDown={() => { playClickMouseDownSound(); }}
           onMouseUp={() => { playClickMouseUpSound(); }}
           onClick={() =>{ onShowRules(); }}
@@ -103,7 +139,11 @@ const StartMenu: React.FC<StartMenuProps> = ({ onStart, onStartAI, onShowRules, 
         GAME RULES
         </button>
         <button
-          onMouseEnter={() => { playHoverButtonSound(); }}
+          onMouseEnter={() => {
+            if (hasInteractedHoverButton) {
+              playHoverButtonSound(); 
+            }
+          }}
           onMouseDown={() => { playClickMouseDownSound(); }}
           onMouseUp={() => { playClickMouseUpSound(); }}
           onClick={ onOpenSettings }

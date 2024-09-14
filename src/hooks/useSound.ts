@@ -9,15 +9,24 @@ const useSound = (sound: string, volume: number = 1, loopStart?: number) => {
     audioRef.current.volume = volume;
 
     if (loopStart !== undefined) {
-      audioRef.current.loop = true; 
+      audioRef.current.loop = true;
       audioRef.current.addEventListener('timeupdate', () => {
         if (audioRef.current && audioRef.current.currentTime >= audioRef.current.duration) {
-          audioRef.current.currentTime = loopStart; 
+          audioRef.current.currentTime = loopStart;
         }
       });
     } else {
       audioRef.current.loop = false; // No loop if not set
     }
+    // Listen for first interaction - hover fix
+    const handleInteraction = () => {
+      hasInteracted.current = true;
+    };
+    window.addEventListener('click', handleInteraction);
+
+    return () => {
+      window.removeEventListener('click', handleInteraction);
+    };
   }, [sound, volume, loopStart]);
 
   const playSound = () => {
@@ -50,7 +59,7 @@ const useSound = (sound: string, volume: number = 1, loopStart?: number) => {
     }
   };
 
-  return { playSound, stopSound, enableSound };
+  return { playSound, stopSound, enableSound, hasInteracted: hasInteracted.current };
 };
 
 export default useSound;
