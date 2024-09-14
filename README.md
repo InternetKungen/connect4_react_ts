@@ -14,7 +14,7 @@ This is a Connect 4 game built using Vite, React, and TypeScript. The game allow
 
 ## Installation
 
-1. **Clone the repository:**
+**Clone the repository:**
 
 ```bash
    git clone https://github.com/InternetKungen/connect4_react_ts.git
