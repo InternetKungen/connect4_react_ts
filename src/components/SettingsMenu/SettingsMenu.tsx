@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Switch from '@mui/material/Switch';
 import './SettingsMenu.css';
 /*Sounds*/
-import useSound from '../../hooks/useSound';
+import useSound, { setGlobalSoundEnabled } from '../../hooks/useSound';
 import hoverButtonSound from '../../assets/sounds/hoverButton.mp3';
 import clickMouseDownButtonBackSound from '../../assets/sounds/clickMouseDownButtonBack.mp3';
 import clickMouseUpButtonBackSound from '../../assets/sounds/clickMouseUpButtonBack.mp3';
@@ -23,19 +23,22 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({
   onClose
 }) => {
   const [soundEnabled, setSoundEnabled] = useState(true);
-  const [backgroundSoundEnabled, setBackgroundSoundEnabled] = useState(true);
+  // const [backgroundSoundEnabled, setBackgroundSoundEnabled] = useState(true);
+
+  setGlobalSoundEnabled(soundEnabled);
 
   const { playSound: playHoverButtonSound } = useSound(hoverButtonSound, 0.3);
   const { playSound: playClickMouseDownButtonBackSound } = useSound(clickMouseDownButtonBackSound, 0.7);
   const { playSound: playClickMouseUpButtonBackSound } = useSound(clickMouseUpButtonBackSound, 0.7);
 
   const handleSoundToggle = () => {
-    setSoundEnabled(!soundEnabled);
+      setSoundEnabled(!soundEnabled);
+      setGlobalSoundEnabled(!soundEnabled);
   };
 
-  const handleBackgroundSoundToggle = () => {
-    setBackgroundSoundEnabled(!backgroundSoundEnabled);
-  };
+  // const handleBackgroundSoundToggle = () => {
+  //   setBackgroundSoundEnabled(!backgroundSoundEnabled);
+  // };
 
   return (
     <div className='menu-modal-overlay'>
@@ -62,15 +65,15 @@ const SettingsMenu: React.FC<SettingsMenuProps> = ({
           />
           Enable Sound
         </label>
-        <label>
+        {/* <label>
           <Switch
             checked={backgroundSoundEnabled}
             onChange={handleBackgroundSoundToggle}
           />
           Enable Background Sound
-        </label>
+        </label> */}
         <button
-          onMouseEnter={ soundEnabled ? playHoverButtonSound : undefined}
+          onMouseEnter={() => { playHoverButtonSound(); }}
           onMouseDown={() => { playClickMouseDownButtonBackSound(); }}
           onMouseUp={() => { playClickMouseUpButtonBackSound(); }}
           onClick={onClose}>Back</button>

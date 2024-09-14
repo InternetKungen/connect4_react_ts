@@ -1,5 +1,11 @@
 import { useEffect, useRef } from 'react';
 
+// Globala inställningar för ljud som kan ändras från en komponent
+let globalSoundEnabled = true;
+export const setGlobalSoundEnabled = (enabled: boolean) => {
+  globalSoundEnabled = enabled;
+};
+export const getGlobalSoundEnabled = () => globalSoundEnabled;
 const useSound = (sound: string, volume: number = 1, loopStart?: number) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const hasInteracted = useRef<boolean>(false);
@@ -30,7 +36,7 @@ const useSound = (sound: string, volume: number = 1, loopStart?: number) => {
   }, [sound, volume, loopStart]);
 
   const playSound = () => {
-    if (audioRef.current) {
+    if (globalSoundEnabled  && audioRef.current) {
       audioRef.current.currentTime = 0; // Play from start
       audioRef.current.play().catch((error) => {
         if (error.name !== 'AbortError') {
@@ -59,7 +65,7 @@ const useSound = (sound: string, volume: number = 1, loopStart?: number) => {
     }
   };
 
-  return { playSound, stopSound, enableSound, hasInteracted: hasInteracted.current };
+  return { playSound, stopSound, enableSound,  hasInteracted: hasInteracted.current };
 };
 
 export default useSound;

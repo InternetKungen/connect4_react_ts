@@ -16,7 +16,7 @@ import ScoreBoard from './components/ScoreBoard/ScoreBoard';
 import SettingsMenu from './components/SettingsMenu/SettingsMenu';
 import TimerDisplay from './components/Timer/Timer';
 import { getBestMove } from './classes/AiHardMode';
-import useSound from './hooks/useSound';
+import useSound , { getGlobalSoundEnabled } from './hooks/useSound';
 
 /*Sounds*/
 import backgroundSound from './assets/sounds/backgroundSound.mp3';
@@ -51,30 +51,30 @@ function App({
 
   // Timer state
   const [timeLeft, setTimeLeft] = useState<number>(30); // 30 seconds per turn
-
+  
   // Set fixed volume for each sound
-  // const { playSound: playBackgroundSound } = useSound(backgroundSound, 0.3, 15);  // 30% volym
-  const { enableSound } = useSound(backgroundSound, 0.3, 15);
-  // useEffect(() => {
-  //   if (gameState === 'main-menu') {
-  //     playBackgroundSound();
-  //   }
-  // }, [gameState, playBackgroundSound]);
+  const { playSound: playBackgroundSound } = useSound(backgroundSound, 0.3, 15);
+  // const { enableSound } = useSound(backgroundSound, 0.3, 15);
+  const isSoundEnabled = getGlobalSoundEnabled();
 
-  //Activate sound when interacting with the app
+  // Play background sound when user interacts with the app
   useEffect(() => {
-  // Enable sound when user interacts with the app (for example, on Start Game button click)
-  const handleUserInteraction = () => {
-    enableSound();
-    window.removeEventListener('click', handleUserInteraction);
-  };
+    // Enable sound when user interacts with the app (for example, on Start Game button click)
+    if (isSoundEnabled) {
+      const handleUserInteraction = () => {
+      
+        // enableSound();
+        playBackgroundSound();
+        window.removeEventListener('click', handleUserInteraction);
+      
+      };
+      window.addEventListener('click', handleUserInteraction);
+      return () => {
+        window.removeEventListener('click', handleUserInteraction);
+      };
+    }
+}, []);
 
-  window.addEventListener('click', handleUserInteraction);
-
-  return () => {
-    window.removeEventListener('click', handleUserInteraction);
-  };
-}, [enableSound]);
 
   // Handler to start the game (Player vs Player)
   const handleStartGame = () => {
