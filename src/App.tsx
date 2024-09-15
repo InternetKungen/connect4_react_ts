@@ -240,6 +240,16 @@ function App({
     }
   }, [timeLeft, gameState, board.gameOver]);
 
+
+
+
+
+
+
+
+
+
+  
   // This useEffect ensures the timer is reset when game bord renders
   useEffect(() => {
     if (gameState === 'game-board') {
