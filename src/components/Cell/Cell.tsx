@@ -10,7 +10,7 @@ interface CellProps {
   highlightColor?: string;
 }
 
-const Cell: React.FC<CellProps> = ({ value, isAnimating, isHighlighted, highlightColor, player }) => {
+const Cell: React.FC<CellProps> = ({ value, isAnimating, isHighlighted, highlightColor }) => {
   return (
     <div
       className={`cell ${value} ${isAnimating ? 'falling' : ''} ${isHighlighted ? `highlighted${highlightColor}` : ''}`}

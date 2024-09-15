@@ -95,7 +95,7 @@
   width: 60%;
   /* Gör bilden lika bred som föräldern */
   height: 60%;
-  background: url('./img/popup-menu-background.png') center center no-repeat;
+  background: url('/img/popup-menu-background.png') center center no-repeat;
   background-size: contain;
   z-index: -1;
   overflow: visible;

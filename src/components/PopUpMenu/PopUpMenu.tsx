@@ -19,11 +19,21 @@ interface PopUpMenuProps {
   onQuit: () => void;    // Function to quit the game
   hideBackgroundEffect: boolean;
   hideUndoButton: boolean;
+  hideAIvsAIButton: boolean
   onToggleBackground: (hide: boolean) => void; // Function to toggle background effect
   onToggleUndoButton: (hide: boolean) => void; // Function to toggle undo button visibility
+  onToggleAIvsAIButton: (hide: boolean) => void
 }
 
-const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit, hideBackgroundEffect, hideUndoButton, onToggleBackground, onToggleUndoButton }) => {
+const PopUpMenu: React.FC<PopUpMenuProps> = ({
+  onRestart,
+  onQuit,
+  hideBackgroundEffect,
+  hideUndoButton,
+  hideAIvsAIButton,
+  onToggleBackground,
+  onToggleUndoButton,
+  onToggleAIvsAIButton }) => {
   const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false); // Main menu state
   const [isSettingsOpen, setIsSettingsOpen] = useState<boolean>(false); // Settings menu state
   // const [hideBackgroundEffect, setHideBackgroundEffect] = useState<boolean>(false); // State for background effect
@@ -127,8 +137,10 @@ const PopUpMenu: React.FC<PopUpMenuProps> = ({ onRestart, onQuit, hideBackground
         <SettingsMenu
           hideBackgroundEffect={hideBackgroundEffect} // Pass the background effect state
           hideUndoButton={hideUndoButton}
+          hideAIvsAIButton={hideAIvsAIButton}
           onToggleBackgroundEffect={onToggleBackground}
           onToggleUndoButton={onToggleUndoButton}
+          onToggleAIvsAIButton={onToggleAIvsAIButton}
           onClose={handleCloseSettings} 
         />
       )}

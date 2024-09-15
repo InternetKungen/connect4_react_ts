@@ -28,14 +28,14 @@
 }
 
 .player-x {
-  background: url('./img/right-peice-player-display.png') center center no-repeat;
+  background: url('/img/right-peice-player-display.png') center center no-repeat;
   background-size: contain;
   left: 0;
   z-index: 0;
 }
 
 .player-o {
-  background: url('./img/left-peice-player-display.png') center center no-repeat;
+  background: url('/img/left-peice-player-display.png') center center no-repeat;
   background-size: contain;
   right: 0;
   z-index: 0;

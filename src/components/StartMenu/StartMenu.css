@@ -206,18 +206,18 @@
 /* Left-moving box (Player vs Player) */
 .left-moving-box {
   transform: translateX(-150%);
-  background: url('./img/pvp-left.png') no-repeat center center / cover;
+  background: url('/img/pvp-left.png') no-repeat center center / cover;
 }
 
 /* Right-moving box (Player vs Player) */
 .right-moving-box {
   transform: translateX(150%);
-  background: url('./img/pvp-right.png') no-repeat center center / cover;
+  background: url('/img/pvp-right.png') no-repeat center center / cover;
 }
 /* Right-moving box (Player vs CPU) */
 .right-moving-box-cpu {
   transform: translateX(150%);
-  background: url('./img/cpu-right.png') no-repeat center center / cover;
+  background: url('/img/cpu-right.png') no-repeat center center / cover;
 }
 /* Animation for moving boxes */
 .animate-left {
