@@ -436,8 +436,10 @@ function App({
                   onQuit={handleQuit}
                   hideBackgroundEffect={hideBackgroundEffect}
                   hideUndoButton={hideUndoButton}
+                  hideAIvsAIButton={hideAIvsAIButton}
                   onToggleBackground={handleToggleBackgroundEffect}
                   onToggleUndoButton={handleToggleUndoButton}
+                  onToggleAIvsAIButton={setHideAIvsAIButton}
                     />
               </div>
             {!hideUndoButton && (
