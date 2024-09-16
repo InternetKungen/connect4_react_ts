@@ -1,0 +1,153 @@
+/* Container for the whole animation */
+.win-animation-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  perspective: 1000px;
+  z-index: 2;
+  position: absolute;
+  left: calc(50vw - 18.6vh);
+  top: calc(17.5vh - 18vh);
+}
+
+/* Outer frame animations */
+.outer-frame {
+  width: 37.2vh;
+  height: 37.2vh;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: flipOuterFrame 0.5s ease-in-out forwards;
+  /* transform: rotate(45deg); */
+  /* Starts the animation */
+}
+
+.outer-frame__front,
+.outer-frame__back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  /* Hides the back side when flipped */
+}
+
+/*linear-gradient with many colors*/
+.outer-frame__front {
+  opacity: 0.6;
+  background: linear-gradient( 45deg, red, blue, green, yellow, purple, orange);
+}
+
+.outer-frame__back {
+  background: linear-gradient(-45deg, #adb4b770 0%, #24242c 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
+  backface-visibility: hidden;
+}
+.inner-frame-rotate {
+  transform: rotate(45deg);
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  transform-style: preserve-3d;
+  overflow: visible;
+}
+/* Inner frame animations */
+.inner-frame {
+  opacity: 0;
+  width: 80%;
+  height: 80%;
+  position: relative;
+  transform-style: preserve-3d;
+  animation: flipInnerFrame 0.5s 0.1s ease-in-out forwards;
+  /* Delayed to start after outer frame flip */
+}
+
+.inner-frame__front,
+.inner-frame__back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  /* transform: rotate(-45deg); */
+}
+
+.inner-frame__front {
+  opacity: 0.6;
+  background: blue;
+}
+
+.inner-frame__back {
+  background: linear-gradient(45deg, #adb4b770 0%, #24242c 100%);
+}
+
+/* Keyframes for flipping the outer frame */
+@keyframes flipOuterFrame {
+  0% {
+    transform: scaleX(4) rotateX(0deg) rotate(45deg);
+    opacity: 0;
+    border: 0px solid white;
+    box-shadow: 0 0 0 0 white;
+    /* left: -3.9vh; 
+    top: 3.6vh; */
+  }
+  50% {
+    border: 4px solid white;
+    box-shadow: 0 0 55vh 20vh white;
+  }
+  100% {
+    opacity: 1;
+    transform: scaleX(1) rotateX(180deg) rotate(45deg);
+    border: 1px solid white;
+    box-shadow: 0 0 2vh 0 white;
+    /* left: -3.9vh;
+    top: 3.6vh; */
+  }
+  /* 100% {
+    transform: scaleX(1) rotateX(180deg) rotate(45deg);
+    border: 1px solid white;
+    box-shadow: 0 0 10px 0 white;
+  } */
+}
+
+/* Keyframes for flipping the inner frame */
+@keyframes flipInnerFrame {
+  0% {
+    opacity: 0;
+    transform: rotateX(0deg) rotate(45deg);
+    z-index: 4;
+  }
+
+  100% {
+    opacity: 1;
+    transform: rotateX(-540deg) rotate(45deg); 
+    z-index: 4;
+  }
+}
+
+/* Styling the content inside the inner-frame__back */
+.inner-frame__back__content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-align: center;
+  transform: rotate(45deg);
+  z-index: 4;
+  width: 100%;
+  height: 100%;
+}
+
+.inner-frame__back__content h2 {
+  font-size: 3vh;
+}
+
+.inner-frame__back__content__button-container {
+  margin-top: 20px;
+  z-index: 5;
+}

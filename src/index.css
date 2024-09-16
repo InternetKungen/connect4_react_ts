@@ -27,6 +27,68 @@ body {
   animation: fadeIn 2.5s ease-in-out 1;
 }
 
+button {
+  /* background-color: transparent; */
+  color: white;
+  font-family: 'Orbitron', sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+  padding: 0.4rem 1rem;
+  border-radius: 0;
+  outline: 1px solid white;
+  transition: box-shadow 300ms;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  background: linear-gradient(to top, #4d575db6, #0d0d0daf);
+  width: 100%;
+  text-transform: uppercase;
+}
+
+/* Remove margin-bottom for the last button */
+button:last-child {
+  margin-bottom: 0;
+}
+
+/* Animation when the button is hovered */
+button:hover {
+  /* outline: 3px solid white; */
+  animation: defaultButtonHover 0.8s ease-in-out infinite;
+}
+
+/* Button hover animation */
+@keyframes defaultButtonHover {
+
+  0%,
+  100% {
+    outline: 2px solid white;
+  }
+
+  50% {
+    outline: 5px double white;
+  }
+}
+
+/* Style when the button is clicked */
+button:active {
+  color: black;
+  background: linear-gradient(to top, #c2c2c2, #fafafa);
+  animation: buttonActive 0.1s ease-in-out 1;
+  outline: 1px solid rgb(32, 32, 32) !important;
+}
+
+/* Button active state animation */
+@keyframes buttonActive {
+
+  0%,
+  100% {
+    background: linear-gradient(to top, #c2c2c2, #fafafa);
+  }
+
+  50% {
+    background: linear-gradient(to top, #4d575db6,
+        #0d0d0daf);
+  }
+}
 /* Main application container */
 .app {
   display: flex;
