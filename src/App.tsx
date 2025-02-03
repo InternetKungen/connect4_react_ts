@@ -46,7 +46,7 @@ function App({
   const [playerOName, setPlayerOName] = useState<string>('');
 
   // State for settings
-  const [hideUndoButton, setHideUndoButton] = useState<boolean>(false);
+  const [hideUndoButton, setHideUndoButton] = useState<boolean>(true);
   const [hideAIvsAIButton, setHideAIvsAIButton] = useState(true);
 
   // Timer state
