@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { GameState } from '../../utils/Types'; // Adjust the import path accordingly
-import './rules.css';
+import './Rules.css';
 
 interface RulesProps {
   setGameState: React.Dispatch<React.SetStateAction<GameState>>;
