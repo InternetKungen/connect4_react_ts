@@ -376,7 +376,9 @@ function App({
         <div className="app">
           <img className="background-menu" src="./img/background-menu.png" alt="background" />
           <div className="empty-board"></div>
-          <h1>{aiSetup ? 'Enter your name' : 'Please enter player names'}</h1>
+          <div className="player-name-setup__title">
+            <h1>{aiSetup ? 'Enter your name' : 'Enter player names'}</h1>
+          </div>
 
           <SetPlayerName
             onSubmit={handlePlayerSetupSubmit}

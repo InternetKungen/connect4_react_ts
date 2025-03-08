@@ -178,6 +178,28 @@ button:active {
   }
 }
 
+.player-name-setup__title h1{
+  font-size: 1.8rem;
+  /* font-weight: 700; */
+  margin: -50px 0 0 0;
+  color: white;
+  text-align: center;
+  animation: fadeInSize 0.5s ease-in-out 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* position: fixed; */
+}
+
+@keyframes fadeInSize {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 /* Additional styles for the Rules component (if needed) */
 .rules-container {
   display: flex;
@@ -292,5 +314,12 @@ button:active {
     position: absolute;
     top: calc((46vh + 46vw) - 13vw);
     left: 15vw;
+  }
+  .player-name-setup__title h1 {
+    font-size: 4.5vw;
+    /* font-weight: 700; */
+    margin: -8vw 0 2vw 0;
+    color: white;
+    text-align: center;
   }
 }

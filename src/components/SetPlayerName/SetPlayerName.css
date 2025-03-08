@@ -1,3 +1,12 @@
+.set-player-name-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 70vh;
+  width: 70vh;
+}
+
 /* Center the form and give it a shadow */
 .set-player-name-form {
   display: flex;
@@ -6,81 +15,231 @@
   padding: 8px;
   border-radius: 5px;
   box-shadow: 0px 0px 10px rgba(182, 52, 52, 0.1);
-  width: 26.12vh;
-  margin-top: 9.6vh;
-  margin-left: 0.2vh;
-  /* Adjust this value to move the form down */
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* .player-label {
+  display: flex;
+  justify-content: center;
+  align-self: center;
+  height: 50%
+} */
+
+.player-x-symbol,
+.player-o-symbol {
+  position: absolute;
+  width: 24.4%;
+  height: 24.4%;
+  mix-blend-mode: multiply;
+  animation: fadeInSymbol 0.5s ease-in-out 1;
+}
+
+@keyframes fadeInSymbol {
+  from {
+    transform: scale(0);
+  }
+  to {
+    transform: scale(1);
+  }
+}
+
+.player-x-symbol {
+  left: 25.6%;
+  top: 24.7%;
+  background: linear-gradient(-45deg, transparent 10%,blue);
+  clip-path: polygon(100% 0%, 0% 100%, 100% 100%);
+}
+
+.player-o-symbol {
+  right: 25.4%;
+  bottom: 26.5%;
+  background: linear-gradient(-45deg, red, transparent 90%);
+  clip-path: polygon(100% 0%, 0% 100%, -100% -100%);
+}
+
+.player-label-x-symbol {
+  font-size: 7.7vh;
+  position: absolute;
+  top: 33.7%;
+  left: 38.8%;
+  z-index: 3;
+}
+
+.player-label-o-symbol {
+  font-size: 7.7vh;
+  position: absolute;
+  /* top: 50%; */
+  bottom: 36.3%;
+  left: 52.4%;
+  z-index: 3;
+}
+
+.player-label-x-symbol,
+.player-label-o-symbol {
+animation: fadeInLabelSymbol 0.5s ease-in-out 1;
+}
+
+@keyframes fadeInLabelSymbol {
+  0% {
+    transform: scale(1.7);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* Style the input fields to make them bigger and more readable */
 .input-field {
   width: 100%;
-  padding: 15px;
+  padding: 1vh;
   background: linear-gradient(to top, #4d575db6, #0d0d0daf);
-  margin: 10px 0;
-  border: 2px solid #ffffff;
-  border-radius: 5px;
-  font-size: 18px;
+  /* margin: 10px 0; */
+  border: 1px solid #ffffff;
+  border-radius: 0px;
+  font-size: 2vh;
   color: white;
+  height: 6%;
 }
 
 .input-field::placeholder {
   color: rgba(255, 255, 255, 0.7);
-  /* Slightly transparent placeholder text */
+  font-family: 'Orbitron',
+    sans-serif;;
 }
 
-.button-container{
+.input-field-x::placeholder {
+  text-align: left;
+  direction: ltr;
+}
+
+.input-field-o::placeholder {
+  text-align: right;
+  direction: rtl;
+}
+
+.input-field-o:focus {
+  background-color: red;
+  color: #ffffff;
+  outline: none;
+}
+
+.input-field-x:focus {
+  background-color: blue;
+  color: #ffffff;
+  outline: none;
+}
+
+.input-field-o:valid {
+  background-color: red; 
+  color: #ffffff;
+}
+
+.input-field-x:valid {
+  background-color: blue;
+  color: #ffffff;
+}
+
+.input-field-o {
+  position: absolute;
+  /* top: 54.1%; */
+  bottom: 41%;
+  right: 50%;
+  width: 31.4%;
+  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 100%);
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 1) 100%);
+  text-align: right;
+  direction: rtl;
+  animation: fadeInFieldO 0.5s ease-in-out 1;
+}
+
+.input-field-x {
+  position: absolute;
+  top: 37%;
+  left: 50.1%;
+  width: 31.5%;
+  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0) 100%);
+  text-align: left;
+  direction: ltr;
+  animation: fadeInFieldX 0.5s ease-in-out 1;
+}
+
+@keyframes fadeInFieldX {
+  0% {
+    translate: -50%;
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  100% {
+    translate: 0;
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInFieldO {
+  0% {
+    translate: 50%;
+    transform: scaleX(0);
+    opacity: 0;
+  }
+
+  100% {
+    translate: 0;
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+.set-player-name-button-container{
   display: flex;
-  flex-direction: column;
-  max-width: 150px;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+  align-items: end;
+  height: 30%;
+  width: 100%;
+  /* max-width: 300px;
+  min-width: 40%; */
+  position: absolute;
+  padding: 0 1.7rem;
+  margin-bottom: 1rem;
+  bottom: 0;
 }
 
-/* Style the "Start Game" submit button */
-.submit-button {
+.set-player-name-button-container button {
   padding: 15px;
   background: linear-gradient(to top, #4d575db6, #0d0d0daf);
   color: white;
   border-radius: 0;
-  border: 1px solid white;
+  outline: 1px solid white;
   cursor: pointer;
   font-size: 16px;
+  font-weight: bold;
   transition: background 300ms, outline 300ms, box-shadow 300ms;
   margin-top: 10px;
+  min-height: 60px;
+  height: 25%;
+  max-width: 50%;
+  /* min-width: 20vw; */
+  width: 200px;
+  margin-bottom: 1rem !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Animation for submit button when hovering */
-.submit-button:hover {
+/* Animation for buttons when hovering */
+.set-player-name-button-container button:hover {
   animation: buttonHover 0.8s ease-in-out infinite;
 }
 
-/* Change style when submit button is clicked */
-.submit-button:active {
-  background: linear-gradient(to top, #c2c2c2, #fafafa);
-  color: black;
-  outline: 1px solid rgb(32, 32, 32);
-  animation: buttonActive 0.1s ease-in-out 1;
-}
 
-/* Style the "Back" button in the top corner */
-.back-button {
-    padding: 15px;
-    background: linear-gradient(to top, #4d575db6, #0d0d0daf);
-    color: white;
-    border-radius: 0;
-    border: 1px solid white;
-    cursor: pointer;
-    font-size: 16px;
-    transition: background 300ms, outline 300ms, box-shadow 300ms;
-    margin-top: 10px;
-}
-
-/* Hover effect for the "Back" button */
-.back-button:hover {
-  animation: buttonHover 0.8s ease-in-out infinite;
-}
-
-/* Active state for the "Back" button when clicked */
-.back-button:active {
+/* Change style when buttons are clicked */
+.set-player-name-button-container button:active {
   background: linear-gradient(to top, #c2c2c2, #fafafa);
   color: black;
   outline: 1px solid rgb(32, 32, 32);
@@ -114,61 +273,95 @@
 }
 
 @media screen and (max-width: 100vh) {
-.set-player-name-form {
-    padding: 1.8vw;
-    width: 26.1vw;
-    margin-top: 9.6vw;
-    margin-left: 0;
+
+  .set-player-name-container {
+    height: 70vw;
+    width: 70vw;
+  }
+
+  .input-field {
+    font-size: 3vw;
+    padding: 1vw;
+  }
+
+  .player-x-symbol,
+  .player-o-symbol {
+    width: 44%;
+    height: 46.4%;
+    mix-blend-mode:multiply;
+  }
+
+  .player-x-symbol {
+    left: 5.9%;
+    top: 2.7%;
+  }
+
+  .player-o-symbol {
+    right: 5.9%;
+    bottom: 4.7%;
+  }
+
+  .player-label-x-symbol {
+    font-size: 10vw;
+    top: 27.4%;
+    left: 31.2%;
+  }
+
+  .player-label-o-symbol {
+    font-size: 10vw;
+    bottom: 28.3%;
+    left: 57.4%;
+  }
+
+  .input-field {
+  height: 10%;
+  }
+
+  .input-field-o {
+    bottom: 31.7%;
+    right: 50%;
+    width: 45.5%;
+  }
+
+  .input-field-x {
+    top: 31.5%;
+    left: 50.1%;
+    width: 45.5%;
+  }
+
+  .set-player-name-button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    height: 30%;
+    width: 100%;
+    /* max-width: 300px;
+    min-width: 40%; */
+    position: absolute;
+    padding: 0 1.7vw;
+    margin-bottom: 0.1vw;
+  }
+
+  .set-player-name-button-container button {
+    padding: 1.2vw;
+    font-size: 16px;
+    font-weight: bold;
+    transition: background 300ms, outline 300ms, box-shadow 300ms;
+    margin-top: 10px;
+    min-height: 32px;
+    height: 25%;
+    max-width: 100%;
+    /* max-width: 50%; */
+    /* min-width: 20vw; */
+    width: 300px;
+    margin-bottom: 1vw !important;
   }
 }
 
-@media screen and (max-width: 780px) {
-  h1 {
-    font-size: 4vw;
+@media screen and (max-width: 680px) {
+  .set-player-name-button-container {
+    /* background: green; */
+    bottom: -25vw;
   }
-
-  .set-player-name-form {
-    width: 60vw;
-    margin-top: 0;
-    padding: 0;
-  }
-
-  .set-player-name-form.input-field {
-    width: 80%;
-    margin: 10px 0;
-    border: 2px solid #ffffff;
-    border-radius: 5px;
-    font-size: 18px;
-    color: white;
-  }
-}
-
-@media (max-width: 415px) {
-  .back-button {
-    font-size: .7rem !important;
-    padding: 0.4rem .6rem !important;
-    margin-top: 1rem;
-  }
-
-  .submit-button {
-    font-size: .7rem !important;
-    padding: 0.4rem .6rem !important;
-    margin-top: 1rem;
-  }
-
-}
-
-@media (max-height: 713px) {
-  .back-button {
-    font-size: .7rem !important;
-    padding: 0.4rem .6rem !important;
-    margin-top: 1rem;
-  }
-
-  .submit-button {
-    font-size: .7rem !important;
-    padding: 0.4rem .6rem !important;
-    margin-top: 1rem;
-  }
-
 }

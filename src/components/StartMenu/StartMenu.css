@@ -378,5 +378,6 @@
 
   .start-menu-button {
     margin-bottom: 0.5rem;
+    max-width: 100%;
   }
 }
