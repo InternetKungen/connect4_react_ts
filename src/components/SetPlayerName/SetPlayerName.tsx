@@ -21,7 +21,7 @@ interface SetPlayerNameProps {
 const SetPlayerName: React.FC<SetPlayerNameProps> = ({ onSubmit, isAiSetup, backSpace }) => {
 
   // UseSound hooks
-  const {playSound: playClickMouseDownButtonBackSound} = useSound(clickMouseDownButtonBackSound, 0.8);
+  const { playSound: playClickMouseDownButtonBackSound} = useSound(clickMouseDownButtonBackSound, 0.8);
   const { playSound: playClickMouseUpButtonBackSound } = useSound(clickMouseUpButtonBackSound, 0.8);
   const { playSound: playClickMouseDownButton } = useSound(clickMouseDownButton, 0.8);
   const { playSound: playClickMouseUpButtonStartGame } = useSound(clickMouseUpButtonStartGame, 0.8);
@@ -74,27 +74,29 @@ useEffect(() => {
   // Render the form
   return (
     <div className="set-player-name-container">
-      <form onSubmit={handleFormSubmit} className="set-player-name-form">     
-        <label>
-          Player X Name:
-          <input name="playerX" placeholder="Enter player name" className="input-field" required />
+      <form onSubmit={handleFormSubmit} className="set-player-name-form">
+        <label className="player-label player-label-x">
+          <div className="player-label-x-symbol">X</div>
+          <span className="player-x-symbol"></span>
+          <input name="playerX" placeholder="Player X name" className="input-field input-field-x" required />
         </label>
         {!isAiSetup && (
-          <label>
-            Player O Name:
-            <input name="playerO" placeholder="Enter player name" className="input-field" required />
+          <label className="player-label player-label-o">
+            <div className="player-label-o-symbol">O</div>
+            <span className="player-o-symbol"></span>
+            <input name="playerO" placeholder="Player O name" className="input-field input-field-o" required />
           </label>
         )}
-        <div className="button-container">
+        <div className="set-player-name-button-container">
           <button
             type="submit"
-            className="submit-button"
+            className="set-player-name-submit-button"
             onMouseDown={playClickMouseDownButton}
             onMouseUp={playClickMouseUpButtonStartGame}
             onMouseEnter={playButtonHoverSound}
           >Start Game</button>
           <button
-            className="back-button"
+            className="set-player-name-back-button"
             onMouseDown={playClickMouseDownButtonBackSound}
             onMouseUp={playClickMouseUpButtonBackSound}
             onMouseEnter={playButtonHoverSound}
